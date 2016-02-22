@@ -11,6 +11,7 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var minifyCSS = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
+var imageResize = require('gulp-image-resize');
 
 const SRC = './src';
 const DEST = './dist';
