@@ -25,5 +25,9 @@
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "liquid-node": "^2.6.1"
+  }
 }

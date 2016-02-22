@@ -27,9 +27,9 @@ gulp.task('scripts',() => {
     .pipe(gulp.dest(DEST+'/src/js'));
 });
 
-gulp.task('jekyll',() => {
-  var spawn = require('child_process').spawn;
-  var jekyll = spawn('jekyll',['build','--watch'], {stdio: 'inherit'});
+gulp.task('files', () => {
+  return gulp.src(['**/*.html', '!./node_modules/**', '!./dist/**'])
+    .pipe(gulp.dest(DEST));
 });
 
 gulp.task('images', () => {
@@ -55,11 +55,11 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(DEST+'/src/css'));
 });
 
-gulp.task('watch',() => {
-  gulp.watch(['**/*.html','**/*.md'], ['jekyll']);
+gulp.task('watch',['default'], () => {
+  gulp.watch(['**/*.html'], ['files']);
   gulp.watch(SRC+'/scss/**/*.scss', ['sass']);
   gulp.watch(SRC+'/js/**/*.js', ['scripts']);
   gulp.watch(SRC+'/img/**/*', ['images']);
 });
 
-gulp.task('default', ['jekyll','sass','scripts','images']);
+gulp.task('default', ['sass','scripts','images','files']);
