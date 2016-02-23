@@ -12,9 +12,10 @@ By [Haroen Viaene](https://haroen.me), [Elias Meire], [Arnaud Weyts](https://wet
 
 The front end uses [gulp](http://gulpjs.com) and thus also [npm](https://www.npmjs.com).
 
-To build the styles locally, you run:
+To build the front-end locally, you run:
 
 ```sh
+npm install
 gulp
 ```
 
