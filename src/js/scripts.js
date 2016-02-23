@@ -5,3 +5,14 @@
  */
 
 // var firebase = require('firebase');
+
+(function(){
+  /* google analytics */
+  window.ga = window.ga || function() {
+      (ga.q = ga.q||[]).push(arguments);
+  };
+  ga.l = +new Date;
+  // fill in analytics
+  ga("create", "", "auto");
+  ga("send", "pageview");
+})();

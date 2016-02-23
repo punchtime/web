@@ -6,7 +6,7 @@ This is the web client of [days.rocks](https://days.rocks).
 
 Made for Projecten 1 at Odisee in Ghent
 
-By [Haroen Viaene](https://haroen.me), [Elias Meire], [Arnaud Weyts](https://wetys.xyz)
+By [Haroen Viaene](https://haroen.me), [Elias Meire](http://eliasmei.re), [Arnaud Weyts](https://weyts.xyz)
 
 ## contributing
 
@@ -25,7 +25,7 @@ If you only want gulp to build the files that have been changed, you can run aft
 gulp watch
 ```
 
-Deploying is done with ___[travis???](https://travis-ci.org)___ to a private server.
+Deploying is done with ___[travis???](https://travis-ci.org)___ to github pages.
 
 ## related
 
