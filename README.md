@@ -1,8 +1,8 @@
-# Days.rocks
+# [punchtime.io](https://punchtime.io)
 
 ## info
 
-This is the web client of [punch.io](https://punch.io).
+This is the web client of [punchtime.io](https://punchtime.io).
 
 Made for Projecten 1 at Odisee in Ghent
 
@@ -25,14 +25,13 @@ If you only want gulp to build the files that have been changed, you can run aft
 gulp watch
 ```
 
-Deploying is done with ___[travis???](https://travis-ci.org)___ to github pages.
+Deploying is done to `gh-pages` using [travis](https://travis-ci.org) with our friendly bot: [@punchtimebot](https://github.com/punchtimebot).
 
 ## related
 
-- [organisation](https://github.com/punch-app/organisation)
-- [iOS client](https://github.com/punch-app/punch-ios)
-- [Android client](https://github.com/punch-app/punch-android)
+- [organisation](https://github.com/punchtime/organisation)
+- [Android client](https://github.com/punchtime/app)
 
 ## License
 
-MIT___
+MIT

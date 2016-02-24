@@ -1,13 +1,13 @@
 {
   "name": "days-web",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "the web client for days.rocks",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/punchtime/web.git"
   },
   "author": "Haroen Viaene <hello@haroen.me>",
   "license": "CC-BY-4.0",
@@ -26,6 +26,5 @@
     "jshint-stylish": "^2.1.0"
   },
   "dependencies": {
-    "jquery": "^2.2.1"
   }
 }
