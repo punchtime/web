@@ -59,8 +59,14 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(DIST+'/src/css'));
 });
 
+gulp.task('copy',() =>{
+  return gulp.src(['CNAME'])
+    .pipe(gulp.dest(DIST));
+});
+
 gulp.task('watch',['default'], () => {
-  gulp.watch(['**/*.jade'], ['templates']);
+  gulp.watch('CNAME',['copy']);
+  gulp.watch('**/*.jade', ['templates']);
   gulp.watch(SRC+'/scss/**/*.scss', ['sass']);
   gulp.watch(SRC+'/js/**/*.js', ['scripts']);
   gulp.watch(SRC+'/img/**/*', ['images']);
