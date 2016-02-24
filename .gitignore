@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/node,osx
 
+### Dist ###
+dist/
+
 ### SASS ###
 .sass-cache/
 
