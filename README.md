@@ -1,5 +1,7 @@
 # [punchtime.io](https://punchtime.io)
 
+[![Build Status](https://travis-ci.org/punchtime/web.svg?branch=master)](https://travis-ci.org/punchtime/web)
+
 ## info
 
 This is the web client of [punchtime.io](https://punchtime.io).
