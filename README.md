@@ -2,7 +2,7 @@
 
 ## info
 
-This is the web client of [days.rocks](https://days.rocks).
+This is the web client of [punch.io](https://punch.io).
 
 Made for Projecten 1 at Odisee in Ghent
 
@@ -29,9 +29,9 @@ Deploying is done with ___[travis???](https://travis-ci.org)___ to github pages.
 
 ## related
 
-- [organisation](https://github.com/days___)
-- [iOS client](https://github.com/days___)
-- [Android client](https://github.com/days___)
+- [organisation](https://github.com/punch-app/organisation)
+- [iOS client](https://github.com/punch-app/punch-ios)
+- [Android client](https://github.com/punch-app/punch-android)
 
 ## License
 
