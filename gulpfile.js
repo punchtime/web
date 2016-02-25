@@ -10,7 +10,8 @@ var gulp            = require('gulp'),
     jshint          = require('gulp-jshint'),
     sass            = require('gulp-sass'),
     stylish         = require('jshint-stylish'),
-    uglify          = require('gulp-uglify');
+    uglify          = require('gulp-uglify'),
+    browserSync     = require('browser-sync').create();
 
 const SRC = './src';
 const DIST = './dist';
