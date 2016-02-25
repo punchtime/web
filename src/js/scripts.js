@@ -7,6 +7,7 @@
 // var firebase = require('firebase');
 
 (function(){
+  /* jshint ignore:start */
   /* google analytics */
   window.ga = window.ga || function() {
       (ga.q = ga.q||[]).push(arguments);
@@ -15,4 +16,5 @@
   // fill in analytics
   ga("create", "", "auto");
   ga("send", "pageview");
+  /* jshint ignore:end */
 })();
