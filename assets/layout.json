@@ -1,14 +1,16 @@
 {"users": {
   "test-user": {
     "name": "Test User",
-    "companies": {
-      "test-company": "employee"
-    }
+    "employee": {
+      "test-company": "true"
+    },
+    "employer": {}
   },
   "test-employer": {
     "name":"Test Employer",
-    "companies": {
-      "test-company": "employer"
+    "employee": {},
+    "employer": {
+      "test-company": true
     }
   }
 },
