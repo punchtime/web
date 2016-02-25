@@ -19,7 +19,8 @@
     },
     "employers": {
       "test-employer": true
-    }
+    },
+    "tier": "free"
   }
 },
 "pulses": {
