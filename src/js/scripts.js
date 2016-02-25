@@ -8,12 +8,12 @@ var Firebase = require('firebase');
 
 var base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
-base.child('0/tier/').on('value', (snapshot) => {
-  console.log('tier: '+snapshot.val());
+base.child('/').on('value', (snapshot) => {
+  console.log(snapshot.val());
 });
 
 // https://www.firebase.com/docs/web/guide/saving-data.html
-base.child('0/tier/').set("paid");
+// base.child('0/tier/').set("paid");
 
 (()=>{
   /* jshint ignore:start */
