@@ -1,0 +1,42 @@
+{"users": {
+  "test-user": {
+    "name": "Test User",
+    "companies": {
+      "test-company": "employee"
+    }
+  },
+  "test-employer": {
+    "name":"Test Employer",
+    "companies": {
+      "test-company": "employer"
+    }
+  }
+},
+"companies": {
+  "test-company": {
+    "employees": {
+      "test-user": true
+    },
+    "employers": {
+      "test-employer": true
+    }
+  }
+},
+"pulses": {
+  "test-pulse-1": {
+    "user": "test-user",
+    "type": "checkout",
+    "time": 1456410617812,
+    "latitude": 51.0537,
+    "longitude": 3.73295,
+    "note": "this is a test check out"
+  },
+  "test-pulse-2": {
+    "user": "test-user",
+    "type": "checkin",
+    "time": 1456410661398,
+    "latitude": 51.03492,
+    "longitude": 3.71166,
+    "note": "this is a test check in"
+  }
+}}
