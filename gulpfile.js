@@ -73,7 +73,7 @@ gulp.task('browser-sync', () => {
   });
 });
 
-gulp.task('watch',['browser-sync'], () => {
+gulp.task('watch',['default','browser-sync'], () => {
   gulp.watch('CNAME',['copy']);
   gulp.watch('**/*.jade', ['templates']);
   gulp.watch(SRC+'/scss/**/*.scss', ['sass']);
@@ -81,4 +81,4 @@ gulp.task('watch',['browser-sync'], () => {
   gulp.watch(SRC+'/img/**/*', ['images']);
 });
 
-gulp.task('default', ['sass','scripts','images','templates']);
+gulp.task('default', ['copy','templates','sass','scripts','images']);
