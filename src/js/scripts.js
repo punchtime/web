@@ -1,5 +1,5 @@
 /*
- * Scripts for the web version of Days.rocks
+ * Scripts for the web version of punchtime.io
  *
  * @author Haroen Viaene <hello@haroen.me>
  */
