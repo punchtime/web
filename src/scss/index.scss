@@ -5,3 +5,29 @@
  */
 
 @import 'generic';
+
+.full {
+  display: flex;
+  flex-direction: column;
+  min-height: 98vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2em;
+  position: relative;
+
+  p {
+    padding: 1em;
+  }
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - .5em);
+    content: '⬇';
+  }
+
+  + .full:after {
+    content: '';
+  }
+}
