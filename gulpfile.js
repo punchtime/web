@@ -60,12 +60,20 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(DIST+'/src/css'));
 });
 
-gulp.task('copy',() =>{
+gulp.task('copy',() => {
   return gulp.src(['CNAME'])
     .pipe(gulp.dest(DIST));
 });
 
-gulp.task('watch',['default'], () => {
+gulp.task('browser-sync', () => {
+  browserSync.init({
+    server: {
+      baseDir: DIST
+    }
+  });
+});
+
+gulp.task('watch',['browser-sync'], () => {
   gulp.watch('CNAME',['copy']);
   gulp.watch('**/*.jade', ['templates']);
   gulp.watch(SRC+'/scss/**/*.scss', ['sass']);
