@@ -4,9 +4,9 @@
  * @author Haroen Viaene <hello@haroen.me>
  */
 
-// var firebase = require('firebase');
+var firebase = require('firebase');
 
-(function(){
+(()=>{
   /* jshint ignore:start */
   /* google analytics */
   window.ga = window.ga || function() {
@@ -17,4 +17,8 @@
   ga("create", "", "auto");
   ga("send", "pageview");
   /* jshint ignore:end */
+})();
+
+(()=>{
+  console.log('test');
 })();

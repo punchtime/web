@@ -7,5 +7,6 @@
   "-W058": true,
   "-W014": true,
   "expr": true,
-  "browser": true
+  "browser": true,
+  "esversion": 6
 }

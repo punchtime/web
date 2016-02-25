@@ -11,6 +11,7 @@ var gulp            = require('gulp'),
     sass            = require('gulp-sass'),
     stylish         = require('jshint-stylish'),
     uglify          = require('gulp-uglify'),
+    gutil           = require('gulp-util'),
     browserSync     = require('browser-sync').create();
 
 const SRC = './src';
@@ -20,11 +21,13 @@ gulp.task('scripts',() => {
   return gulp.src([SRC+'/js/*.js', '!./node_modules/**', '!./dist/**'])
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter(stylish))
-    .pipe(babel())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
     .pipe(browserify({
       insertGlobals : true
     }))
-    .pipe(uglify())
+    .pipe(uglify().on('error', gutil.log))
     .pipe(gulp.dest(DIST+'/src/js'));
 });
 
