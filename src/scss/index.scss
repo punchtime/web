@@ -17,18 +17,20 @@
   padding-bottom: 11vh;
   position: relative;
 
+  &--content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   p {
     padding: 1em;
   }
 
-  // seemingly, it's not possible to have this positionend at the bottom without position absolute
-  // todo: if you find somehow a thing that would work like `justify-self: flex-end`, that'd be cool
-  .full--arrow {
+  &--arrow {
     color: $color-dark;
     text-decoration: none;
-    position: absolute;
-    bottom: 11vh;
-    left: calc(50% - .5em);
   }
 
   // don't show for the last page
