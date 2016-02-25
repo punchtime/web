@@ -8,7 +8,7 @@ This is the web client of [punchtime.io](https://punchtime.io).
 
 Made for Projecten 1 at Odisee in Ghent
 
-By [Haroen Viaene](https://haroen.me), [Elias Meire](http://eliasmei.re), [Arnaud Weyts](https://weyts.xyz)
+By [Haroen Viaene](https://haroen.me), [Elias Meire](http://eliasmei.re) and [Arnaud Weyts](https://weyts.xyz)
 
 ## contributing
 
@@ -29,10 +29,12 @@ gulp watch
 
 Deploying is done to `gh-pages` using [travis](https://travis-ci.org) with our friendly bot: [@punchtimebot](https://github.com/punchtimebot).
 
+See also [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## related
 
 - [organisation](https://github.com/punchtime/organisation)
-- [Android client](https://github.com/punchtime/app)
+- [Android client](https://github.com/punchtime/android)
 
 ## License
 
