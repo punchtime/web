@@ -2,11 +2,12 @@ doctype html
 html(lang="en")
   include ./includes/head.jade
   body
-    .full.full__intro
+    .full.full__intro#intro
       h1 punchtime
       p simple timekeeping away from office
       p coming soon
-    footer.full.full__footer
+      a(href="#footer", title="go to the next section").full--arrow ↓
+    footer.full.full__footer#footer
       p created as a second-year project for #[a(href="http://www.odisee.be") Odisee] by #[a(href="https://haroen.me") Haroen Viaene], #[a(href="https://weyts.xyz") Arnaud Weyts] and #[a(href="https://eliasmei.re") Elias Meire].
       p all code is open source and visible at #[a(href="https://github.com/punchtime") github.com/punchtime].
     include ./includes/foot.jade
