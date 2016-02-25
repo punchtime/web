@@ -9,24 +9,27 @@
 .full {
   display: flex;
   flex-direction: column;
-  min-height: 98vh;
+  min-height: 100vh;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 2em;
+  padding-bottom: 11vh;
   position: relative;
 
   p {
     padding: 1em;
   }
 
+  // the arrow is inside the container
   &:after {
     position: absolute;
-    bottom: 0;
+    bottom: 11vh;
     left: calc(50% - .5em);
-    content: '↓';
+    content: '↓'; // don't use ⬇, gets converted to emoji on iOS
   }
 
+  // don't show for the last page
   + .full:after {
     content: '';
   }
