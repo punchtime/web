@@ -2,27 +2,24 @@
  * Firebase setup
  */
 // require('./scripts');
-var Firebase = require('firebase');
-var tableify = require('tableify');
-var base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
+const Firebase = require('firebase');
+const tableify = require('tableify');
+let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
 /**
- * testing out firebase code
- * @todo remove when real code is written
+ * logging all of the values of our firebase
  */
 (()=>{
-  var table;
   base.child('/').on('value', (snapshot) => {
-    table = tableify(snapshot.val());
-    document.getElementById('table').innerHTML = table;
+    document.getElementById('table').innerHTML = tableify(snapshot.val());
   });
-
-  // https://www.firebase.com/docs/web/guide/saving-data.html
-  // base.child('companies/test-company').set({"tier":"paid"});
 })();
 
+/**
+ * Adding Firebase.push() to the pulse form
+ */
 (()=>{
-  let form = document.getElementById('form');
+  let form = document.getElementById('pulse');
   form.querySelector('[name="time"]').value = new Date().getTime();
 
   navigator.geolocation.getCurrentPosition(pos=>{
@@ -42,5 +39,54 @@ var base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
       "type": form.querySelector('[name="type"]').value,
       "user": form.querySelector('[name="user"]').value
     });
+    //todo: also push to the array of pulses of that user
+    //this won't be possible in this version of the test, because users aren't authenticated
+    //Consider that disk space is cheap, but a user’s time is not
+    //source for that: https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
+  });
+})();
+
+/**
+ * Adding firebase.push() to the 'create a user' form
+ * it's kinda messy, should be fixed
+ */
+(()=>{
+  let form = document.getElementById('create-user');
+
+  form.querySelector('[type="submit"]').addEventListener('click',e=>{
+    e.preventDefault();
+    let employer = form.querySelector('[name="employer"]').value;
+    let employee = form.querySelector('[name="employee"]').value;
+    if (employee) {
+      base.child('users').push({
+        "name": form.querySelector('[name="name"]').value,
+        "employee": {
+          [employee]:true
+        }
+      });
+    }
+    if (employer) {
+      base.child('users').push({
+        "name": form.querySelector('[name="name"]').value,
+        "employer": {
+          [employer]:true
+        }
+      });
+    }
+    if (employer && employee) {
+      base.child('users').push({
+        "name": form.querySelector('[name="name"]').value,
+        "employee": {
+          [employee]:true
+        },
+        "employer": {
+          [employer]:true
+        }
+      });
+    }
+    //todo: also push the new user to the array of users of his company
+    //this won't be possible in this version of the test, because users aren't authenticated
+    //Consider that disk space is cheap, but a user’s time is not
+    //source for that: https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
   });
 })();

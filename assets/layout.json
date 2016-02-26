@@ -4,7 +4,11 @@
     "employee": {
       "test-company": "true"
     },
-    "employer": {}
+    "employer": {},
+    "pulses": {
+      "test-pulse-1": true,
+      "test-pulse-2": true
+    }
   },
   "test-employer": {
     "name":"Test Employer",

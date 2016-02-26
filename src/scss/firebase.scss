@@ -9,8 +9,14 @@ body {
 }
 
 form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 15rem;
+
   fieldset {
-    display: block;
+    padding: .2em;
+    margin: .2em;
+    border: 1px solid #ccc;
   }
   input {
     border: 1px solid #ccc;
@@ -20,7 +26,7 @@ form {
   input, label {
     display: block;
     margin: .3rem auto;
-    width: 10rem;
+    width: 100%;
   }
 }
 
@@ -33,8 +39,10 @@ table, tbody {
 tr {
   border: 1px solid #ccc;
   text-align: top;
+  overflow: auto;
 }
 th, td {
   text-align: left;
   padding: 4px;
+  word-break: break-word;
 }

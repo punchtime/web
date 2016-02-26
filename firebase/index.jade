@@ -4,8 +4,9 @@ html(lang="en")
   include ../includes/head.jade
   body.dev
     p This is the firebase data, look at <code>firebase.js</code> to see how it works
-    form#form
-      fieldset
+    form
+      fieldset#pulse
+        legend test pulse
         label(for="latitude") latitude
         input(type="text", name="latitude")
         label(for="longitude") longitude
@@ -18,6 +19,15 @@ html(lang="en")
         input(type="text", name="type", value="checkin")
         label(for="user") user
         input(type="text", name="user", value="test-user")
+        input(type="submit")
+      fieldset#create-user
+        legend test user
+        label(for="name") name
+        input(type="text", name="name")
+        label(for="employee") employee of
+        input(type="text", name="employee")
+        label(for="employer") employer of
+        input(type="text", name="employer")
         input(type="submit")
     #table
     script(src="/src/js/firebase.js")
