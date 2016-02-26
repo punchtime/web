@@ -29,6 +29,7 @@
     "jshint-stylish": "^2.1.0"
   },
   "dependencies": {
-    "firebase": "^2.4.1"
+    "firebase": "^2.4.1",
+    "tableify": "^1.0.0"
   }
 }

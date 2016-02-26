@@ -2,6 +2,9 @@
  * the animation for the arrows
  * @param  {string} classname the name of the class that each arrow has
  */
+
+// require('./scripts');
+
 (classname=>{
   // https://gist.github.com/james2doyle/5694700
   // easing functions http://goo.gl/5HLl8
