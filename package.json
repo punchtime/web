@@ -1,10 +1,7 @@
 {
-  "name": "days-web",
-  "version": "0.0.2",
-  "description": "the web client for days.rocks",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "days",
+  "version": "0.1.0",
+  "description": "The web client of punchtime https://punchtime.io",
   "repository": {
     "type": "git",
     "url": "https://github.com/punchtime/web.git"
