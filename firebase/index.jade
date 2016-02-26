@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+  - var stylesheet = '/src/css/firebase.css'
+  include ../includes/head.jade
+  body.dev
+    p This is the firebase data, look at <code>firebase.js</code> to see how it works
+    form#form
+      fieldset
+        label(for="latitude") latitude
+        input(type="text", name="latitude")
+        label(for="longitude") longitude
+        input(type="text", name="longitude")
+        label(for="note") note
+        input(type="text", name="note")
+        label(for="time") time
+        input(type="text", name="time")
+        label(for="type") type
+        input(type="text", name="type", value="checkin")
+        label(for="user") user
+        input(type="text", name="user", value="test-user")
+        input(type="submit")
+    #table
+    script(src="/src/js/firebase.js")
+    script(src="/src/js/scripts.js")
+    include ../includes/foot.jade

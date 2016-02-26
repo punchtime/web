@@ -1,0 +1,30 @@
+/**
+ * Styles for the firebase page.
+ */
+
+@import 'development';
+
+body {
+  padding-top: 2em;
+}
+
+form {
+  input, label {
+    display: block;
+  }
+}
+
+table {
+  border-collapse: collapse;
+}
+table, tbody {
+  width: 100%;
+}
+tr {
+  border: 1px solid #ccc;
+  text-align: top;
+}
+th, td {
+  text-align: left;
+  padding: 4px;
+}
