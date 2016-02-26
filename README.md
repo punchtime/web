@@ -1,5 +1,7 @@
 # [punchtime.io](https://punchtime.io)
 
+> Note: this is a work in progress, and not yet a deployed site.
+
 [![Join the chat at https://gitter.im/punchtime/web](https://badges.gitter.im/punchtime/web.svg)](https://gitter.im/punchtime/web?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/punchtime/web.svg?branch=master)](https://travis-ci.org/punchtime/web) [![Dependency Status](https://david-dm.org/punchtime/web.svg)](https://david-dm.org/punchtime/web) [![devDependency Status](https://david-dm.org/punchtime/web/dev-status.svg)](https://david-dm.org/punchtime/web#info=devDependencies)
 
 ## info
@@ -8,7 +10,9 @@ This is the web client of [punchtime.io](https://punchtime.io).
 
 Made for Projecten 1 at Odisee in Ghent
 
-By [Haroen Viaene](https://haroen.me), [Elias Meire](http://eliasmei.re) and [Arnaud Weyts](https://weyts.xyz)
+By [Haroen Viaene](https://haroen.me), [Elias Meire](http://eliasmei.re) and [Arnaud Weyts](https://weyts.xyz).
+
+It uses Firebase to communicate the location of an employee when he arrives at a location he works at (i.e. an electrician). This is then used to calculate the amount of hours the employee worked, and also how much the clients should pay for offered services.
 
 ## contributing
 
