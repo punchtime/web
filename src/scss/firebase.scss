@@ -9,8 +9,18 @@ body {
 }
 
 form {
+  fieldset {
+    display: block;
+  }
+  input {
+    border: 1px solid #ccc;
+    appearance: none;
+    padding: .1rem;
+  }
   input, label {
     display: block;
+    margin: .3rem auto;
+    width: 10rem;
   }
 }
 
