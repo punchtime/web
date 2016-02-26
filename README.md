@@ -42,4 +42,4 @@ See also [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-MIT
+Apache License 2.0
