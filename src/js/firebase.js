@@ -5,6 +5,7 @@
 const Firebase = require('firebase');
 const tableify = require('tableify');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
+base.onAuth(authDataCallback);
 
 /**
  * logging all of the values of our firebase
@@ -88,5 +89,62 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     //this won't be possible in this version of the test, because users aren't authenticated
     //Consider that disk space is cheap, but a user’s time is not
     //source for that: https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
+  });
+})();
+
+
+/**
+ * callback for when user logs in or out
+ */
+function authDataCallback(authData) {
+  if (authData) {
+    console.log("User " + authData.uid + " is logged in with " + authData.provider);
+  } else {
+    console.log("User is logged out");
+  }
+}
+
+/**
+ * logging in with facebook after click on #facebook
+ */
+(()=>{
+  document.getElementById('facebook').addEventListener('click',()=>{
+    base.authWithOAuthPopup("facebook", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+      }
+    });
+  });
+})();
+
+/**
+ * logging in with twitter after click on #twitter
+ */
+(()=>{
+  document.getElementById('twitter').addEventListener('click',()=>{
+    base.authWithOAuthPopup("twitter", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+      }
+    });
+  });
+})();
+
+/**
+ * logging in with google after click on #google
+ */
+(()=>{
+  document.getElementById('google').addEventListener('click',()=>{
+    base.authWithOAuthPopup("google", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+      }
+    });
   });
 })();
