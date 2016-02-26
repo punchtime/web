@@ -1,5 +1,7 @@
 # [punchtime.io](https://punchtime.io)
 
+[![Join the chat at https://gitter.im/punchtime/web](https://badges.gitter.im/punchtime/web.svg)](https://gitter.im/punchtime/web?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/punchtime/web.svg?branch=master)](https://travis-ci.org/punchtime/web)
 
 ## info
