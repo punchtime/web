@@ -11,19 +11,21 @@ body {
 form {
   display: flex;
   flex-wrap: wrap;
-  flex-basis: 15rem;
+  flex: 1 1 15rem;
+  justify-content: space-between;
 
   fieldset {
     padding: .2em;
     margin: .2em;
     border: 1px solid #ccc;
   }
-  input {
+  input, button  {
+    font-size: 1rem;
     border: 1px solid #ccc;
     appearance: none;
     padding: .1rem;
   }
-  input, label {
+  input, label, button {
     display: block;
     margin: .3rem auto;
     width: 100%;

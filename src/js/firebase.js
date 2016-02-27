@@ -5,7 +5,6 @@
 const Firebase = require('firebase');
 const tableify = require('tableify');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
-base.onAuth(authDataCallback);
 
 /**
  * logging all of the values of our firebase
@@ -33,12 +32,12 @@ base.onAuth(authDataCallback);
   form.querySelector('[type="submit"]').addEventListener('click',e=>{
     e.preventDefault();
     base.child('pulses').push({
-      "latitude": form.querySelector('[name="latitude"]').value,
-      "longitude": form.querySelector('[name="longitude"]').value,
-      "note": form.querySelector('[name="note"]').value,
-      "time": form.querySelector('[name="time"]').value,
-      "type": form.querySelector('[name="type"]').value,
-      "user": form.querySelector('[name="user"]').value
+      'latitude': form.querySelector('[name="latitude"]').value,
+      'longitude': form.querySelector('[name="longitude"]').value,
+      'note': form.querySelector('[name="note"]').value,
+      'time': form.querySelector('[name="time"]').value,
+      'type': form.querySelector('[name="type"]').value,
+      'user': form.querySelector('[name="user"]').value
     });
     //todo: also push to the array of pulses of that user
     //this won't be possible in this version of the test, because users aren't authenticated
@@ -60,27 +59,27 @@ base.onAuth(authDataCallback);
     let employee = form.querySelector('[name="employee"]').value;
     if (employee) {
       base.child('users').push({
-        "name": form.querySelector('[name="name"]').value,
-        "employee": {
+        'name': form.querySelector('[name="name"]').value,
+        'employee': {
           [employee]:true
         }
       });
     }
     if (employer) {
       base.child('users').push({
-        "name": form.querySelector('[name="name"]').value,
-        "employer": {
+        'name': form.querySelector('[name="name"]').value,
+        'employer': {
           [employer]:true
         }
       });
     }
     if (employer && employee) {
       base.child('users').push({
-        "name": form.querySelector('[name="name"]').value,
-        "employee": {
+        'name': form.querySelector('[name="name"]').value,
+        'employee': {
           [employee]:true
         },
-        "employer": {
+        'employer': {
           [employer]:true
         }
       });
@@ -92,28 +91,46 @@ base.onAuth(authDataCallback);
   });
 })();
 
-
 /**
- * callback for when user logs in or out
+ * logging at authentication or deauthentication
  */
-function authDataCallback(authData) {
+(()=>{
+
+  var authData = base.getAuth();
   if (authData) {
-    console.log("User " + authData.uid + " is logged in with " + authData.provider);
-  } else {
-    console.log("User is logged out");
+    console.log("Authenticated user with uid:", authData.uid);
   }
-}
+
+
+  base.onAuth(authDataCallback);
+  /**
+   * callback for when user logs in or out
+   */
+  function authDataCallback(authData) {
+    if (authData) {
+      console.log('User ' + authData.uid + ' is logged in with ' + authData.provider);
+    } else {
+      console.log('User is logged out');
+    }
+  }
+})();
 
 /**
  * logging in with facebook after click on #facebook
  */
 (()=>{
   document.getElementById('facebook').addEventListener('click',()=>{
-    base.authWithOAuthPopup("facebook", function(error, authData) {
+    base.authWithOAuthPopup('facebook', function(error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        console.log('Login Failed!', error);
       } else {
-        console.log("Authenticated successfully with payload:", authData);
+        console.log('authenticated with: '+authData.uid);
+        let fieldsets = document.querySelectorAll('fieldset');
+        for (let set in fieldsets) {
+          if (fieldsets.hasOwnProperty(set)) {
+            set.disabled = false;
+          }
+        }
       }
     });
   });
@@ -124,11 +141,17 @@ function authDataCallback(authData) {
  */
 (()=>{
   document.getElementById('twitter').addEventListener('click',()=>{
-    base.authWithOAuthPopup("twitter", function(error, authData) {
+    base.authWithOAuthPopup('twitter', function(error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        console.log('Login Failed!', error);
       } else {
-        console.log("Authenticated successfully with payload:", authData);
+        console.log('authenticated with: '+authData.uid);
+        let fieldsets = document.querySelectorAll('fieldset');
+        for (let set in fieldsets) {
+          if (fieldsets.hasOwnProperty(set)) {
+            set.disabled = false;
+          }
+        }
       }
     });
   });
@@ -139,12 +162,27 @@ function authDataCallback(authData) {
  */
 (()=>{
   document.getElementById('google').addEventListener('click',()=>{
-    base.authWithOAuthPopup("google", function(error, authData) {
+    base.authWithOAuthPopup('google', function(error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        console.log('Login Failed!', error);
       } else {
-        console.log("Authenticated successfully with payload:", authData);
+        console.log('authenticated with: '+authData.uid);
+        let fieldsets = document.querySelectorAll('fieldset');
+        for (let set in fieldsets) {
+          if (fieldsets.hasOwnProperty(set)) {
+            set.disabled = false;
+          }
+        }
       }
     });
+  });
+})();
+
+/**
+ * logging out after clicking on #logout
+ */
+(()=>{
+  document.getElementById('logout').addEventListener('click',()=>{
+    base.unauth();
   });
 })();

@@ -4,11 +4,14 @@ html(lang="en")
   include ../includes/head.jade
   body.dev
     p This is the firebase data, look at <code>firebase.js</code> to see how it works.
-    button#facebook login with facebook
-    button#google login with google
-    button#twitter login with twitter
     form
-      fieldset#pulse
+      fieldset#login
+        legend logging in
+        button#facebook login with facebook
+        button#google login with google
+        button#twitter login with twitter
+        button#logout logout
+      fieldset#pulse(disabled)
         legend test pulse
         label(for="latitude") latitude
         input(type="text", name="latitude")
@@ -23,7 +26,7 @@ html(lang="en")
         label(for="user") user
         input(type="text", name="user", value="test-user")
         input(type="submit")
-      fieldset#create-user
+      fieldset#create-user(disabled)
         legend test user
         label(for="name") name
         input(type="text", name="name")
