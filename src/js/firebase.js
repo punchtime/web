@@ -92,96 +92,57 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 })();
 
 /**
- * logging at authentication or deauthentication
+ * logging in and out
  */
 (()=>{
-
-  var authData = base.getAuth();
-  if (authData) {
-    console.log("Authenticated user with uid:", authData.uid);
-  }
-
-
-  base.onAuth(authDataCallback);
   /**
-   * callback for when user logs in or out
+   * log on logging in and out
    */
-  function authDataCallback(authData) {
+  base.onAuth(authData=>{
     if (authData) {
       console.log('User ' + authData.uid + ' is logged in with ' + authData.provider);
     } else {
       console.log('User is logged out');
     }
-  }
-})();
+  });
 
-/**
- * logging in with facebook after click on #facebook
- */
-(()=>{
-  document.getElementById('facebook').addEventListener('click',()=>{
-    base.authWithOAuthPopup('facebook', function(error, authData) {
+  /**
+   * enable all fieldsets
+   */
+  let enableForms = ()=>{
+    let fieldsets = document.querySelectorAll('fieldset');
+    for (let set in fieldsets) {
+      if (fieldsets.hasOwnProperty(set)) {
+        set.disabled = false;
+      }
+    }
+  };
+
+  /**
+   * logging in with any service
+   * @param {string} service the auth service [google,twitter,facebook]
+   */
+  let auth = service => {
+    base.authWithOAuthPopup(service, function(error, authData) {
       if (error) {
         console.log('Login Failed!', error);
       } else {
         console.log('authenticated with: '+authData.uid);
-        let fieldsets = document.querySelectorAll('fieldset');
-        for (let set in fieldsets) {
-          if (fieldsets.hasOwnProperty(set)) {
-            set.disabled = false;
-          }
-        }
+        enableForms();
       }
     });
-  });
-})();
+  };
 
-/**
- * logging in with twitter after click on #twitter
- */
-(()=>{
-  document.getElementById('twitter').addEventListener('click',()=>{
-    base.authWithOAuthPopup('twitter', function(error, authData) {
-      if (error) {
-        console.log('Login Failed!', error);
-      } else {
-        console.log('authenticated with: '+authData.uid);
-        let fieldsets = document.querySelectorAll('fieldset');
-        for (let set in fieldsets) {
-          if (fieldsets.hasOwnProperty(set)) {
-            set.disabled = false;
-          }
-        }
-      }
-    });
-  });
-})();
+  /**
+   * adding event listeners to the log in buttons
+   */
+  document.getElementById('google').addEventListener('click',service('google'));
+  document.getElementById('facebook').addEventListener('click',service('facebook'));
+  document.getElementById('twitter').addEventListener('click',service('twitter'));
 
-/**
- * logging in with google after click on #google
- */
-(()=>{
-  document.getElementById('google').addEventListener('click',()=>{
-    base.authWithOAuthPopup('google', function(error, authData) {
-      if (error) {
-        console.log('Login Failed!', error);
-      } else {
-        console.log('authenticated with: '+authData.uid);
-        let fieldsets = document.querySelectorAll('fieldset');
-        for (let set in fieldsets) {
-          if (fieldsets.hasOwnProperty(set)) {
-            set.disabled = false;
-          }
-        }
-      }
-    });
-  });
-})();
-
-/**
- * logging out after clicking on #logout
- */
-(()=>{
+  /**
+   * logging out after clicking on #logout
+   */
   document.getElementById('logout').addEventListener('click',()=>{
     base.unauth();
   });
