@@ -5,12 +5,15 @@ html(lang="en")
   body.dev
     p This is the firebase data, look at <code>firebase.js</code> to see how it works.
     form
-      fieldset#login
-        legend logging in
-        input(type="button", value="login with facebook")#facebook
-        input(type="button", value="login with google")#google
-        input(type="button", value="login with twitter")#twitter
-        input(type="button", value="logout")#logout
+      fieldset#auth
+        fieldset#login
+          legend log in
+          input(type="button", value="login with facebook")#facebook
+          input(type="button", value="login with google")#google
+          input(type="button", value="login with twitter")#twitter
+        fieldset#logout
+          legend log out
+          input(type="button", value="logout")
       fieldset#pulse(disabled)
         legend test pulse
         label(for="latitude") latitude
@@ -23,13 +26,9 @@ html(lang="en")
         input(type="text", name="time")
         label(for="type") type
         input(type="text", name="type", value="checkin")
-        label(for="user") user
-        input(type="text", name="user", value="test-user")
         input(type="submit")
       fieldset#create-user(disabled)
-        legend test user
-        label(for="name") name
-        input(type="text", name="name")
+        legend add yourself to a company
         label(for="employee") employee of
         input(type="text", name="employee")
         label(for="employer") employer of

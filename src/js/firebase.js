@@ -95,28 +95,32 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
  * logging in and out
  */
 (()=>{
+
+  /**
+   * enable all fieldsets except the login form
+   * @param {boolean} login true if login, false if logout
+   */
+  let enableForms = login=>{
+    let fieldsets = document.querySelectorAll('fieldset');
+    for (let i = fieldsets.length; i--;) {
+      fieldsets[i].disabled = !login;
+    }
+    document.getElementById('login').disabled = login;
+    document.getElementById('auth').disabled = false;
+  };
+
   /**
    * log on logging in and out
    */
   base.onAuth(authData=>{
     if (authData) {
-      console.log('User ' + authData.uid + ' is logged in with ' + authData.provider);
+      console.log('User ' + authData.uid + ' is logged in with ' + authData.provider, authData);
+      enableForms(true);
     } else {
       console.log('User is logged out');
+      enableForms(false);
     }
   });
-
-  /**
-   * enable all fieldsets
-   */
-  let enableForms = ()=>{
-    let fieldsets = document.querySelectorAll('fieldset');
-    for (let set in fieldsets) {
-      if (fieldsets.hasOwnProperty(set)) {
-        set.disabled = false;
-      }
-    }
-  };
 
   /**
    * logging in with any service
@@ -129,7 +133,6 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
         console.log('Login Failed!', error);
       } else {
         console.log('authenticated with: '+authData.uid);
-        enableForms();
       }
     });
   };
