@@ -123,6 +123,7 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
    * @param {string} service the auth service [google,twitter,facebook]
    */
   let auth = service => {
+    console.log('logging in');
     base.authWithOAuthPopup(service, function(error, authData) {
       if (error) {
         console.log('Login Failed!', error);
@@ -144,6 +145,7 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
    * logging out after clicking on #logout
    */
   document.getElementById('logout').addEventListener('click',()=>{
+    console.log('logging out');
     base.unauth();
   });
 })();

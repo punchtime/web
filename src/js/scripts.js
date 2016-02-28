@@ -9,16 +9,16 @@
  * @param {string} trackingCode The google analytics tracking code like UA-XXXXXXXX-X
  */
 /* jshint ignore:start */
-((trackingCode)=>{
-  /* google analytics */
-  window.ga = window.ga || function(){
-      (ga.q = ga.q||[]).push(arguments);
-  };
-  ga.l = +new Date;
-  // fill in analytics
-  ga('create', trackingCode, 'auto');
-  ga('send', 'pageview');
-})('UA-XXXXXXXX-X');
+// ((trackingCode)=>{
+//   /* google analytics */
+//   window.ga = window.ga || function(){
+//       (ga.q = ga.q||[]).push(arguments);
+//   };
+//   ga.l = +new Date;
+//   // fill in analytics
+//   ga('create', trackingCode, 'auto');
+//   ga('send', 'pageview');
+// })('UA-XXXXXXXX-X');
 /* jshint ignore:end */
 
 /**
