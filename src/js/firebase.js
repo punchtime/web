@@ -31,13 +31,29 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
   form.querySelector('[type="submit"]').addEventListener('click',e=>{
     e.preventDefault();
-    base.child('pulses').push({
+    let pulseUrl = base.child('pulses').push({
       'latitude': form.querySelector('[name="latitude"]').value,
       'longitude': form.querySelector('[name="longitude"]').value,
       'note': form.querySelector('[name="note"]').value,
       'time': form.querySelector('[name="time"]').value,
       'type': form.querySelector('[name="type"]').value,
       'user': base.getAuth().uid
+    });
+
+    /**
+     * get the reference from the url
+     * @param  {string} url the exact url of a push
+     * @return {string}     the id of that push
+     */
+    let getID = url => {
+      return url.substr(url.indexOf('/-')+1);
+    };
+
+    /**
+     * Also pushed the reference to this pulse to the corresponding user
+     */
+    base.child('users').child(base.getAuth().uid).child('pulses').push({
+      [getID(pulseUrl)]: true
     });
     //todo: also push to the array of pulses of that user
     //this won't be possible in this version of the test, because users aren't authenticated
@@ -128,7 +144,7 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
       case 'google':
         return authData.google.displayName;
     }
-  }
+  };
 
   /**
    * logging in with any service
@@ -142,7 +158,7 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
       } else {
         // make a new account if it didn't exist yet
         base.child('users').child(authData.uid).once('value', snapshot=>{
-          if (snapshot.val() === null) {
+          if (!snapshot.exists()) {
             base.child('users').child(authData.uid).set({
               provider: authData.provider,
               name: getName(authData)
