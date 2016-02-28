@@ -11,10 +11,10 @@ body {
 form {
   display: flex;
   flex-wrap: wrap;
-  flex: 1 1 15rem;
   justify-content: space-between;
 
   fieldset {
+    flex: 1 0 11rem;
     padding: .2em;
     margin: .2em;
     border: 1px solid #ccc;
@@ -30,6 +30,10 @@ form {
     margin: .3rem auto;
     width: 100%;
   }
+}
+
+:disabled {
+  cursor: not-allowed;
 }
 
 table {
