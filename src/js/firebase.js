@@ -41,19 +41,10 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     });
 
     /**
-     * get the reference from the url
-     * @param  {string} url the exact url of a push
-     * @return {string}     the id of that push
-     */
-    let getID = url => {
-      return url.substr(url.indexOf('/-')+1);
-    };
-
-    /**
      * Also pushed the reference to this pulse to the corresponding user
      */
-    base.child('users').child(base.getAuth().uid).child('pulses').push({
-      [getID(pulseUrl)]: true
+    base.child('users').child(base.getAuth().uid).child('pulses').update({
+      [pulseUrl.ref().key()]: true
     });
     //todo: also push to the array of pulses of that user
     //this won't be possible in this version of the test, because users aren't authenticated
