@@ -29,7 +29,19 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     console.warn('ERROR(' + err.code + '): ' + err.message);
   });
 
+  let getEmployer = employer=>{
+    base.child('companies').orderByChild('name').equalTo(employer).once('value',snap=>{
+      return Object.keys(snap.val())[0];
+    });
+  };
+
   form.querySelector('[type="submit"]').addEventListener('click',e=>{
+    let employer;
+
+    base.child('companies').orderByChild('name').equalTo(form.querySelector('[name="employer"]').value).once('value',snap=>{
+      employer = Object.keys(snap.val())[0];
+    });
+
     e.preventDefault();
     let pulseUrl = base.child('pulses').push({
       'latitude': form.querySelector('[name="latitude"]').value,
@@ -37,7 +49,8 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
       'note': form.querySelector('[name="note"]').value,
       'time': form.querySelector('[name="time"]').value,
       'type': form.querySelector('[name="type"]').value,
-      'user': base.getAuth().uid
+      'employer': employer,
+      'employee': base.getAuth().uid
     });
 
     /**
@@ -46,10 +59,6 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     base.child('users').child(base.getAuth().uid).child('pulses').update({
       [pulseUrl.ref().key()]: true
     });
-    //todo: also push to the array of pulses of that user
-    //this won't be possible in this version of the test, because users aren't authenticated
-    //Consider that disk space is cheap, but a user’s time is not
-    //source for that: https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
   });
 })();
 
@@ -63,30 +72,42 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     e.preventDefault();
     let employer = form.querySelector('[name="employer"]').value;
     let employee = form.querySelector('[name="employee"]').value;
+
     if (employee) {
-      //base.getAuth().uid
-      base.child('users').child('-KBUKRyWeWruegpnzZYI').on('value', snapshot=> {
-        console.log(snapshot);
+      base.child('companies').orderByChild('name').equalTo(employee).once('value',snap=>{
+        base.child('companies').child(Object.keys(snap.val())[0]).child('employees').update({
+          [base.getAuth().uid]:true
+        });
+        base.child('users').child(base.getAuth().uid).child('employee').update({
+          [Object.keys(snap.val())[0]]:true
+        });
       });
-      // base.child('users').push({
-      //   'name': form.querySelector('[name="name"]').value,
-      //   'employee': {
-      //     [employee]:true
-      //   }
-      // });
     }
     if (employer) {
-      // base.child('users').push({
-      //   'name': form.querySelector('[name="name"]').value,
-      //   'employer': {
-      //     [employer]:true
-      //   }
-      // });
+      base.child('companies').orderByChild('name').equalTo(employer).once('value',snap=>{
+        base.child('companies').child(Object.keys(snap.val())[0]).child('employers').update({
+          [base.getAuth().uid]:true
+        });
+        base.child('users').child(base.getAuth().uid).child('employer').update({
+          [Object.keys(snap.val())[0]]:true
+        });
+      });
     }
-    //todo: also push the new user to the array of users of his company
-    //this won't be possible in this version of the test, because users aren't authenticated
-    //Consider that disk space is cheap, but a user’s time is not
-    //source for that: https://www.firebase.com/blog/2013-04-12-denormalizing-is-normal.html
+  });
+})();
+
+/**
+ * form for adding a company
+ */
+(()=>{
+  let form = document.getElementById('add-company');
+
+  form.querySelector('[type="submit"]').addEventListener('click',e=>{
+    e.preventDefault();
+    base.child('companies').push({
+      'name': form.querySelector('[name="name"]').value,
+      'tier': form.querySelector('[name="tier"]').value
+    });
   });
 })();
 

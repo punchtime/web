@@ -26,6 +26,8 @@ html(lang="en")
         input(type="text", name="time")
         label(for="type") type
         input(type="text", name="type", value="checkin")
+        label(for="employer") employer (name)
+        input(type="text", name="employer")
         input(type="submit")
       fieldset#add-roles(disabled)
         legend add yourself to a company
@@ -33,6 +35,13 @@ html(lang="en")
         input(type="text", name="employee")
         label(for="employer") employer of
         input(type="text", name="employer")
+        input(type="submit")
+      fieldset#add-company(disabled)
+        legend add a company
+        label(for="name") name
+        input(type="text", name="name")
+        label(for="tier") tier
+        input(type="text", name="tier", value="free")
         input(type="submit")
     #table
     script(src="/src/js/firebase.js")
