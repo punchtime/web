@@ -37,7 +37,7 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
       'note': form.querySelector('[name="note"]').value,
       'time': form.querySelector('[name="time"]').value,
       'type': form.querySelector('[name="type"]').value,
-      'user': form.querySelector('[name="user"]').value
+      'user': base.getAuth().uid
     });
     //todo: also push to the array of pulses of that user
     //this won't be possible in this version of the test, because users aren't authenticated
@@ -47,42 +47,34 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 })();
 
 /**
- * Adding firebase.push() to the 'create a user' form
- * it's kinda messy, should be fixed
+ * Add yourself to certain companies as employee or employer
  */
 (()=>{
-  let form = document.getElementById('create-user');
+  let form = document.getElementById('add-roles');
 
   form.querySelector('[type="submit"]').addEventListener('click',e=>{
     e.preventDefault();
     let employer = form.querySelector('[name="employer"]').value;
     let employee = form.querySelector('[name="employee"]').value;
     if (employee) {
-      base.child('users').push({
-        'name': form.querySelector('[name="name"]').value,
-        'employee': {
-          [employee]:true
-        }
+      //base.getAuth().uid
+      base.child('users').child('-KBUKRyWeWruegpnzZYI').on('value', snapshot=> {
+        console.log(snapshot);
       });
+      // base.child('users').push({
+      //   'name': form.querySelector('[name="name"]').value,
+      //   'employee': {
+      //     [employee]:true
+      //   }
+      // });
     }
     if (employer) {
-      base.child('users').push({
-        'name': form.querySelector('[name="name"]').value,
-        'employer': {
-          [employer]:true
-        }
-      });
-    }
-    if (employer && employee) {
-      base.child('users').push({
-        'name': form.querySelector('[name="name"]').value,
-        'employee': {
-          [employee]:true
-        },
-        'employer': {
-          [employer]:true
-        }
-      });
+      // base.child('users').push({
+      //   'name': form.querySelector('[name="name"]').value,
+      //   'employer': {
+      //     [employer]:true
+      //   }
+      // });
     }
     //todo: also push the new user to the array of users of his company
     //this won't be possible in this version of the test, because users aren't authenticated
@@ -114,13 +106,29 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
    */
   base.onAuth(authData=>{
     if (authData) {
-      console.log('User ' + authData.uid + ' is logged in with ' + authData.provider, authData);
+      console.log('User ' + authData.uid + ' is logged in with ' + authData.provider);
       enableForms(true);
     } else {
       console.log('User is logged out');
       enableForms(false);
     }
   });
+
+  /**
+   * get name from authData
+   */
+  let getName = authData => {
+    switch(authData.provider) {
+      case 'password':
+        return authData.password.email.replace(/@.*/, '');
+      case 'twitter':
+        return authData.twitter.displayName;
+      case 'facebook':
+        return authData.facebook.displayName;
+      case 'google':
+        return authData.google.displayName;
+    }
+  }
 
   /**
    * logging in with any service
@@ -132,7 +140,15 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
       if (error) {
         console.log('Login Failed!', error);
       } else {
-        console.log('authenticated with: '+authData.uid);
+        // make a new account if it didn't exist yet
+        base.child('users').child(authData.uid).once('value', snapshot=>{
+          if (snapshot.val() === null) {
+            base.child('users').child(authData.uid).set({
+              provider: authData.provider,
+              name: getName(authData)
+            });
+          }
+        });
       }
     });
   };
