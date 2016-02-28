@@ -29,12 +29,6 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     console.warn('ERROR(' + err.code + '): ' + err.message);
   });
 
-  let getEmployer = employer=>{
-    base.child('companies').orderByChild('name').equalTo(employer).once('value',snap=>{
-      return Object.keys(snap.val())[0];
-    });
-  };
-
   form.querySelector('[type="submit"]').addEventListener('click',e=>{
     let employer;
 
