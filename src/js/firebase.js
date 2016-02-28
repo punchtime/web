@@ -136,9 +136,9 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
   /**
    * adding event listeners to the log in buttons
    */
-  document.getElementById('google').addEventListener('click',service('google'));
-  document.getElementById('facebook').addEventListener('click',service('facebook'));
-  document.getElementById('twitter').addEventListener('click',service('twitter'));
+  document.getElementById('google').addEventListener('click',auth('google'));
+  document.getElementById('facebook').addEventListener('click',auth('facebook'));
+  document.getElementById('twitter').addEventListener('click',auth('twitter'));
 
   /**
    * logging out after clicking on #logout
