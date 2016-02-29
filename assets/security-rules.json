@@ -3,7 +3,7 @@
     "users": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
-        ".write": "auth != null && auth.uid === $uid""auth != null && auth.uid === $uid"
+        ".write": "auth != null && auth.uid === $uid"
       }
     },
     "pulses": {
@@ -17,6 +17,7 @@
       "$company": {
         ".read": "auth != null && $company.employees **contains** auth.uid",
         ".write": "auth != null && $company.employees **contains** auth.uid",
+        ".validate": "newData().val === 'true'"
       }
     }
   }
