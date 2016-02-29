@@ -10,13 +10,13 @@
       "$pulse": {
         ".read": "auth != null && auth.uid === $pulse.name",
         ".write": "auth != null && auth.uid === $pulse.name",
-        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.companies.**auth.uid**.employee **contains** newData.val().employer"
+        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.parent.child('companies').$company.child('employee') **contains** newData.val().employer"
       }
     },
     "companies": {
       "$company": {
-        ".read": "auth != null && $company.employees **contains** auth.uid",
-        ".write": "auth != null && $company.employees **contains** auth.uid",
+        ".read": "auth != null && ( $company.child('employees') **contains** auth.uid || $company.child('employers') **contains** auth.uid )",
+        ".write": "auth != null && ( $company.child('employees') **contains** auth.uid || $company.child('employers') **contains** auth.uid )",
         ".validate": "newData().val === 'true'"
       }
     }
