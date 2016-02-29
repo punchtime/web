@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid""auth != null && auth.uid === $uid"
+      }
+    },
+    "pulses": {
+      "$pulse": {
+        ".read": "auth != null && auth.uid === $pulse.name",
+        ".write": "auth != null && auth.uid === $pulse.name",
+        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.companies.**auth.uid**.employee **contains** newData.val().employer"
+      }
+    },
+    "companies": {
+      "$company": {
+        ".read": "auth != null && $company.employees **contains** auth.uid",
+        ".write": "auth != null && $company.employees **contains** auth.uid",
+      }
+    }
+  }
+}
