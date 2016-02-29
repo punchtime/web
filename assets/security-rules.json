@@ -10,7 +10,7 @@
       "$pulse": {
         ".read": "auth != null && auth.uid === $pulse.name",
         ".write": "auth != null && auth.uid === $pulse.name",
-        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.parent.child('companies').$company.child('employee') **contains** newData.val().employer"
+        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.parent().child('companies').$company.child('employee') **contains** newData.child('employer').val()"
       }
     },
     "companies": {
