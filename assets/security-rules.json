@@ -15,8 +15,9 @@
     },
     "companies": {
       "$company": {
-        ".read": "auth != null && ( data.child('employees').child(auth.uid).exists()|| data.child('employers').child(auth.uid).exists() )",
-        ".write": "auth != null && ( data.child('employees').child(auth.uid).exists() || data.child('employers').child(auth.uid).exists() )"
+        ".read": "auth != null",
+        ".write": "auth != null",
+        ".validate": "newData.child('employees').key() == auth.uid || newData.child('employers').key() == auth.uid "
       }
     }
   }

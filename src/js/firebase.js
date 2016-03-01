@@ -239,11 +239,31 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
             },(error, authData)=> {
               if (error) {
                 console.log('Login Failed!', error);
-              } else {}
+              } else {
+                // make a new account if it didn't exist yet
+                base.child('users').child(authData.uid).once('value', snapshot=>{
+                  if (!snapshot.exists()) {
+                    base.child('users').child(authData.uid).set({
+                      provider: authData.provider,
+                      name: getName(authData)
+                    });
+                  }
+                });
+              }
             });
           }
         });
-      } else {}
+      } else {
+        // make a new account if it didn't exist yet
+        base.child('users').child(authData.uid).once('value', snapshot=>{
+          if (!snapshot.exists()) {
+            base.child('users').child(authData.uid).set({
+              provider: authData.provider,
+              name: getName(authData)
+            });
+          }
+        });
+      }
     });
   });
 
