@@ -8,16 +8,15 @@
     },
     "pulses": {
       "$pulse": {
-        ".read": "auth != null && auth.uid === $pulse.name",
-        ".write": "auth != null && auth.uid === $pulse.name",
-        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.parent().child('companies').$company.child('employee') **contains** newData.child('employer').val()"
+        ".read": "auth != null && auth.uid === data.child('name').val()",
+        ".write": "auth != null && auth.uid === data.child('name').val()",
+        ".validate": "newData.hasChildren(['name', 'time', 'employer', 'type']) && data.parent().child('companies').child('employee').child(newData.child('employer').val()).exists()"
       }
     },
     "companies": {
       "$company": {
-        ".read": "auth != null && ( $company.child('employees') **contains** auth.uid || $company.child('employers') **contains** auth.uid )",
-        ".write": "auth != null && ( $company.child('employees') **contains** auth.uid || $company.child('employers') **contains** auth.uid )",
-        ".validate": "newData().val === 'true'"
+        ".read": "auth != null && ( data.child('employees').child(auth.uid).exists()|| data.child('employers').child(auth.uid).exists() )",
+        ".write": "auth != null && ( data.child('employees').child(auth.uid).exists() || data.child('employers').child(auth.uid).exists() )"
       }
     }
   }
