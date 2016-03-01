@@ -6,7 +6,7 @@ var gulp            = require('gulp'),
     browserify      = require('gulp-browserify'),
     cssnano         = require('gulp-cssnano'),
     imagemin        = require('gulp-imagemin'),
-    notify          = require('gulp-notify'),
+    // notify          = require('gulp-notify'),
     jade            = require('gulp-jade'),
     jshint          = require('gulp-jshint'),
     sass            = require('gulp-sass'),
@@ -55,10 +55,10 @@ gulp.task('images', () => {
 
 gulp.task('sass', () => {
   return gulp.src([SRC+'/scss/**/*.scss', '!./node_modules/**', '!./dist/**'])
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass().on('error', sass.logError)) //notify(...) and continue
     .pipe(autoprefixer({
-      browsers: ['>1%'],
-      cascade: false
+      browsers: ['>0.5%'],
+      cascade: true
     }))
     .pipe(cssnano())
     .pipe(gulp.dest(DIST+'/src/css'));
