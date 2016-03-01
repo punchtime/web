@@ -6,6 +6,7 @@ var gulp            = require('gulp'),
     browserify      = require('gulp-browserify'),
     cssnano         = require('gulp-cssnano'),
     imagemin        = require('gulp-imagemin'),
+    notify          = require('gulp-notify'),
     jade            = require('gulp-jade'),
     jshint          = require('gulp-jshint'),
     sass            = require('gulp-sass'),
@@ -27,7 +28,7 @@ gulp.task('scripts',() => {
     .pipe(browserify({
       insertGlobals : true
     }))
-    .pipe(uglify().on('error', gutil.log))
+    .pipe(uglify().on('error', gutil.log)) //notify(...) and continue
     .pipe(gulp.dest(DIST+'/src/js'));
 });
 
