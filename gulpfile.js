@@ -57,8 +57,7 @@ gulp.task('sass', () => {
   return gulp.src([SRC+'/scss/**/*.scss', '!./node_modules/**', '!./dist/**'])
     .pipe(sass().on('error', sass.logError)) //notify(...) and continue
     .pipe(autoprefixer({
-      browsers: ['>0.5%'],
-      cascade: true
+      browsers: ['>0.5%']
     }))
     .pipe(cssnano())
     .pipe(gulp.dest(DIST+'/src/css'));
