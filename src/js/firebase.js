@@ -2,8 +2,8 @@
  * Firebase setup
  */
 // require('./scripts');
-const Firebase = require('firebase');
-const tableify = require('tableify');
+import Firebase from 'firebase';
+import tableify from 'tableify';
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
 /**
