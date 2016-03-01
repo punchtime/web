@@ -1,8 +1,8 @@
 /**
  * import statements
  */
-import Firebase from 'firebase';
-import tableify from 'tableify';
+let Firebase = require('firebase');
+let tableify = require('tableify');
 
 /**
  * Firebase setup
@@ -217,6 +217,34 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
   });
   document.getElementById('twitter').addEventListener('click',()=>{
     auth('twitter');
+  });
+
+  document.getElementById('email-button').addEventListener('click',()=>{
+    base.authWithPassword({
+      email    : document.querySelector('[name="email"]').value,
+      password : document.querySelector('[name="password"]').value
+    },(error, authData)=> {
+      if (error) {
+        console.log('Login Failed!', error);
+        base.createUser({
+          email    : document.querySelector('[name="email"]').value,
+          password : document.querySelector('[name="password"]').value
+        },(error, authData)=> {
+          if (error) {
+            console.log('User creation failed!', error);
+          } else {
+            base.authWithPassword({
+              email    : document.querySelector('[name="email"]').value,
+              password : document.querySelector('[name="password"]').value
+            },(error, authData)=> {
+              if (error) {
+                console.log('Login Failed!', error);
+              } else {}
+            });
+          }
+        });
+      } else {}
+    });
   });
 
   /**
