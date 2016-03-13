@@ -27,3 +27,42 @@ html {
   background-color: $color-light;
   color: $color-dark;
 }
+
+.inline {
+  display: inline-block;
+}
+
+button, input[type=button], input[type=submit] {
+  font-size: 1em;
+  appearance: none;
+  background-color: $color-accent;
+  color: $color-light;
+  border: 1px solid $color-accent;
+  user-select: none;
+  border-radius:.2em;
+  padding: .2em;
+  transition: all ease .2s;
+
+  &:active {
+    color: $color-dark;
+    background-color: transparent;
+  }
+
+  &:focus {
+    color: $color-dark;
+    background-color: transparent;
+    border: 2px solid $color-accent;
+  }
+}
+
+input {
+  font-size: 1em;
+  border: none;
+  padding: .2em;
+  border-bottom: 1px solid currentColor;
+
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid currentColor;
+  }
+}

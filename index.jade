@@ -8,9 +8,21 @@ html(lang="en")
         h1 punchtime
         p simple timekeeping away from office
         p coming soon
+      a(href="#info", title="go to the next section").full--arrow ↓
+    .full.full__info#info
+      .full--content
+        h2 Reducing friction
+        p Punchtime uses your location when it needs it to give a clear overview of where you've been.
+        h2 Useable by everyone
+        p From painters to electricians, everyone who doesn't work an office job will be able to use it.
       a(href="#footer", title="go to the next section").full--arrow ↓
     footer.full.full__footer#footer
       .full--content
+        p find us on #[a(href="https://twitter.com/punchtimeio") twitter]
+        p join our mailing list:
+          form(action="#").inline
+            input(type="email", name="email" placeholder="your@email.com")
+            input(type="submit", value="subscribe")
         p created as a second-year project for #[a(href="http://www.odisee.be") Odisee] by #[a(href="https://haroen.me") Haroen Viaene], #[a(href="https://weyts.xyz") Arnaud Weyts] and #[a(href="https://eliasmei.re") Elias Meire].
         p all code is open source and visible at #[a(href="https://github.com/punchtime") github.com/punchtime].
     script(src="src/js/index.js")
