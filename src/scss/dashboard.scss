@@ -5,9 +5,31 @@
 
 @import 'development';
 
+body {
+  display: flex;
+  flex-direction: column;
+
+  section {
+    margin: 1em;
+  }
+}
+
 .header {
   background-color: $color-accent;
   display: flex;
   padding: 1em;
   justify-content: space-between;
+
+  .header--item {
+    font-size: 1.5em;
+  }
+
+  img {
+    height: 1em;
+  }
+}
+
+.employee-container {
+  display: flex;
+  flex-wrap: wrap;
 }
