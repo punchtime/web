@@ -1,0 +1,13 @@
+/**
+ * Styles for the employer dashboard
+ * @author Haroen Viaene <hello@haroen.me>
+ */
+
+@import 'development';
+
+.header {
+  background-color: $color-accent;
+  display: flex;
+  padding: 1em;
+  justify-content: space-between;
+}

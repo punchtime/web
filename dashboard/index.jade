@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  - var stylesheet = '/src/css/dashboard.css'
+  include ../includes/head.jade
+  body.dev
+    section.header
+      h1
+        a(href="/")
+          img(src="/src/img/favicon/favicon-32x32.png", alt="punchtime logo", title="go home")
+      h2 Company Name
+      a(href="settings.html")
+        img(src="/src/img/favicon/favicon-32x32.png", alt="settings", title="settings")
+    //- script(src="/src/js/dashboard.js")
+    script(src="/src/js/scripts.js")
+    include ../includes/foot.jade
