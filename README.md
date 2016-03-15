@@ -40,6 +40,25 @@ See also [CONTRIBUTING.md](CONTRIBUTING.md).
 - [organisation](https://github.com/punchtime/organisation)
 - [Android client](https://github.com/punchtime/android)
 
+## Open source packages used
+
+* <https://github.com/google/material-design-icons/>
+* babel-preset-es2015
+* browser-sync
+* gulp
+* gulp-autoprefixer
+* gulp-babel
+* gulp-browserify
+* gulp-cssnano
+* gulp-imagemin
+* gulp-jade
+* gulp-jshint
+* gulp-sass
+* gulp-uglify
+* gulp-util
+* jshint
+* jshint-stylish
+
 ## License
 
 Apache License 2.0
