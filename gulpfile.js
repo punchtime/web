@@ -72,6 +72,16 @@ gulp.task('browser-sync', () => {
   browserSync.init({
     server: {
       baseDir: DIST
+    },
+    notify: {
+      styles: {
+        right: 'initial',
+        top: 'initial',
+        bottom: '0',
+        left: '0',
+        borderBottomLeftRadius: 'initial',
+        borderTopRightRadius: '1em'
+      }
     }
   });
 });
