@@ -3,13 +3,7 @@ html(lang="en")
   - var stylesheet = '/src/css/dashboard.css'
   include ../includes/head.jade
   body
-    header.header
-      h1.header--item
-        a(href="/")
-          img(src="/src/img/favicon/favicon-32x32.png", alt="punchtime logo", title="go home")
-      h2.header--item Company Name
-      a(href="settings.html").header--item
-        img(src="/src/img/icons/settings.svg", alt="settings", title="settings")
+    include header.jade
     section.employees
       h1 Employees
       div.employee-container

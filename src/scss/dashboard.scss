@@ -20,6 +20,11 @@ body {
   padding: 1em;
   justify-content: space-between;
 
+  .header--title {
+    color: inherit;
+    text-decoration: none;
+  }
+
   .header--item {
     font-size: 1.5em;
   }
