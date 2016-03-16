@@ -7,22 +7,40 @@ html(lang="en")
     section.employees
       h1 Employees
       div.employee-container
-        div.employee-container--item
-          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe")
-          p John Doe
-          span.status.status__good ok
-        div.employee-container--item
-          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe")
-          p John Doe
-          span.status.status__bad ok
-        div.employee-container--item
-          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe")
-          p John Doe
-          span.status.status__to-confirm ok
-        div.employee-container--item
-          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe")
-          p John Doe
-          span.status.status__bad ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status good").status.status__good ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status bad").status.status__bad ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status to confirm").status.status__to-confirm ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status bad").status.status__bad ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status good").status.status__good ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status bad").status.status__bad ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status to confirm").status.status__to-confirm ok
+        div.employee
+          img(src="/src/img/favicon/favicon-96x96.png", alt="John Doe").employee--image
+          p.employee--name John Doe
+          span(title="status bad").status.status__bad ok
+        //- to be fixed!!!
+        div(class="employee 👻")
     section.overview
       h1 Overview
       div.graph
