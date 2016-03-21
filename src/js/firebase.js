@@ -223,13 +223,13 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
     base.authWithPassword({
       email    : document.querySelector('[name="email"]').value,
       password : document.querySelector('[name="password"]').value
-    },(error, authData)=> {
+    },(error)=> {
       if (error) {
         console.log('Login Failed!', error);
         base.createUser({
           email    : document.querySelector('[name="email"]').value,
           password : document.querySelector('[name="password"]').value
-        },(error, authData)=> {
+        },(error)=> {
           if (error) {
             console.log('User creation failed!', error);
           } else {
