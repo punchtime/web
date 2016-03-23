@@ -1,5 +1,4 @@
-// let d3 = require('d3');
-// d3.timeline = require('d3-timeline');
+// todo: require d3 and d3-timeline
 let Firebase = require('firebase');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
@@ -15,7 +14,7 @@ let addEmployees = employees => {
       employee.classList.add('employee');
 
       let image = document.createElement('img');
-      image.src = "/src/img/favicon/favicon-96x96.png"; //todo real image
+      image.src = "/src/img/favicon/favicon-96x96.png"; //todo: real image
       image.alt = employees[i].name;
       image.classList.add('employee--image');
       employee.appendChild(image);
