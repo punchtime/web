@@ -59,17 +59,32 @@ let getEmployees = (id,myCallback) => {
 getEmployees(company.id,addEmployees);
 
 
-let chart = d3.timeline().stack();
-let testData = [
-  {label: "person a", times: [
-    {"starting_time": 1355752800000, "ending_time": 1355759900000},
-    {"starting_time": 1355767900000, "ending_time": 1355774400000}]},
-  {label: "person b", times: [
-    {"starting_time": 1355759910000, "ending_time": 1355761900000}]},
-  {label: "person c", times: [
-    {"starting_time": 1355761910000, "ending_time": 1355763910000}]},
-];
-let svg = d3.select("#timeline")
-            .append("svg")
-            .attr("width", window.innerWidth - 50)
-            .datum(testData).call(chart);
+let drawChart = () => {
+  let container = document.getElementById('timeline');
+  let chart = new google.visualization.Timeline(container);
+  let dataTable = new google.visualization.DataTable();
+
+  dataTable.addColumn({ type: 'string', id: 'President' });
+  dataTable.addColumn({ type: 'date', id: 'Start' });
+  dataTable.addColumn({ type: 'date', id: 'End' });
+  dataTable.addRows([
+    [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+    [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+    [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
+
+  chart.draw(dataTable);
+}
+google.charts.load('current', {'packages':['timeline']});
+google.charts.setOnLoadCallback(drawChart);
+
+/*
+ * listener on resize to reload graph
+ * Will refresh the graph if there is 250 ms after a resize event
+ */
+var resizeTimer;
+window.addEventListener('resize', function(){
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() {
+    drawChart();
+  }, 250);
+});
