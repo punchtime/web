@@ -26,8 +26,6 @@
     "jshint-stylish": "^2.1.0"
   },
   "dependencies": {
-    "d3": "^3.5.16",
-    "d3-timeline": "^1.0.1",
     "firebase": "^2.4.1",
     "tableify": "^1.0.0"
   }
