@@ -59,7 +59,7 @@ let getEmployees = (id,myCallback) => {
 getEmployees(company.id,addEmployees);
 
 
-let drawChart = function() {
+let drawChart = () => {
   let container = document.getElementById('timeline');
   let chart = new google.visualization.Timeline(container);
   let dataTable = new google.visualization.DataTable();
