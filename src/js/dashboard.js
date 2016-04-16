@@ -20,6 +20,13 @@ if (auth) {
   location.href = '/login/';
 }
 
+let pulses = [
+  ['Haroen Viaene', new Date(2016, 2, 1, 10,  0), new Date(2016, 2, 1, 11,  0)],
+  ['Haroen Viaene', new Date(2016, 2, 1, 11,  5), new Date(2016, 2, 1, 13, 30)],
+  ['Bram Gosseye',  new Date(2016, 2, 2, 14,  0), new Date(2016, 2, 2, 14, 15)],
+  ['Bram Gosseye',  new Date(2016, 2, 2, 14, 30), new Date(2016, 2, 2, 15,  0)]
+];
+
 let addEmployees = employees => {
   for (let i in employees) {
     if (employees.hasOwnProperty(i)) {
@@ -51,6 +58,18 @@ let addEmployees = employees => {
       document.querySelector('.employee-container').appendChild(shadow);
     }
   }
+
+  for (let employee in employees) {
+    if (employees.hasOwnProperty(employee)) {
+      for (let pulse in employees[employee].pulses) {
+        if (employees[employee].pulses.hasOwnProperty(pulse)) {
+          base.child('pulses').child(pulse).once('value',snap=>{
+            console.log([employees[employee].name, new Date(parseInt(snap.val().time))]);
+          });
+        }
+      }
+    }
+  }
 };
 
 let getEmployees = (id,myCallback) => {
@@ -79,10 +98,11 @@ let drawChart = () => {
   dataTable.addColumn({ type: 'string', id: 'employee' });
   dataTable.addColumn({ type: 'date', id: 'Start' });
   dataTable.addColumn({ type: 'date', id: 'End' });
-  dataTable.addRows([
-    [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
-    [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-    [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
+  dataTable.addRows(pulses);
+  // dataTable.addRows([
+  //   [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+  //   [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+  //   [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
 
   chart.draw(dataTable);
 };
