@@ -58,20 +58,33 @@ let getEmployees = (id,myCallback) => {
 
 getEmployees(company.id,addEmployees);
 
+
+let drawChart = function() {
+  let container = document.getElementById('timeline');
+  let chart = new google.visualization.Timeline(container);
+  let dataTable = new google.visualization.DataTable();
+
+  dataTable.addColumn({ type: 'string', id: 'President' });
+  dataTable.addColumn({ type: 'date', id: 'Start' });
+  dataTable.addColumn({ type: 'date', id: 'End' });
+  dataTable.addRows([
+    [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
+    [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+    [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
+
+  chart.draw(dataTable);
+}
 google.charts.load('current', {'packages':['timeline']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        let container = document.getElementById('timeline');
-        let chart = new google.visualization.Timeline(container);
-        let dataTable = new google.visualization.DataTable();
+google.charts.setOnLoadCallback(drawChart);
 
-        dataTable.addColumn({ type: 'string', id: 'President' });
-        dataTable.addColumn({ type: 'date', id: 'Start' });
-        dataTable.addColumn({ type: 'date', id: 'End' });
-        dataTable.addRows([
-          [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
-          [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-          [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
-
-        chart.draw(dataTable);
-      }
+/*
+ * listener on resize to reload graph
+ * Will refresh the graph if there is 250 ms after a resize event
+ */
+var resizeTimer;
+window.addEventListener('resize', function(){
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() {
+    drawChart();
+  }, 250);
+});
