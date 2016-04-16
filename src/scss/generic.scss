@@ -32,6 +32,12 @@ html {
   display: inline-block;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 15em;
+}
+
 button, input[type=button], input[type=submit] {
   font-size: 1em;
   appearance: none;

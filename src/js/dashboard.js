@@ -3,17 +3,22 @@ let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
 let auth = base.getAuth();
 
+const setTitle = () => {
+  document.getElementById('company-name').innerHTML = JSON.parse(localStorage.punchtime).company.name;
+};
+
+// if the localstorage hasn't been set, go to settings
+if (!localStorage.punchtime) {
+  location.href = 'settings.html';
+}
+
 if (auth) {
   console.log('logged in with: '+auth.uid);
+  setTitle();
 } else {
   console.warn('not logged in');
   location.href = '/login/';
 }
-
-let company = {
-  "name": "my-company",
-  "id": "-KBdSPf90dvJCeH3J8m7"
-};
 
 let addEmployees = employees => {
   for (let i in employees) {
@@ -64,15 +69,14 @@ let getEmployees = (id,myCallback) => {
   });
 };
 
-getEmployees(company.id,addEmployees);
-
+getEmployees(JSON.parse(localStorage.punchtime).company.id,addEmployees);
 
 let drawChart = () => {
   let container = document.getElementById('timeline');
   let chart = new google.visualization.Timeline(container);
   let dataTable = new google.visualization.DataTable();
 
-  dataTable.addColumn({ type: 'string', id: 'President' });
+  dataTable.addColumn({ type: 'string', id: 'employee' });
   dataTable.addColumn({ type: 'date', id: 'Start' });
   dataTable.addColumn({ type: 'date', id: 'End' });
   dataTable.addRows([

@@ -6,7 +6,13 @@ html(lang="en")
     include header.jade
     section
       h1 Settings
+      p Welcome&nbsp;
+        span#username
       button#logout log out
+      form#settings
+        label(for="company") Pick the company you want to admin
+        select#company(name="company")
+        input(type="submit")
 
     script(src="/src/js/settings.js")
     script(src="/src/js/scripts.js")

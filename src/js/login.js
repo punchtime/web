@@ -11,6 +11,18 @@ if (auth) {
 }
 
 /**
+ * redirect on good login
+ */
+base.onAuth(authData=>{
+  if (authData) {
+    console.log('logged in with: '+authData.uid);
+    history.go(-1);
+  } else {
+    console.log('not logged in');
+  }
+});
+
+/**
  * logging in and out
  */
 (()=>{

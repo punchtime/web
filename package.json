@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "firebase": "^2.4.1",
+    "form-obj": "^1.0.2",
     "tableify": "^1.0.0"
   }
 }
