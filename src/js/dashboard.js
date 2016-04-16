@@ -1,6 +1,14 @@
-// todo: require d3 and d3-timeline
 let Firebase = require('firebase');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
+
+let auth = base.getAuth();
+
+if (auth) {
+  console.log('logged in with: '+auth.uid);
+} else {
+  console.warn('not logged in');
+  location.href = '/login/';
+}
 
 let company = {
   "name": "my-company",
@@ -73,7 +81,7 @@ let drawChart = () => {
     [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
 
   chart.draw(dataTable);
-}
+};
 google.charts.load('current', {'packages':['timeline']});
 google.charts.setOnLoadCallback(drawChart);
 

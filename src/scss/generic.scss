@@ -41,6 +41,7 @@ button, input[type=button], input[type=submit] {
   user-select: none;
   border-radius:.2em;
   padding: .2em;
+  margin: .2em;
   transition: all ease .2s;
 
   &:active {

@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+  - var stylesheet = '/src/css/login.css'
+  include ../includes/head.jade
+  body.dev
+    h1 Welcome to punchtime
+
+    p Punchtime allows you to track the time of your employees in a simple way. Log in or create an account here, or #[a(href="/") learn more].
+
+    form
+      fieldset#login
+        legend log in
+        input(type="button", value="login with facebook")#facebook
+        input(type="button", value="login with google")#google
+        input(type="button", value="login with twitter")#twitter
+        fieldset#login-email
+          label(for="email") email
+          input(type="email", name="email", placeholder="you@email.com")#email
+          label(for="password") password
+          input(type="password", name="password", placeholder="your password")#password
+          input(type="button", value="login with email")#email-button
+    script(src="/src/js/login.js")
+    script(src="/src/js/scripts.js")
+    include ../includes/foot.jade

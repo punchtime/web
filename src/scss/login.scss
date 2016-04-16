@@ -1,0 +1,33 @@
+/**
+ * Styles for the firebase page.
+ */
+
+@import 'development';
+
+body {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 30em ;
+}
+
+h1 {
+  margin: 2em;
+  transition: margin .2s ease;
+  @media (max-height: 600px) {
+    margin: 1em;
+  }
+}
+
+form, fieldset {
+  border: none;
+  display: flex;
+  margin: 2em auto;
+  transition: margin .2s ease;
+  @media (max-height: 600px) {
+    margin: 1em auto;
+  }
+
+  [type=button] {
+    margin: .2em auto;
+  }
+}
