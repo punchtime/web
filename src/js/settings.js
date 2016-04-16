@@ -9,3 +9,8 @@ if (auth) {
   console.warn('not logged in');
   location.href = '/login/';
 }
+
+document.getElementById('logout').addEventListener('click',()=>{
+  base.unauth();
+  location.href = '/login/';
+});
