@@ -5,7 +5,7 @@ let auth = base.getAuth();
 
 if (auth) {
   console.log('logged in with: '+auth.uid);
-  history.go(-1);
+  location.href = '../dashboard/';
 } else {
   console.log('not logged in');
 }
