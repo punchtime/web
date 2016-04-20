@@ -1,3 +1,55 @@
+// HTML Escape helper utility
+var util = (function() {
+  // Thanks to Andrea Giammarchi
+  var
+    reEscape = /[&<>'"]/g,
+    reUnescape = /&(?:amp|#38|lt|#60|gt|#62|apos|#39|quot|#34);/g,
+    oEscape = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    },
+    oUnescape = {
+      '&amp;': '&',
+      '&#38;': '&',
+      '&lt;': '<',
+      '&#60;': '<',
+      '&gt;': '>',
+      '&#62;': '>',
+      '&apos;': "'",
+      '&#39;': "'",
+      '&quot;': '"',
+      '&#34;': '"'
+    },
+    fnEscape = function(m) {
+      return oEscape[m];
+    },
+    fnUnescape = function(m) {
+      return oUnescape[m];
+    },
+    replace = String.prototype.replace;
+  return (Object.freeze || Object)({
+    escape: function escape(s) {
+      return replace.call(s, reEscape, fnEscape);
+    },
+    unescape: function unescape(s) {
+      return replace.call(s, reUnescape, fnUnescape);
+    }
+  });
+}());
+
+// Tagged template function
+function html(pieces) {
+  var result = pieces[0];
+  var substitutions = [].slice.call(arguments, 1);
+  for (var i = 0; i < substitutions.length; ++i) {
+    result += util.escape(substitutions[i]) + pieces[i + 1];
+  }
+  return result;
+};
+
 let Firebase = require('firebase');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
@@ -20,77 +72,46 @@ if (auth) {
   location.href = '/login/';
 }
 
-let pulses = [
-  ['Haroen Viaene', new Date(2016, 2, 1, 10,  0), new Date(2016, 2, 1, 11,  0)],
-  ['Haroen Viaene', new Date(2016, 2, 1, 11,  5), new Date(2016, 2, 1, 13, 30)],
-  ['Bram Gosseye',  new Date(2016, 2, 2, 14,  0), new Date(2016, 2, 2, 14, 15)],
-  ['Bram Gosseye',  new Date(2016, 2, 2, 14, 30), new Date(2016, 2, 2, 15,  0)]
-];
+let pulses = []; // the graph is made from this object
 
-let addEmployees = employees => {
-  for (let i in employees) {
-    if (employees.hasOwnProperty(i)) {
-      let employee = document.createElement('div');
-      employee.classList.add('employee');
-
-      let image = document.createElement('img');
-      image.src = "/src/img/favicon/favicon-96x96.png"; //todo: real image
-      image.alt = employees[i].name;
-      image.classList.add('employee--image');
-      employee.appendChild(image);
-
-      let name = document.createElement('p');
-      name.classList.add('employee--name');
-      name.innerHTML = employees[i].name;
-      employee.appendChild(name);
-
-      let status = document.createElement('span');
-      status.title= "status "+/*employees[i].status*/'good';
-      status.classList.add('status');
-      // todo: add status
-      status.classList.add('status__'+/*employees[i].status*/'good');
-      employee.appendChild(status);
-
-      let shadow = document.createElement('div');
-      shadow.classList.add('👻');
-
-      document.querySelector('.employee-container').appendChild(employee);
-      document.querySelector('.employee-container').appendChild(shadow);
-    }
-  }
-
-  for (let employee in employees) {
-    if (employees.hasOwnProperty(employee)) {
-      for (let pulse in employees[employee].pulses) {
-        if (employees[employee].pulses.hasOwnProperty(pulse)) {
-          base.child('pulses').child(pulse).once('value',snap=>{
-            console.log([employees[employee].name, new Date(parseInt(snap.val().time))]);
-          });
+const addEmployee = employee => {
+  for (let pulse in employee.pulses) {
+    if (employee.pulses.hasOwnProperty(pulse)) {
+      base.child('pulses').child(pulse).once('value',snap=>{
+        let name = employee.name,
+            checkin = new Date(parseInt(snap.val().checkin)),
+            checkout;
+        if (snap.val().checkout) {
+          checkout = new Date(parseInt(snap.val().checkout));
+        } else {
+          checkout = new Date();
         }
-      }
+        pulses.push([name, checkin, checkout]);
+        drawChart();
+      });
     }
   }
+
+  let image = '/src/img/favicon/favicon-96x96.png',
+      name = employee.name,
+      status = 'good';
+
+  document.querySelector('.employee-container').innerHTML +=html`
+  <div class="employee"><img src="${image}" alt="${name}" class="employee--image"><p class="employee--name">${name}</p><span title="status ${status}" class="status status__${status}">${status}</span></div><div class="👻"></div>`;
 };
 
-let getEmployees = (id,myCallback) => {
-  let employees = [];
+let getEmployees = (id,callback) => {
 
-  base.child('companies').child(id).child('employees').once('value',snapshot=>{
-    let baseEmployees = snapshot.val();
-    for (let i in baseEmployees) {
-      if (baseEmployees.hasOwnProperty(i)) {
-        base.child('users').child(i).once('value',snap=>{
-          employees.push(snap.val());
-          myCallback(employees);
-        });
-      }
-    }
+  base.child('companies').child(id).child('employees').on('child_added',snapshot=>{
+    base.child('users').child(snapshot.key()).once('value',snap=>{
+      callback(snap.val());
+    });
   });
 };
 
-getEmployees(JSON.parse(localStorage.punchtime).company.id,addEmployees);
+getEmployees(JSON.parse(localStorage.punchtime).company.id,addEmployee);
 
-let drawChart = () => {
+const drawChart = () => {
   let container = document.getElementById('timeline');
   let chart = new google.visualization.Timeline(container);
   let dataTable = new google.visualization.DataTable();
@@ -99,10 +120,6 @@ let drawChart = () => {
   dataTable.addColumn({ type: 'date', id: 'Start' });
   dataTable.addColumn({ type: 'date', id: 'End' });
   dataTable.addRows(pulses);
-  // dataTable.addRows([
-  //   [ 'Washington', new Date(1789, 3, 30), new Date(1797, 2, 4) ],
-  //   [ 'Adams',      new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-  //   [ 'Jefferson',  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
 
   chart.draw(dataTable);
 };
