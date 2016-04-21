@@ -31,12 +31,14 @@ html {
 .inline {
   display: inline-block;
   max-width: initial;
+  text-align: center;
 }
 
 form {
   display: flex;
   flex-direction: column;
   max-width: 15em;
+  margin: 1em 0;
 }
 
 button, input[type=button], input[type=submit] {
