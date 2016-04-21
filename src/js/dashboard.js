@@ -78,21 +78,25 @@ const addEmployee = employee => {
   for (let pulse in employee.pulses) {
     if (employee.pulses.hasOwnProperty(pulse)) {
       base.child('pulses').child(pulse).once('value',snap=>{
-        let name = employee.name,
-            checkin = new Date(parseInt(snap.val().checkin)),
-            checkout;
-        if (snap.val().checkout && snap.val().checkout !== 0) {
-          checkout = new Date(parseInt(snap.val().checkout));
-        } else {
-          checkout = new Date();
+        try {
+          let name = employee.name,
+              checkin = new Date(parseInt(snap.val().checkin)),
+              checkout;
+          if (snap.val().checkout && snap.val().checkout !== 0) {
+            checkout = new Date(parseInt(snap.val().checkout));
+          } else {
+            checkout = new Date();
+          }
+          pulses.push([name, checkin, checkout]);
+          drawChart();
+        } catch(e) {
+          console.log(`/pulses/${snap.key()} in /users/${employee.name} has a problem.`);
         }
-        pulses.push([name, checkin, checkout]);
-        drawChart();
       });
     }
   }
 
-  let image = '/src/img/favicon/favicon-96x96.png',
+  let image = employee.image || '/src/img/favicon/favicon-96x96.png',
       name = employee.name,
       status = 'good';
 
