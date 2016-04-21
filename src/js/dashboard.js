@@ -81,7 +81,7 @@ const addEmployee = employee => {
         let name = employee.name,
             checkin = new Date(parseInt(snap.val().checkin)),
             checkout;
-        if (snap.val().checkout) {
+        if (snap.val().checkout && snap.val().checkout !== 0) {
           checkout = new Date(parseInt(snap.val().checkout));
         } else {
           checkout = new Date();
