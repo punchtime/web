@@ -41,7 +41,7 @@ var util = (function() {
 }());
 
 // Tagged template function
-function html(pieces) {
+var html = function(pieces) {
   var result = pieces[0];
   var substitutions = [].slice.call(arguments, 1);
   for (var i = 0; i < substitutions.length; ++i) {
