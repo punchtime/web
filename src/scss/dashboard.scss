@@ -52,13 +52,14 @@ body {
   flex: 1 1 8em;
 
   &--image {
-    border-radius: 100%;
+    border-radius: .5em;
     width: 100%;
     height: auto;
   }
 
   &--name {
     text-align: center;
+    flex-grow: 1;
   }
 }
 
