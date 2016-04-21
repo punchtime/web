@@ -12,6 +12,8 @@ form {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  max-width: initial;
+  flex-direction: row;
 
   fieldset {
     flex: 1 0 11rem;
