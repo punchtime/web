@@ -50,3 +50,26 @@ document.getElementById('settings').addEventListener('submit',e=>{
   localStorage.punchtime = JSON.stringify(settings);
   setTitle();
 });
+
+const addEmail = e => {
+  e.preventDefault();
+  num++;
+  let div = document.createElement('div');
+  div.innerHTML = `<input type="email" placeholder="their@email.com" name="email-${num}" data-num="${num}">`;
+  let button = document.createElement('button');
+  button.type = 'button';
+  button.innerHTML = '+';
+  div.appendChild(button);
+  e.target.parentNode.parentNode.appendChild(div);
+  button.addEventListener('click',addEmail);
+  e.target.parentNode.removeChild(e.target);
+};
+
+let num = 0;
+document.getElementById('add').addEventListener('click',addEmail);
+
+document.getElementById('invite').addEventListener('submit',e=>{
+  e.preventDefault();
+  let form = formObj(e.target);
+  console.log(form);
+});

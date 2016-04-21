@@ -13,6 +13,13 @@ html(lang="en")
         label(for="company") Pick the company you want to admin
         select#company(name="company")
         input(type="submit")
+      form#invite
+        p Invite employees to your team. They'll receive an email instructing how to join your team.
+        formset.inline
+          div
+            input(type="email", placeholder="their@email.com", name="email-0", data-num="0")
+            button#add(type="button") +
+        input(type="submit")
 
     script(src="/src/js/settings.js")
     script(src="/src/js/scripts.js")
