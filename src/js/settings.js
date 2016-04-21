@@ -71,5 +71,11 @@ document.getElementById('add').addEventListener('click',addEmail);
 document.getElementById('invite').addEventListener('submit',e=>{
   e.preventDefault();
   let form = formObj(e.target);
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('POST','http://punchtim.eltanin.uberspace.de/punchtime/invite/');
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify(form));
+
   console.log(form);
 });
