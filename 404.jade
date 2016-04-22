@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  - var stylesheet = '/src/css/404.css'
+  include ./includes/head.jade
+  body.full
+    .full--content
+      a(href="/")
+        img(src="/src/img/icons/logo.svg", alt="punchtime")
+      p this page wasn't found, did you use a wrong link?
+      p find out more about&nbsp;
+        a(href="/") punchtime
+      p log in to the&nbsp;
+        a(href="/dashboard") dashboard
+      p contact us via&nbsp;
+        a(href="https://twitter.com/punchtimeio") twitter

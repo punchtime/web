@@ -1,0 +1,11 @@
+@import 'index';
+
+.full {
+  &--content {
+    align-items: center;
+  }
+}
+
+img {
+  width: 10em;
+}
