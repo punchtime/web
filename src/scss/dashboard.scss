@@ -15,7 +15,7 @@ body {
 }
 
 .header {
-  background-color: $color-accent;
+  background-color: $color-accent-dark;
   display: flex;
   padding: 1em;
   justify-content: space-between;
@@ -92,4 +92,8 @@ body {
   &__good {
     background-color: green;
   }
+}
+
+.footer {
+  display: none;
 }

@@ -7,12 +7,12 @@
 
 body.dev:before {
   content: 'development';
-  color: $color-accent;
+  color: $color-accent-dark;
   position: fixed;
   top: 0;
   left: 0;
-  border-right: 1px solid $color-accent;
-  border-bottom: 1px solid $color-accent;
+  border-right: 1px solid $color-accent-dark;
+  border-bottom: 1px solid $color-accent-dark;
   padding: .2em;
   border-bottom-right-radius: $size-radius-small;
 }
