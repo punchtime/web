@@ -89,5 +89,5 @@ document.getElementById('invite').addEventListener('submit', e => {
   }
 
   e.target.reset();
-  modal('Your employees now got an email with instructions');
+  modal('Your employees now got an email with instructions',()=>{},()=>{});
 });
