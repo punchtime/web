@@ -81,13 +81,14 @@ const addEmployee = employee => {
         try {
           let name = employee.name,
               checkin = new Date(parseInt(snap.val().checkin)),
+              note = snap.val().note,
               checkout;
           if (snap.val().checkout && snap.val().checkout !== 0) {
             checkout = new Date(parseInt(snap.val().checkout));
           } else {
             checkout = new Date();
           }
-          pulses.push([name, checkin, checkout]);
+          pulses.push([name, note, checkin, checkout]);
           drawChart();
         } catch(e) {
           console.log(`/pulses/${snap.key()} in /users/${employee.name} has a problem.`);
@@ -105,7 +106,6 @@ const addEmployee = employee => {
 };
 
 let getEmployees = (id,callback) => {
-
   base.child('companies').child(id).child('employees').on('child_added',snapshot=>{
     base.child('users').child(snapshot.key()).once('value',snap=>{
       callback(snap.val());
@@ -121,11 +121,14 @@ const drawChart = () => {
   let dataTable = new google.visualization.DataTable();
 
   dataTable.addColumn({ type: 'string', id: 'employee' });
+  dataTable.addColumn({ type: 'string', id: 'note' });
   dataTable.addColumn({ type: 'date', id: 'Start' });
   dataTable.addColumn({ type: 'date', id: 'End' });
   dataTable.addRows(pulses);
 
-  chart.draw(dataTable);
+  chart.draw(dataTable,{
+    timeline: { colorByRowLabel: true }
+  });
 };
 google.charts.load('current', {'packages':['timeline']});
 google.charts.setOnLoadCallback(drawChart);
