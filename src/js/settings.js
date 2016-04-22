@@ -82,8 +82,11 @@ document.getElementById('invite').addEventListener('submit', e => {
       });
       base.child('invites').push({
         claimed: 'false',
-        company: JSON.parse(localStorage.punchtime).company.id,
-        email:   form[email]
+        company: {
+          id: JSON.parse(localStorage.punchtime).company.id,
+          name: JSON.parse(localStorage.punchtime).company.name
+        },
+        email: form[email]
       });
     }
   }
