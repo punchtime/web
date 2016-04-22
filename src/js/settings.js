@@ -24,6 +24,7 @@ if (auth) {
 
 document.getElementById('logout').addEventListener('click', () => {
   base.unauth();
+  localStorage.punchtime = '';
   location.href = '/login/';
 });
 
