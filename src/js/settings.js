@@ -1,4 +1,5 @@
 const formObj = require('form-obj');
+const modal = require('modal');
 let Firebase = require('firebase');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
@@ -88,4 +89,5 @@ document.getElementById('invite').addEventListener('submit', e => {
   }
 
   e.target.reset();
+  modal('Your employees now got an email with instructions');
 });

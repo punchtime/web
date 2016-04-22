@@ -28,6 +28,7 @@
   "dependencies": {
     "firebase": "^2.4.1",
     "form-obj": "^1.0.2",
+    "modal": "git+https://github.com/haroenv/modal.git",
     "tableify": "^1.0.0"
   }
 }
