@@ -56,7 +56,7 @@ button, input[type=button], input[type=submit] {
   appearance: none;
   background-color: $color-accent-dark;
   color: $color-light;
-  border: 1px solid currentColor;
+  border: 1px solid $color-light;
   user-select: none;
   border-radius:.2em;
   padding: .2em;
