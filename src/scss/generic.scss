@@ -4,7 +4,8 @@
  * @author Haroen Viaene <hello@haroen.me>
  */
 
-$font-family-general: system, -apple-system, Roboto, sans-serif;
+$font-family-general: Roboto, system, -apple-system, sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
 $size-radius-small: 0.3em;
 $size-radius: 0.5em;
@@ -14,6 +15,7 @@ $size-radius-circle: 50%;
 $color-light: white;
 $color-dark: black;
 $color-accent-dark: #282F3F;
+$color-accent-medium: #3B4358;
 $color-accent-light: #1DE9B6;
 
 * {
