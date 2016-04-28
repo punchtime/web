@@ -49,6 +49,7 @@ body {
 
 .employee {
   @extend %card;
+  cursor: pointer;
   background-color: $color-accent-medium;
   color: $color-light;
   margin: .5em;
@@ -98,6 +99,8 @@ body {
 // styles for overview
 
 .overview {
+  position: fixed;
+  z-index: 2;
   background-color: transparentize($color-accent-dark,0.4);
   backdrop-filter: blur(10px);
   width: 100%;

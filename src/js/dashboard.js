@@ -106,6 +106,50 @@ const addEmployee = employee => {
   empl.innerHTML = html`
   <img src="${image}" alt="${name}" class="employee--image"><p class="employee--name">${name}</p><span title="status ${status}" class="status status__${status}">${status}</span>`;
   document.querySelector('.employee-container').appendChild(empl);
+  empl.addEventListener('click',e=>{
+    let overlay = document.createElement('div');
+    overlay.classList.add('overview');
+    overlay.innerHTML = html`
+<section class="overview--content">
+  <h2 class="overview--title">John Doe</h2>
+  <div class="timeline">
+    <div class="timeline--item timeline--item__day">
+      <h3>Thursay, 28 April</h3>
+    </div>
+    <div class="timeline--item timeline--item__still timeline--item__confirmed">
+      <h4>Werfstraat 131</h4>
+      <div class="duration">
+        <time datetime="2016-04-28T15:15:24+00:00">15:15</time><span class="duration--arrow">→</span>
+        <time datetime="2016-04-28T15:30:24+00:00">15:30</time>
+      </div>
+    </div>
+    <div class="timeline--item timeline--item__travel timeline--item__confirmed">
+      <div class="duration"><span>30 min</span></div>
+    </div>
+    <div class="timeline--item timeline--item__still timeline--item__unconfirmed">
+      <h4>Oudeheerweg 13</h4>
+      <div class="duration">
+        <time datetime="2016-04-28T16:00:24+00:00">16:00</time><span class="duration--arrow">→</span>
+        <time datetime="2016-04-28T16:30:24+00:00">16:30</time>
+      </div>
+    </div>
+    <div class="timeline--item timeline--item__travel timeline--item__unconfirmed">
+      <div class="duration"><span>2 h 30 min</span></div>
+    </div>
+    <div class="timeline--item timeline--item__still timeline--item__confirmed">
+      <h4>Gebroeders Desmetstraat 1</h4>
+      <div class="duration">
+        <time datetime="2016-04-28T18:00:24+00:00">18:00</time><span class="duration--arrow">→</span>
+        <time datetime="2016-04-28T18:32:24+00:00">18:32</time>
+      </div>
+    </div>
+  </div>
+</section>
+    `;
+    // todo: add less hacky
+    console.log(document.body.firstChild.nextSibling);
+    document.body.insertBefore(overlay,document.querySelector('.employees'));
+  })
   let flexfix = document.createElement('div');
   flexfix.classList.add('👻');
   document.querySelector('.employee-container').appendChild(flexfix);
