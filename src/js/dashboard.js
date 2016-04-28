@@ -101,8 +101,14 @@ const addEmployee = employee => {
       name = employee.name,
       status = 'good';
 
-  document.querySelector('.employee-container').innerHTML +=html`
-  <div class="employee"><img src="${image}" alt="${name}" class="employee--image"><p class="employee--name">${name}</p><span title="status ${status}" class="status status__${status}">${status}</span></div><div class="👻"></div>`;
+  let empl = document.createElement('div');
+  empl.classList.add('employee');
+  empl.innerHTML = html`
+  <img src="${image}" alt="${name}" class="employee--image"><p class="employee--name">${name}</p><span title="status ${status}" class="status status__${status}">${status}</span>`;
+  document.querySelector('.employee-container').appendChild(empl);
+  let flexfix = document.createElement('div');
+  flexfix.classList.add('👻');
+  document.querySelector('.employee-container').appendChild(flexfix);
 };
 
 let getEmployees = (id,callback) => {
