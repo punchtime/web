@@ -5,6 +5,9 @@
 
 @import 'development';
 
+$color-status-good: $color-accent-light;
+$color-status-bad: complement($color-accent-light);
+
 body {
   display: flex;
   flex-direction: column;
@@ -83,15 +86,11 @@ body {
   user-select: none;
 
   &__bad {
-    background-color: red;
-  }
-
-  &__to-confirm {
-    background-color: orange;
+    background-color: $color-status-bad;
   }
 
   &__good {
-    background-color: green;
+    background-color: $color-status-good;
   }
 }
 
