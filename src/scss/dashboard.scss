@@ -40,6 +40,8 @@ body {
   color: $color-light;
 }
 
+// employee cards
+
 .employee-container {
   display: flex;
   flex-wrap: wrap;
@@ -67,7 +69,7 @@ body {
   }
 }
 
-// to be fixed!!!!!
+// flexfix
 .\👻 {
   order: 1; // force last item
   flex: 1 0 10em; // same as flexbox children
@@ -92,6 +94,83 @@ body {
     background-color: $color-status-good;
   }
 }
+
+// styles for overview
+
+.overview {
+  background-color: transparentize($color-accent-dark,0.4);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+
+  &--content {
+    background-color: $color-light;
+    max-width: 40rem;
+    margin: 0 auto;
+    @extend %card;
+  }
+
+  &--title {
+    background-color: $color-accent-medium;
+    color: $color-light;
+    padding: 1em;
+    border-right: .5em solid $color-accent-light;
+  }
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  margin: .5em;
+
+  &--item {
+    cursor: pointer;
+
+    h4, .duration {
+      margin: .3em;
+      hyphens: auto;
+      word-break: break-word;
+    }
+
+    &__day {
+      margin: .5em 0;
+    }
+
+    &__still {
+      background-color: $color-accent-medium;
+      color: $color-light;
+      padding: .2em;
+      @extend %card;
+      border-right: solid .5em $color-accent-medium;
+    }
+
+    &__travel {
+      margin: 0;
+      padding: 1em;
+      margin-left: 1em;
+      border-left: solid .2em $color-accent-medium;
+    }
+
+    &__confirmed {
+      border-color: $color-status-good;
+    }
+
+    &__unconfirmed {
+      border-color: $color-status-bad;
+    }
+  }
+}
+
+.duration {
+  display: flex;
+  &--arrow {
+    margin: 0 .5em;
+  }
+}
+
+
+// misc
 
 .footer {
   display: none;
