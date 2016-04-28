@@ -81,8 +81,8 @@ body {
   height: .5em;
   overflow: hidden;
   align-self: flex-end;
-  color: rgba(0,0,0,0);
-  cursor: pointer;
+  color: transparent;
+  // cursor: pointer;
   user-select: none;
 
   &__bad {
