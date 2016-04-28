@@ -97,7 +97,7 @@ const addEmployee = employee => {
     }
   }
 
-  let image = employee.image || '/src/img/favicon/favicon-96x96.png',
+  let image = employee.image || '/src/img/icons/empty.svg',
       name = employee.name,
       status = 'good';
 
