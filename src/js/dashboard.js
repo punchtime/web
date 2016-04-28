@@ -107,9 +107,9 @@ const addEmployee = employee => {
   <img src="${image}" alt="${name}" class="employee--image"><p class="employee--name">${name}</p><span title="status ${status}" class="status status__${status}">${status}</span>`;
   document.querySelector('.employee-container').appendChild(empl);
   empl.addEventListener('click',e=>{
-    let overlay = document.createElement('div');
-    overlay.classList.add('overview');
-    overlay.innerHTML = html`
+    let overview = document.createElement('div');
+    overview.classList.add('overview');
+    overview.innerHTML = html`
 <section class="overview--content">
   <h2 class="overview--title">John Doe</h2>
   <div class="timeline">
@@ -147,8 +147,17 @@ const addEmployee = employee => {
 </section>
     `;
     // todo: add less hacky
-    console.log(document.body.firstChild.nextSibling);
-    document.body.insertBefore(overlay,document.querySelector('.employees'));
+    document.body.insertBefore(overview,document.querySelector('.employees'));
+    overview.addEventListener('click',e=>{
+      if (e.target.classList.contains('overview')) {
+        e.target.parentNode.removeChild(e.target);
+        console.log('remove');
+      } else if (e.target.className.indexOf('__unconfirmed') !== -1 || e.target.parentNode.className.indexOf('__unconfirmed') !== -1) {
+        console.log('confirm');
+      } else if (e.target.className.indexOf('__confirmed') !== -1 || e.target.parentNode.className.indexOf('__confirmed') !== -1) {
+        console.log('unconfirm');
+      }
+    });
   })
   let flexfix = document.createElement('div');
   flexfix.classList.add('👻');
