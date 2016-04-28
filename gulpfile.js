@@ -59,7 +59,12 @@ gulp.task('sass', () => {
     .pipe(autoprefixer({
       browsers: ['>0.5%']
     }))
-    .pipe(cssnano())
+    // the rules here will prevent the animations from being removed
+    .pipe(cssnano({
+      discardUnused: false,
+      reduceIdents: false,
+      mergeIdents: false
+    }))
     .pipe(gulp.dest(DIST+'/src/css'));
 });
 

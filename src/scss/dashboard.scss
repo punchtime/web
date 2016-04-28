@@ -98,7 +98,17 @@ body {
 
 // styles for overview
 
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+
 .overview {
+  animation: fadeIn .3s;
   position: fixed;
   z-index: 2;
   background-color: transparentize($color-accent-dark,0.4);
