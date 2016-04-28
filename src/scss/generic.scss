@@ -68,6 +68,7 @@ button, input[type=button], input[type=submit] {
   &:active,&:focus {
     color: $color-dark;
     background-color: $color-light;
+    border: 1px solid $color-accent-dark;
   }
 
   &:focus {
@@ -76,7 +77,7 @@ button, input[type=button], input[type=submit] {
 }
 
 input {
-  color: $color-light;
+  color: $color-accent-dark;
   font-size: 1em;
   border: none;
   padding: .2em;
@@ -87,6 +88,10 @@ input {
   &:focus {
     outline: none;
     border-bottom: 2px solid currentColor;
+  }
+
+  .dark & {
+    color: $color-light;
   }
 }
 
