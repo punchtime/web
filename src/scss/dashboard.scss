@@ -49,6 +49,7 @@ body {
 
 .employee {
   @extend %card;
+  animation: fadeIn .3s;
   cursor: pointer;
   background-color: $color-accent-medium;
   color: $color-light;
