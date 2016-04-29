@@ -1,3 +1,4 @@
+// todo: put this in its own file and require it
 // HTML Escape helper utility
 var util = (function() {
   // Thanks to Andrea Giammarchi
@@ -74,7 +75,8 @@ if (auth) {
 
 let pulses = []; // the graph is made from this object
 
-const addEmployee = employee => {
+const addEmployee = (employee,id) => {
+  let employeePulses = [];
   for (let pulse in employee.pulses) {
     if (employee.pulses.hasOwnProperty(pulse)) {
       base.child('pulses').child(pulse).once('value',snap=>{
@@ -89,6 +91,15 @@ const addEmployee = employee => {
             checkout = new Date();
           }
           pulses.push([name, note, checkin, checkout]);
+          employeePulses.push({
+            id: snap.key(),
+            latitude: snap.val().latitude,
+            longitude: snap.val().longitude,
+            checkin: snap.val().checkin,
+            checkout: snap.val().checkout,
+            note: snap.val().note,
+            confirmed: snap.val().confirmed,
+          });
           drawChart();
         } catch(e) {
           console.log(`/pulses/${snap.key()} in /users/${employee.name} has a problem.`);
@@ -101,14 +112,25 @@ const addEmployee = employee => {
       name = employee.name,
       status = 'good';
 
+  // todo: async/await the fetching
+  for (let i in employeePulses) {
+    if (employeePulses.hasOwnProperty(i)) {
+      console.log(employeePulses[i]);
+    }
+  }
+
   let empl = document.createElement('div');
   empl.classList.add('employee');
+  // empl.dataset.id = id;
   empl.innerHTML = html`
-  <img src="${image}" alt="${name}" class="employee--image"><p class="employee--name">${name}</p><span title="status ${status}" class="status status__${status}">${status}</span>`;
+<img src="${image}" alt="${name}" class="employee--image">
+<p class="employee--name">${name}</p>
+<span title="status ${status}" class="status status__${status}">${status}</span>`;
   document.querySelector('.employee-container').appendChild(empl);
   empl.addEventListener('click',e=>{
     let overview = document.createElement('div');
     overview.classList.add('overview');
+    // todo: get the right pulses out of the user
     overview.innerHTML = html`
 <section class="overview--content">
   <h2 class="overview--title">John Doe</h2>
@@ -118,6 +140,7 @@ const addEmployee = employee => {
     </div>
     <div class="timeline--item timeline--item__still timeline--item__confirmed">
       <h4>Werfstraat 131</h4>
+      <p class="timeline--item__note">there is some note<p>
       <div class="duration">
         <time datetime="2016-04-28T15:15:24+00:00">15:15</time><span class="duration--arrow">→</span>
         <time datetime="2016-04-28T15:30:24+00:00">15:30</time>
@@ -128,6 +151,7 @@ const addEmployee = employee => {
     </div>
     <div class="timeline--item timeline--item__still timeline--item__unconfirmed">
       <h4>Oudeheerweg 13</h4>
+      <p class="timeline--item__note">this is also a note<p>
       <div class="duration">
         <time datetime="2016-04-28T16:00:24+00:00">16:00</time><span class="duration--arrow">→</span>
         <time datetime="2016-04-28T16:30:24+00:00">16:30</time>
@@ -138,6 +162,7 @@ const addEmployee = employee => {
     </div>
     <div class="timeline--item timeline--item__still timeline--item__confirmed">
       <h4>Gebroeders Desmetstraat 1</h4>
+      <p class="timeline--item__note">Hello, there's a bit written here, because this person kinda liked writing at the point of his checkin.<p>
       <div class="duration">
         <time datetime="2016-04-28T18:00:24+00:00">18:00</time><span class="duration--arrow">→</span>
         <time datetime="2016-04-28T18:32:24+00:00">18:32</time>
@@ -146,10 +171,10 @@ const addEmployee = employee => {
   </div>
 </section>
     `;
-    // todo: add less hacky
     document.body.insertBefore(overview,document.querySelector('.employees'));
     overview.addEventListener('click',e=>{
       if (e.target.classList.contains('overview')) {
+        // todo: make fade out animation work
         //e.target.parentNode.style.webkitAnimation = 'fadeOut .3s';
         // e.target.parentNode.style.animation = 'fadeOut .3s';
         // e.target.parentNode.addEventListener('webkitAnimationEnd',()=>{
@@ -160,8 +185,10 @@ const addEmployee = employee => {
         // });
         console.log('removed');
       } else if (e.target.className.indexOf('__unconfirmed') !== -1 || e.target.parentNode.className.indexOf('__unconfirmed') !== -1) {
+        // todo: actually do this action
         console.log('confirmed');
       } else if (e.target.className.indexOf('__confirmed') !== -1 || e.target.parentNode.className.indexOf('__confirmed') !== -1) {
+        // todo: actually do this action
         console.log('unconfirmed');
       }
     });
@@ -174,7 +201,7 @@ const addEmployee = employee => {
 let getEmployees = (id,callback) => {
   base.child('companies').child(id).child('employees').on('child_added',snapshot=>{
     base.child('users').child(snapshot.key()).once('value',snap=>{
-      callback(snap.val());
+      callback(snap.val(),snap.key());
     });
   });
 };

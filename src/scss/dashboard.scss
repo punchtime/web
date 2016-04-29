@@ -181,6 +181,11 @@ body {
     &__unconfirmed {
       border-color: $color-status-bad;
     }
+
+    &__note {
+      font-size: .8em;
+      font-style: italic;
+    }
   }
 }
 
