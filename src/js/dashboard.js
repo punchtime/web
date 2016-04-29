@@ -174,21 +174,17 @@ const addEmployee = (employee,id) => {
     document.body.insertBefore(overview,document.querySelector('.employees'));
     overview.addEventListener('click',e=>{
       if (e.target.classList.contains('overview')) {
-        // todo: make fade out animation work
-        //e.target.parentNode.style.webkitAnimation = 'fadeOut .3s';
-        // e.target.parentNode.style.animation = 'fadeOut .3s';
-        // e.target.parentNode.addEventListener('webkitAnimationEnd',()=>{
-          e.target.parentNode.removeChild(e.target);
-        // });
-        // e.target.parentNode.addEventListener('animationEnd',()=>{
-          // e.target.parentNode.removeChild(e.target);
-        // });
+        e.target.parentNode.removeChild(e.target);
         console.log('removed');
       } else if (e.target.className.indexOf('__unconfirmed') !== -1 || e.target.parentNode.className.indexOf('__unconfirmed') !== -1) {
         // todo: actually do this action
+        // 1. toggle the class
+        // send to firebase
         console.log('confirmed');
       } else if (e.target.className.indexOf('__confirmed') !== -1 || e.target.parentNode.className.indexOf('__confirmed') !== -1) {
         // todo: actually do this action
+        // 1. toggle the class
+        // send to firebase
         console.log('unconfirmed');
       }
     });
