@@ -133,7 +133,7 @@ const addEmployee = (employee,id) => {
     // todo: get the right pulses out of the user
     overview.innerHTML = html`
 <section class="overview--content">
-  <h2 class="overview--title">John Doe</h2>
+  <h2 class="overview--title">${employee.name}</h2>
   <div class="timeline">
     <div class="timeline--item timeline--item__day">
       <h3>Thursay, 28 April</h3>
