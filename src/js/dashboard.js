@@ -1,57 +1,5 @@
-// todo: put this in its own file and require it
-// HTML Escape helper utility
-var util = (function() {
-  // Thanks to Andrea Giammarchi
-  var
-    reEscape = /[&<>'"]/g,
-    reUnescape = /&(?:amp|#38|lt|#60|gt|#62|apos|#39|quot|#34);/g,
-    oEscape = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    },
-    oUnescape = {
-      '&amp;': '&',
-      '&#38;': '&',
-      '&lt;': '<',
-      '&#60;': '<',
-      '&gt;': '>',
-      '&#62;': '>',
-      '&apos;': "'",
-      '&#39;': "'",
-      '&quot;': '"',
-      '&#34;': '"'
-    },
-    fnEscape = function(m) {
-      return oEscape[m];
-    },
-    fnUnescape = function(m) {
-      return oUnescape[m];
-    },
-    replace = String.prototype.replace;
-  return (Object.freeze || Object)({
-    escape: function escape(s) {
-      return replace.call(s, reEscape, fnEscape);
-    },
-    unescape: function unescape(s) {
-      return replace.call(s, reUnescape, fnUnescape);
-    }
-  });
-}());
-
-// Tagged template function
-var html = function(pieces) {
-  var result = pieces[0];
-  var substitutions = [].slice.call(arguments, 1);
-  for (var i = 0; i < substitutions.length; ++i) {
-    result += util.escape(substitutions[i]) + pieces[i + 1];
-  }
-  return result;
-};
-
 let Firebase = require('firebase');
+let html = require('./html-escaping');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
 let auth = base.getAuth();
@@ -75,7 +23,7 @@ if (auth) {
 
 let pulses = []; // the graph is made from this object
 
-const addEmployee = (employee,id) => {
+const addEmployee = (employee) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
     if (employee.pulses.hasOwnProperty(pulse)) {
@@ -127,7 +75,7 @@ const addEmployee = (employee,id) => {
 <p class="employee--name">${name}</p>
 <span title="status ${status}" class="status status__${status}">${status}</span>`;
   document.querySelector('.employee-container').appendChild(empl);
-  empl.addEventListener('click',e=>{
+  empl.addEventListener('click',()=>{
     let overview = document.createElement('div');
     overview.classList.add('overview');
     // todo: get the right pulses out of the user
@@ -188,7 +136,7 @@ const addEmployee = (employee,id) => {
         console.log('unconfirmed');
       }
     });
-  })
+  });
   let flexfix = document.createElement('div');
   flexfix.classList.add('👻');
   document.querySelector('.employee-container').appendChild(flexfix);
@@ -197,7 +145,7 @@ const addEmployee = (employee,id) => {
 let getEmployees = (id,callback) => {
   base.child('companies').child(id).child('employees').on('child_added',snapshot=>{
     base.child('users').child(snapshot.key()).once('value',snap=>{
-      callback(snap.val(),snap.key());
+      callback(snap.val());
     });
   });
 };
