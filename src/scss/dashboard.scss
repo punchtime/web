@@ -149,7 +149,7 @@ body {
   &--item {
     cursor: pointer;
 
-    h4, .duration {
+    > * {
       margin: .3em;
       hyphens: auto;
       word-break: break-word;
