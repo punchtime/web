@@ -14,6 +14,7 @@ body {
 
   section {
     margin: 1em;
+    overflow: auto;
   }
 }
 
@@ -119,6 +120,8 @@ body {
 .overview {
   animation: fadeIn .3s;
   position: fixed;
+  top: 0;
+  overflow: auto;
   z-index: 2;
   background-color: transparentize($color-accent-dark,0.4);
   backdrop-filter: blur(10px);
