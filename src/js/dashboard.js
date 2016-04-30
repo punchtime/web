@@ -23,6 +23,22 @@ if (auth) {
 
 let pulses = []; // the graph is made from this object
 
+const geocoding = {
+  req: null,
+  init: function() {
+    this.req = new XMLHttpRequest();
+    this.req.addEventListener("load", this.listener);
+  },
+  listener: function() {
+    var a = JSON.parse(this.response).results[0].address_components;
+    console.log(a[1].long_name +' '+ a[0].long_name);
+  },
+  search: function(lat,lon) {
+    this.req.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&key=AIzaSyA8Tawxe7x2cpGiTpvOh35xHe8dUZsjsFg");
+    this.req.send();
+  }
+};
+
 const addEmployee = (employee) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
@@ -38,6 +54,8 @@ const addEmployee = (employee) => {
           } else {
             checkout = new Date();
           }
+          geocoding.init();
+          geocoding.search(snap.val().latitude,snap.val().longitude);
           pulses.push([name, note, checkin, checkout]);
           employeePulses.push({
             id: snap.key(),
@@ -46,7 +64,7 @@ const addEmployee = (employee) => {
             checkin: snap.val().checkin,
             checkout: snap.val().checkout,
             note: snap.val().note,
-            confirmed: snap.val().confirmed,
+            confirmed: snap.val().confirmed
           });
           drawChart();
         } catch(e) {
@@ -55,6 +73,8 @@ const addEmployee = (employee) => {
       });
     }
   }
+
+
 
   let image = employee.image || '/src/img/icons/empty.svg',
       name = employee.name,
