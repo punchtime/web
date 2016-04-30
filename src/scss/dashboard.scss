@@ -151,7 +151,6 @@ body {
   margin: .5em;
 
   &--item {
-    cursor: pointer;
     transition: border-color .3s ease;
 
     > * {
@@ -165,6 +164,7 @@ body {
     }
 
     &__still {
+      cursor: pointer;
       background-color: $color-accent-medium;
       color: $color-light;
       padding: .2em;

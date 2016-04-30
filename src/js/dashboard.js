@@ -146,29 +146,26 @@ const addEmployee = (employee) => {
       if (e.target.classList.contains('overview')) {
         e.target.parentNode.removeChild(e.target);
         console.log('removed');
+        // todo: DRY this code
       } else if (e.target.parentNode.classList.contains('timeline--item__still')) {
         if (e.target.parentNode.classList.contains('timeline--item__unconfirmed')){
           e.target.parentNode.classList.remove('timeline--item__unconfirmed');
           e.target.parentNode.classList.add('timeline--item__confirmed');
           base.child('pulses').child(e.target.parentNode.dataset.pulse).child('confirmed').set('true');
-          console.log('parent confirmed');
         } else if (e.target.parentNode.classList.contains('timeline--item__confirmed')) {
           e.target.parentNode.classList.remove('timeline--item__confirmed');
           e.target.parentNode.classList.add('timeline--item__unconfirmed');
           base.child('pulses').child(e.target.parentNode.dataset.pulse).child('confirmed').set('false');
-          console.log('parent unconfirmed');
         }
       } else if (e.target.classList.contains('timeline--item__still')) {
         if (e.target.classList.contains('timeline--item__unconfirmed')){
           e.target.classList.remove('timeline--item__unconfirmed');
           e.target.classList.add('timeline--item__confirmed');
           base.child('pulses').child(e.target.dataset.pulse).child('confirmed').set('true');
-          console.log('confirmed');
         } else if (e.target.classList.contains('timeline--item__confirmed')) {
           e.target.classList.remove('timeline--item__confirmed');
           e.target.classList.add('timeline--item__unconfirmed');
           base.child('pulses').child(e.target.dataset.pulse).child('confirmed').set('false');
-          console.log('unconfirmed');
         }
       }
     });
