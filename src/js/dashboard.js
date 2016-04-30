@@ -146,16 +146,26 @@ const addEmployee = (employee) => {
       if (e.target.classList.contains('overview')) {
         e.target.parentNode.removeChild(e.target);
         console.log('removed');
-      } else if (e.target.classList.contains('timeline--item__unconfirmed') !== -1 || e.target.parentNode.classList.contains('timeline--item__unconfirmed') !== -1) {
-        // todo: actually do this action
-        // 1. toggle the class
-        // send to firebase
-        console.log('confirmed');
-      } else if (e.target.classList.contains('timeline--item__confirmed') !== -1 || e.target.parentNode.classList.contains.classList.contains('timeline--item__confirmed') !== -1) {
-        // todo: actually do this action
-        // 1. toggle the class
-        // send to firebase
-        console.log('unconfirmed');
+      } else if (e.target.parentNode.classList.contains('timeline--item__still')) {
+        if (e.target.parentNode.classList.contains('timeline--item__unconfirmed')){
+          e.target.parentNode.classList.remove('timeline--item__unconfirmed');
+          e.target.parentNode.classList.add('timeline--item__confirmed');
+          console.log('parent confirmed');
+        } else if (e.target.parentNode.classList.contains('timeline--item__confirmed')) {
+          e.target.parentNode.classList.remove('timeline--item__confirmed');
+          e.target.parentNode.classList.add('timeline--item__unconfirmed');
+          console.log('parent unconfirmed');
+        }
+      } else if (e.target.classList.contains('timeline--item__still')) {
+        if (e.target.classList.contains('timeline--item__unconfirmed')){
+          e.target.classList.remove('timeline--item__unconfirmed');
+          e.target.classList.add('timeline--item__confirmed');
+          console.log('confirmed');
+        } else if (e.target.classList.contains('timeline--item__confirmed')) {
+          e.target.classList.remove('timeline--item__confirmed');
+          e.target.classList.add('timeline--item__unconfirmed');
+          console.log('unconfirmed');
+        }
       }
     });
   });
