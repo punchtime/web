@@ -1,5 +1,6 @@
 let Firebase = require('firebase');
 let html = require('./html-escaping');
+let welcome = require('./welcome')();
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
 let auth = base.getAuth();

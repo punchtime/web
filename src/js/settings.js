@@ -1,5 +1,6 @@
 const formObj = require('form-obj');
 const modal = require('modal');
+let welcome = require('./welcome')();
 let Firebase = require('firebase');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
