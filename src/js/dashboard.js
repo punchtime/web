@@ -57,7 +57,7 @@ const addEmployee = (employee) => {
             checkout = new Date();
           }
           geocoding.init();
-          geocoding.search(snap.val().latitude,snap.val().longitude);
+          // geocoding.search(snap.val().latitude,snap.val().longitude);
           pulses.push([name, note, checkin, checkout]);
           employeePulses.push({
             id: snap.key(),
@@ -116,7 +116,7 @@ const addEmployee = (employee) => {
         <time datetime="2016-04-28T15:30:24+00:00">15:30</time>
       </div>
     </div>
-    <div class="timeline--item timeline--item__travel timeline--item__confirmed">
+    <div class="timeline--item timeline--item__travel timeline--item__good">
       <div class="duration"><span>30 min</span></div>
     </div>
     <div class="timeline--item timeline--item__still timeline--item__unconfirmed">
@@ -127,7 +127,7 @@ const addEmployee = (employee) => {
         <time datetime="2016-04-28T16:30:24+00:00">16:30</time>
       </div>
     </div>
-    <div class="timeline--item timeline--item__travel timeline--item__unconfirmed">
+    <div class="timeline--item timeline--item__travel timeline--item__bad">
       <div class="duration"><span>2 h 30 min</span></div>
     </div>
     <div class="timeline--item timeline--item__still timeline--item__confirmed">
@@ -175,8 +175,7 @@ let getEmployees = (id,callback) => {
 getEmployees(JSON.parse(localStorage.punchtime).company.id,addEmployee);
 
 const drawChart = () => {
-  let container = document.getElementById('timeline');
-  let chart = new google.visualization.Timeline(container);
+  let chart = new google.visualization.Timeline(document.getElementById('timeline'));
   let dataTable = new google.visualization.DataTable();
 
   dataTable.addColumn({ type: 'string', id: 'employee' });

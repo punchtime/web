@@ -178,11 +178,11 @@ body {
       border-left: solid .2em $color-accent-medium;
     }
 
-    &__confirmed {
+    &__confirmed, &__good {
       border-color: $color-status-good;
     }
 
-    &__unconfirmed {
+    &__unconfirmed, &__bad {
       border-color: $color-status-bad;
     }
 
