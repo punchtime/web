@@ -23,6 +23,7 @@ if (auth) {
 
 let pulses = []; // the graph is made from this object
 
+// todo: put results in the right location
 const geocoding = {
   req: null,
   init: function() {
