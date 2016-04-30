@@ -108,7 +108,7 @@ const addEmployee = (employee) => {
     <div class="timeline--item timeline--item__day">
       <h3>Thursay, 28 April</h3>
     </div>
-    <div class="timeline--item timeline--item__still timeline--item__confirmed">
+    <div class="timeline--item timeline--item__still timeline--item__confirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
       <h4>Werfstraat 131</h4>
       <p class="timeline--item__note">there is some note<p>
       <div class="duration">
@@ -119,7 +119,7 @@ const addEmployee = (employee) => {
     <div class="timeline--item timeline--item__travel timeline--item__good">
       <div class="duration"><span>30 min</span></div>
     </div>
-    <div class="timeline--item timeline--item__still timeline--item__unconfirmed">
+    <div class="timeline--item timeline--item__still timeline--item__unconfirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
       <h4>Oudeheerweg 13</h4>
       <p class="timeline--item__note">this is also a note<p>
       <div class="duration">
@@ -130,7 +130,7 @@ const addEmployee = (employee) => {
     <div class="timeline--item timeline--item__travel timeline--item__bad">
       <div class="duration"><span>2 h 30 min</span></div>
     </div>
-    <div class="timeline--item timeline--item__still timeline--item__confirmed">
+    <div class="timeline--item timeline--item__still timeline--item__confirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
       <h4>Gebroeders Desmetstraat 1</h4>
       <p class="timeline--item__note">Hello, there's a bit written here, because this person kinda liked writing at the point of his checkin.<p>
       <div class="duration">
@@ -150,20 +150,24 @@ const addEmployee = (employee) => {
         if (e.target.parentNode.classList.contains('timeline--item__unconfirmed')){
           e.target.parentNode.classList.remove('timeline--item__unconfirmed');
           e.target.parentNode.classList.add('timeline--item__confirmed');
+          base.child('pulses').child(e.target.parentNode.dataset.pulse).child('confirmed').set('true');
           console.log('parent confirmed');
         } else if (e.target.parentNode.classList.contains('timeline--item__confirmed')) {
           e.target.parentNode.classList.remove('timeline--item__confirmed');
           e.target.parentNode.classList.add('timeline--item__unconfirmed');
+          base.child('pulses').child(e.target.parentNode.dataset.pulse).child('confirmed').set('false');
           console.log('parent unconfirmed');
         }
       } else if (e.target.classList.contains('timeline--item__still')) {
         if (e.target.classList.contains('timeline--item__unconfirmed')){
           e.target.classList.remove('timeline--item__unconfirmed');
           e.target.classList.add('timeline--item__confirmed');
+          base.child('pulses').child(e.target.dataset.pulse).child('confirmed').set('true');
           console.log('confirmed');
         } else if (e.target.classList.contains('timeline--item__confirmed')) {
           e.target.classList.remove('timeline--item__confirmed');
           e.target.classList.add('timeline--item__unconfirmed');
+          base.child('pulses').child(e.target.dataset.pulse).child('confirmed').set('false');
           console.log('unconfirmed');
         }
       }
