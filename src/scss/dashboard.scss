@@ -152,6 +152,7 @@ body {
 
   &--item {
     cursor: pointer;
+    transition: border-color .3s ease;
 
     > * {
       margin: .3em;
