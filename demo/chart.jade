@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  - var stylesheet = '/src/css/firebase.css'
+  include ../includes/head.jade
+  style.
+    #timeline {
+      width: 100%;
+      overflow: auto;
+    }
+  body.dev
+    #timeline
+    script(src="https://d3js.org/d3.v3.min.js")
+    script(src="/src/js/d3-timeline.js")
+    script(src="/src/js/chart.js")
+    include ../includes/foot.jade

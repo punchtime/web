@@ -146,12 +146,12 @@ const addEmployee = (employee) => {
       if (e.target.classList.contains('overview')) {
         e.target.parentNode.removeChild(e.target);
         console.log('removed');
-      } else if (e.target.className.indexOf('__unconfirmed') !== -1 || e.target.parentNode.className.indexOf('__unconfirmed') !== -1) {
+      } else if (e.target.classList.contains('timeline--item__unconfirmed') !== -1 || e.target.parentNode.classList.contains('timeline--item__unconfirmed') !== -1) {
         // todo: actually do this action
         // 1. toggle the class
         // send to firebase
         console.log('confirmed');
-      } else if (e.target.className.indexOf('__confirmed') !== -1 || e.target.parentNode.className.indexOf('__confirmed') !== -1) {
+      } else if (e.target.classList.contains('timeline--item__confirmed') !== -1 || e.target.parentNode.classList.contains.classList.contains('timeline--item__confirmed') !== -1) {
         // todo: actually do this action
         // 1. toggle the class
         // send to firebase
@@ -185,7 +185,7 @@ const drawChart = () => {
   dataTable.addRows(pulses);
 
   chart.draw(dataTable,{
-    timeline: { colorByRowLabel: true }
+    timeline: { singleColor: '#3B4358' }
   });
 };
 google.charts.load('current', {'packages':['timeline']});
