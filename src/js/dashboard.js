@@ -50,21 +50,21 @@ const addEmployee = (employee) => {
           let name = employee.name,
               checkin = new Date(parseInt(snap.val().checkin)),
               note = snap.val().note,
+              address = snap.val().addressStreet,
               checkout;
           if (snap.val().checkout && snap.val().checkout !== 0) {
             checkout = new Date(parseInt(snap.val().checkout));
           } else {
             checkout = new Date();
           }
-          geocoding.init();
-          // geocoding.search(snap.val().latitude,snap.val().longitude);
-          pulses.push([name, note, checkin, checkout]);
+          pulses.push([name, address, checkin, checkout]);
           employeePulses.push({
             id: snap.key(),
             latitude: snap.val().latitude,
             longitude: snap.val().longitude,
-            checkin: snap.val().checkin,
-            checkout: snap.val().checkout,
+            checkin: new Date(parseInt(snap.val().checkin)),
+            checkout: new Date(parseInt(snap.val().checkout)),
+            address: snap.val().addressStreet,
             note: snap.val().note,
             confirmed: snap.val().confirmed
           });
@@ -76,18 +76,9 @@ const addEmployee = (employee) => {
     }
   }
 
-
-
   let image = employee.image || '/src/img/icons/empty.svg',
       name = employee.name,
       status = 'good';
-
-  // todo: async/await the fetching
-  for (let i in employeePulses) {
-    if (employeePulses.hasOwnProperty(i)) {
-      console.log(employeePulses[i]);
-    }
-  }
 
   let empl = document.createElement('div');
   empl.classList.add('employee');
@@ -97,50 +88,69 @@ const addEmployee = (employee) => {
 <p class="employee--name">${name}</p>
 <span title="status ${status}" class="status status__${status}">${status}</span>`;
   document.querySelector('.employee-container').appendChild(empl);
+
   empl.addEventListener('click',()=>{
     let overview = document.createElement('div');
     overview.classList.add('overview');
     // todo: get the right pulses out of the user
-    overview.innerHTML = html`
-<section class="overview--content">
-  <h2 class="overview--title">${employee.name}</h2>
-  <div class="timeline">
-    <div class="timeline--item timeline--item__day">
-      <h3>Thursay, 28 April</h3>
-    </div>
-    <div class="timeline--item timeline--item__still timeline--item__confirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
-      <h4>Werfstraat 131</h4>
-      <p class="timeline--item__note">there is some note<p>
-      <div class="duration">
-        <time datetime="2016-04-28T15:15:24+00:00">15:15</time><span class="duration--arrow">→</span>
-        <time datetime="2016-04-28T15:30:24+00:00">15:30</time>
-      </div>
-    </div>
-    <div class="timeline--item timeline--item__travel timeline--item__good">
-      <div class="duration"><span>30 min</span></div>
-    </div>
-    <div class="timeline--item timeline--item__still timeline--item__unconfirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
-      <h4>Oudeheerweg 13</h4>
-      <p class="timeline--item__note">this is also a note<p>
-      <div class="duration">
-        <time datetime="2016-04-28T16:00:24+00:00">16:00</time><span class="duration--arrow">→</span>
-        <time datetime="2016-04-28T16:30:24+00:00">16:30</time>
-      </div>
-    </div>
-    <div class="timeline--item timeline--item__travel timeline--item__bad">
-      <div class="duration"><span>2 h 30 min</span></div>
-    </div>
-    <div class="timeline--item timeline--item__still timeline--item__confirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
-      <h4>Gebroeders Desmetstraat 1</h4>
-      <p class="timeline--item__note">Hello, there's a bit written here, because this person kinda liked writing at the point of his checkin.<p>
-      <div class="duration">
-        <time datetime="2016-04-28T18:00:24+00:00">18:00</time><span class="duration--arrow">→</span>
-        <time datetime="2016-04-28T18:32:24+00:00">18:32</time>
-      </div>
-    </div>
+    let overviewContent = document.createElement('div');
+    overviewContent.classList.add('overview--content');
+    overviewContent.innerHTML = html`<h2 class="overview--title">${employee.name}</h2>`;
+    let timeline = document.createElement('div');
+    timeline.classList.add('timeline');
+    timeline.innerHTML = html`
+<div class="timeline--item timeline--item__day">
+  <h3>Thursay, 28 April</h3>
+</div>
+<div class="timeline--item timeline--item__still timeline--item__confirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
+  <h4>Werfstraat 131</h4>
+  <p class="timeline--item__note">there is some note<p>
+  <div class="duration">
+    <time datetime="2016-04-28T15:15:24+00:00">15:15</time><span class="duration--arrow">→</span>
+    <time datetime="2016-04-28T15:30:24+00:00">15:30</time>
   </div>
-</section>
-    `;
+</div>
+<div class="timeline--item timeline--item__travel timeline--item__good">
+  <div class="duration"><span>30 min</span></div>
+</div>
+<div class="timeline--item timeline--item__still timeline--item__unconfirmed" data-pulse="-KGSNFkJ8ha5yT3sqpo7">
+  <h4>Oudeheerweg 13</h4>
+  <p class="timeline--item__note">this is also a note<p>
+  <div class="duration">
+    <time datetime="2016-04-28T16:00:24+00:00">16:00</time><span class="duration--arrow">→</span>
+    <time datetime="2016-04-28T16:30:24+00:00">16:30</time>
+  </div>
+</div>`;
+
+    // todo: don't hardcode this anymore
+    let previous = {
+      checkout: new Date(1462022458815)
+    }
+    let current = {
+      checkin: new Date (1462022569815),
+      checkout: new Date(1462022697858),
+      id: '-KGbKsOy2jwSbMK-QdFP',
+      confirmed: 'true',
+      note: 'bla bla bla bla',
+      address: 'Gebroeders Desmetstraat 1'
+    };
+    let diff = new Date(current.checkin - previous.checkout);
+
+    timeline.innerHTML += html`
+<div class="timeline--item timeline--item__travel timeline--item__bad">
+  <div class="duration"><span>${diff.getHours() - 1}h ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)}m</span></div>
+</div>
+<div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}">
+  <h4>${current.address}</h4>
+  <p class="timeline--item__note">${current.note}<p>
+  <div class="duration">
+    <time datetime="${current.checkin.toISOString()}">${current.checkin.getHours()}:${current.checkin.getMinutes()}</time><span class="duration--arrow">→</span>
+    <time datetime="${current.checkout.toISOString()}">${current.checkout.getHours()}:${current.checkout.getMinutes()}</time>
+  </div>
+</div>`;
+    overviewContent.appendChild(timeline);
+    overview.appendChild(overviewContent);
+
     document.body.insertBefore(overview,document.querySelector('.employees'));
     overview.addEventListener('click',e=>{
       if (e.target.classList.contains('overview')) {
@@ -170,6 +180,7 @@ const addEmployee = (employee) => {
       }
     });
   });
+
   let flexfix = document.createElement('div');
   flexfix.classList.add('👻');
   document.querySelector('.employee-container').appendChild(flexfix);
