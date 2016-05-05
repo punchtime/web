@@ -134,7 +134,11 @@ body {
     background-color: $color-light;
     max-width: 40rem;
     margin: 0 auto;
-    @extend %card;
+    overflow: hidden;
+    border-radius: .2em;
+    // @extend %card;
+    // box-shadow performs badly on large items
+    // when the overview is smaller we can fix this
   }
 
   &--title {
