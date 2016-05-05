@@ -114,7 +114,7 @@ let addOverview = (pulses,employee) => {
   });
 };
 
-let parseBool = (string) {
+let parseBool = (string) => {
   if (string === 'true' || string === true) {
     return true;
   } else {
