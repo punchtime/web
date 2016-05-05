@@ -158,25 +158,9 @@ const addEmployee = (employee) => {
         console.log('removed');
         // todo: DRY this code
       } else if (e.target.parentNode.classList.contains('timeline--item__still')) {
-        if (e.target.parentNode.classList.contains('timeline--item__unconfirmed')){
-          e.target.parentNode.classList.remove('timeline--item__unconfirmed');
-          e.target.parentNode.classList.add('timeline--item__confirmed');
-          base.child('pulses').child(e.target.parentNode.dataset.pulse).child('confirmed').set('true');
-        } else if (e.target.parentNode.classList.contains('timeline--item__confirmed')) {
-          e.target.parentNode.classList.remove('timeline--item__confirmed');
-          e.target.parentNode.classList.add('timeline--item__unconfirmed');
-          base.child('pulses').child(e.target.parentNode.dataset.pulse).child('confirmed').set('false');
-        }
+        toggleStatus(e.target.parentNode);
       } else if (e.target.classList.contains('timeline--item__still')) {
-        if (e.target.classList.contains('timeline--item__unconfirmed')){
-          e.target.classList.remove('timeline--item__unconfirmed');
-          e.target.classList.add('timeline--item__confirmed');
-          base.child('pulses').child(e.target.dataset.pulse).child('confirmed').set('true');
-        } else if (e.target.classList.contains('timeline--item__confirmed')) {
-          e.target.classList.remove('timeline--item__confirmed');
-          e.target.classList.add('timeline--item__unconfirmed');
-          base.child('pulses').child(e.target.dataset.pulse).child('confirmed').set('false');
-        }
+        toggleStatus(e.target);
       }
     });
   });
@@ -184,6 +168,18 @@ const addEmployee = (employee) => {
   let flexfix = document.createElement('div');
   flexfix.classList.add('👻');
   document.querySelector('.employee-container').appendChild(flexfix);
+};
+
+let toggleStatus = (element) => {
+  if (element.classList.contains('timeline--item__unconfirmed')){
+    element.classList.remove('timeline--item__unconfirmed');
+    element.classList.add('timeline--item__confirmed');
+    base.child('pulses').child(element.dataset.pulse).child('confirmed').set('true');
+  } else if (element.classList.contains('timeline--item__confirmed')) {
+    element.classList.remove('timeline--item__confirmed');
+    element.classList.add('timeline--item__unconfirmed');
+    base.child('pulses').child(element.dataset.pulse).child('confirmed').set('false');
+  }
 };
 
 let getEmployees = (id,callback) => {
