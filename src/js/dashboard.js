@@ -49,7 +49,7 @@ const addEmployee = (employee) => {
             checkout: new Date(parseInt(snap.val().checkout)),
             address: snap.val().addressStreet,
             note: snap.val().note,
-            confirmed: snap.val().confirmed
+            confirmed: parseBool(snap.val().confirmed)
           });
           drawChart();
         } catch (e) {
@@ -84,12 +84,12 @@ const addEmployee = (employee) => {
 let addOverview = (pulses,employee) => {
   let overview = document.createElement('div');
   overview.classList.add('overview');
-  // todo: get the right pulses out of the user
   let overviewContent = document.createElement('div');
   overviewContent.classList.add('overview--content');
   overviewContent.innerHTML = html `<h2 class="overview--title">${employee.name}</h2>`;
   let timeline = document.createElement('div');
   timeline.classList.add('timeline');
+  // todo: take day in account
 //   timeline.innerHTML = html `
 // <div class="timeline--item timeline--item__day">
 //   <h3>Thursay, 28 April</h3>
@@ -114,6 +114,14 @@ let addOverview = (pulses,employee) => {
   });
 };
 
+let parseBool = (string) {
+  if (string === 'true' || string === true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 let addToTimeline = (current, previous, timeline) => {
   if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
@@ -123,7 +131,7 @@ let addToTimeline = (current, previous, timeline) => {
 </div>`;
   }
   timeline.innerHTML += html `
-<div class="timeline--item timeline--item__still timeline--item__${current.confirmed === 'true' || current.confirmed === true ? '' : 'un'}confirmed" data-pulse="${current.id}">
+<div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}">
   <h4>${current.address}</h4>
   <p class="timeline--item__note">${current.note}<p>
   <div class="duration">
