@@ -28,7 +28,7 @@ const addEmployee = (employee) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
     if (employee.pulses.hasOwnProperty(pulse)) {
-      base.child('pulses').child(pulse).once('value', snap => {
+      base.child('pulses').child(pulse).once('value', (snap) => {
         try {
           let name = employee.name,
             checkin = new Date(parseInt(snap.val().checkin)),
@@ -73,15 +73,24 @@ const addEmployee = (employee) => {
   document.querySelector('.employee-container').appendChild(empl);
 
   empl.addEventListener('click', () => {
-    let overview = document.createElement('div');
-    overview.classList.add('overview');
-    // todo: get the right pulses out of the user
-    let overviewContent = document.createElement('div');
-    overviewContent.classList.add('overview--content');
-    overviewContent.innerHTML = html `<h2 class="overview--title">${employee.name}</h2>`;
-    let timeline = document.createElement('div');
-    timeline.classList.add('timeline');
-    timeline.innerHTML = html `
+    addOverview(employeePulses,employee)
+  });
+
+  let flexfix = document.createElement('div');
+  flexfix.classList.add('👻');
+  document.querySelector('.employee-container').appendChild(flexfix);
+};
+
+let addOverview = (pulses,employee) => {
+  let overview = document.createElement('div');
+  overview.classList.add('overview');
+  // todo: get the right pulses out of the user
+  let overviewContent = document.createElement('div');
+  overviewContent.classList.add('overview--content');
+  overviewContent.innerHTML = html `<h2 class="overview--title">${employee.name}</h2>`;
+  let timeline = document.createElement('div');
+  timeline.classList.add('timeline');
+  timeline.innerHTML = html `
 <div class="timeline--item timeline--item__day">
   <h3>Thursay, 28 April</h3>
 </div>
@@ -105,21 +114,21 @@ const addEmployee = (employee) => {
   </div>
 </div>`;
 
-    // todo: don't hardcode this anymore
-    let previous = {
-      checkout: new Date(1462022458815)
-    }
-    let current = {
-      checkin: new Date(1462022569815),
-      checkout: new Date(1462022697858),
-      id: '-KGbKsOy2jwSbMK-QdFP',
-      confirmed: 'true',
-      note: 'bla bla bla bla',
-      address: 'Gebroeders Desmetstraat 1'
-    };
-    let diff = new Date(current.checkin - previous.checkout);
+  // todo: don't hardcode this anymore
+  let previous = {
+    checkout: new Date(1462022458815)
+  }
+  let current = {
+    checkin: new Date(1462022569815),
+    checkout: new Date(1462022697858),
+    id: '-KGbKsOy2jwSbMK-QdFP',
+    confirmed: 'true',
+    note: 'bla bla bla bla',
+    address: 'Gebroeders Desmetstraat 1'
+  };
+  let diff = new Date(current.checkin - previous.checkout);
 
-    timeline.innerHTML += html `
+  timeline.innerHTML += html `
 <div class="timeline--item timeline--item__travel timeline--item__bad">
   <div class="duration"><span>${diff.getHours() - 1}h ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)}m</span></div>
 </div>
@@ -131,25 +140,19 @@ const addEmployee = (employee) => {
     <time datetime="${current.checkout.toISOString()}">${current.checkout.getHours()}:${current.checkout.getMinutes()}</time>
   </div>
 </div>`;
-    overviewContent.appendChild(timeline);
-    overview.appendChild(overviewContent);
+  overviewContent.appendChild(timeline);
+  overview.appendChild(overviewContent);
 
-    document.body.insertBefore(overview, document.querySelector('.employees'));
-    overview.addEventListener('click', (e) => {
-      if (e.target.classList.contains('overview')) {
-        e.target.parentNode.removeChild(e.target);
-        console.log('removed');
-      } else if (e.target.parentNode.classList.contains('timeline--item__still')) {
-        toggleStatus(e.target.parentNode);
-      } else if (e.target.classList.contains('timeline--item__still')) {
-        toggleStatus(e.target);
-      }
-    });
+  document.body.insertBefore(overview, document.querySelector('.employees'));
+  overview.addEventListener('click', (e) => {
+    if (e.target.classList.contains('overview')) {
+      e.target.parentNode.removeChild(e.target);
+    } else if (e.target.parentNode.classList.contains('timeline--item__still')) {
+      toggleStatus(e.target.parentNode);
+    } else if (e.target.classList.contains('timeline--item__still')) {
+      toggleStatus(e.target);
+    }
   });
-
-  let flexfix = document.createElement('div');
-  flexfix.classList.add('👻');
-  document.querySelector('.employee-container').appendChild(flexfix);
 };
 
 let toggleStatus = (element) => {
