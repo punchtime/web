@@ -15,7 +15,7 @@ if (!localStorage.punchtime) {
 }
 
 if (auth) {
-  console.log('logged in with: '+auth.uid);
+  console.log('logged in with: ' + auth.uid);
   setTitle();
 } else {
   console.warn('not logged in');
@@ -24,34 +24,17 @@ if (auth) {
 
 let pulses = []; // the graph is made from this object
 
-// todo: put results in the right location
-const geocoding = {
-  req: null,
-  init: function() {
-    this.req = new XMLHttpRequest();
-    this.req.addEventListener("load", this.listener);
-  },
-  listener: function() {
-    var a = JSON.parse(this.response).results[0].address_components;
-    console.log(a[1].long_name +' '+ a[0].long_name);
-  },
-  search: function(lat,lon) {
-    this.req.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&key=AIzaSyA8Tawxe7x2cpGiTpvOh35xHe8dUZsjsFg");
-    this.req.send();
-  }
-};
-
 const addEmployee = (employee) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
     if (employee.pulses.hasOwnProperty(pulse)) {
-      base.child('pulses').child(pulse).once('value',snap=>{
+      base.child('pulses').child(pulse).once('value', snap => {
         try {
           let name = employee.name,
-              checkin = new Date(parseInt(snap.val().checkin)),
-              note = snap.val().note,
-              address = snap.val().addressStreet,
-              checkout;
+            checkin = new Date(parseInt(snap.val().checkin)),
+            note = snap.val().note,
+            address = snap.val().addressStreet,
+            checkout;
           if (snap.val().checkout && snap.val().checkout !== 0) {
             checkout = new Date(parseInt(snap.val().checkout));
           } else {
@@ -69,7 +52,7 @@ const addEmployee = (employee) => {
             confirmed: snap.val().confirmed
           });
           drawChart();
-        } catch(e) {
+        } catch (e) {
           console.log(`/pulses/${snap.key()} in /users/${employee.name} has a problem.`);
         }
       });
@@ -77,28 +60,28 @@ const addEmployee = (employee) => {
   }
 
   let image = employee.image || '/src/img/icons/empty.svg',
-      name = employee.name,
-      status = 'good';
+    name = employee.name,
+    status = 'good';
 
   let empl = document.createElement('div');
   empl.classList.add('employee');
   // empl.dataset.id = id;
-  empl.innerHTML = html`
+  empl.innerHTML = html `
 <img src="${image}" alt="${name}" class="employee--image">
 <p class="employee--name">${name}</p>
 <span title="status ${status}" class="status status__${status}">${status}</span>`;
   document.querySelector('.employee-container').appendChild(empl);
 
-  empl.addEventListener('click',()=>{
+  empl.addEventListener('click', () => {
     let overview = document.createElement('div');
     overview.classList.add('overview');
     // todo: get the right pulses out of the user
     let overviewContent = document.createElement('div');
     overviewContent.classList.add('overview--content');
-    overviewContent.innerHTML = html`<h2 class="overview--title">${employee.name}</h2>`;
+    overviewContent.innerHTML = html `<h2 class="overview--title">${employee.name}</h2>`;
     let timeline = document.createElement('div');
     timeline.classList.add('timeline');
-    timeline.innerHTML = html`
+    timeline.innerHTML = html `
 <div class="timeline--item timeline--item__day">
   <h3>Thursay, 28 April</h3>
 </div>
@@ -127,7 +110,7 @@ const addEmployee = (employee) => {
       checkout: new Date(1462022458815)
     }
     let current = {
-      checkin: new Date (1462022569815),
+      checkin: new Date(1462022569815),
       checkout: new Date(1462022697858),
       id: '-KGbKsOy2jwSbMK-QdFP',
       confirmed: 'true',
@@ -136,7 +119,7 @@ const addEmployee = (employee) => {
     };
     let diff = new Date(current.checkin - previous.checkout);
 
-    timeline.innerHTML += html`
+    timeline.innerHTML += html `
 <div class="timeline--item timeline--item__travel timeline--item__bad">
   <div class="duration"><span>${diff.getHours() - 1}h ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)}m</span></div>
 </div>
@@ -151,12 +134,11 @@ const addEmployee = (employee) => {
     overviewContent.appendChild(timeline);
     overview.appendChild(overviewContent);
 
-    document.body.insertBefore(overview,document.querySelector('.employees'));
-    overview.addEventListener('click',e=>{
+    document.body.insertBefore(overview, document.querySelector('.employees'));
+    overview.addEventListener('click', (e) => {
       if (e.target.classList.contains('overview')) {
         e.target.parentNode.removeChild(e.target);
         console.log('removed');
-        // todo: DRY this code
       } else if (e.target.parentNode.classList.contains('timeline--item__still')) {
         toggleStatus(e.target.parentNode);
       } else if (e.target.classList.contains('timeline--item__still')) {
@@ -171,42 +153,64 @@ const addEmployee = (employee) => {
 };
 
 let toggleStatus = (element) => {
-  if (element.classList.contains('timeline--item__unconfirmed')){
+  if (element.classList.contains('timeline--item__unconfirmed')) {
     element.classList.remove('timeline--item__unconfirmed');
     element.classList.add('timeline--item__confirmed');
-    base.child('pulses').child(element.dataset.pulse).child('confirmed').set('true');
+    base.child('pulses')
+      .child(element.dataset.pulse)
+      .child('confirmed')
+      .set('true');
   } else if (element.classList.contains('timeline--item__confirmed')) {
     element.classList.remove('timeline--item__confirmed');
     element.classList.add('timeline--item__unconfirmed');
-    base.child('pulses').child(element.dataset.pulse).child('confirmed').set('false');
+    base.child('pulses')
+      .child(element.dataset.pulse)
+      .child('confirmed')
+      .set('false');
   }
 };
 
-let getEmployees = (id,callback) => {
-  base.child('companies').child(id).child('employees').on('child_added',snapshot=>{
-    base.child('users').child(snapshot.key()).once('value',snap=>{
+let getEmployees = (id, callback) => {
+  base.child('companies').child(id).child('employees').on('child_added', (snapshot) => {
+    base.child('users').child(snapshot.key()).once('value', (snap) => {
       callback(snap.val());
     });
   });
 };
 
-getEmployees(JSON.parse(localStorage.punchtime).company.id,addEmployee);
+getEmployees(JSON.parse(localStorage.punchtime).company.id, addEmployee);
 
 const drawChart = () => {
   let chart = new google.visualization.Timeline(document.getElementById('timeline'));
   let dataTable = new google.visualization.DataTable();
 
-  dataTable.addColumn({ type: 'string', id: 'employee' });
-  dataTable.addColumn({ type: 'string', id: 'note' });
-  dataTable.addColumn({ type: 'date', id: 'Start' });
-  dataTable.addColumn({ type: 'date', id: 'End' });
+  dataTable.addColumn({
+    type: 'string',
+    id: 'employee'
+  });
+  dataTable.addColumn({
+    type: 'string',
+    id: 'note'
+  });
+  dataTable.addColumn({
+    type: 'date',
+    id: 'Start'
+  });
+  dataTable.addColumn({
+    type: 'date',
+    id: 'End'
+  });
   dataTable.addRows(pulses);
 
-  chart.draw(dataTable,{
-    timeline: { singleColor: '#3B4358' }
+  chart.draw(dataTable, {
+    timeline: {
+      singleColor: '#3B4358'
+    }
   });
 };
-google.charts.load('current', {'packages':['timeline']});
+google.charts.load('current', {
+  'packages': ['timeline']
+});
 google.charts.setOnLoadCallback(drawChart);
 
 /*
@@ -214,9 +218,9 @@ google.charts.setOnLoadCallback(drawChart);
  * Will refresh the graph if there is 250 ms after a resize event
  */
 var resizeTimer;
-window.addEventListener('resize', function(){
+window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(function() {
+  resizeTimer = setTimeout(() => {
     drawChart();
   }, 250);
 });
