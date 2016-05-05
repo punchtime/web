@@ -123,7 +123,7 @@ let addToTimeline = (current, previous, timeline) => {
 </div>`;
   }
   timeline.innerHTML += html `
-<div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}">
+<div class="timeline--item timeline--item__still timeline--item__${current.confirmed === 'true' || current.confirmed === true ? '' : 'un'}confirmed" data-pulse="${current.id}">
   <h4>${current.address}</h4>
   <p class="timeline--item__note">${current.note}<p>
   <div class="duration">
