@@ -2,7 +2,7 @@
  * import statements
  */
 let Firebase = require('firebase');
-let welcome = require('./welcome')();
+require('./welcome')();
 let tableify = require('tableify');
 
 /**

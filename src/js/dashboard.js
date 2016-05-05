@@ -1,6 +1,6 @@
 let Firebase = require('firebase');
 let html = require('./html-escaping');
-let welcome = require('./welcome')();
+require('./welcome')();
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
 let auth = base.getAuth();
@@ -73,7 +73,7 @@ const addEmployee = (employee) => {
   document.querySelector('.employee-container').appendChild(empl);
 
   empl.addEventListener('click', () => {
-    addOverview(employeePulses,employee)
+    addOverview(employeePulses,employee);
   });
 
   let flexfix = document.createElement('div');

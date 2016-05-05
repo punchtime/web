@@ -1,4 +1,4 @@
-let welcome = require('./welcome')();
+require('./welcome')();
 /**
  * the animation for the arrows
  * @param  {string} classname the name of the class that each arrow has
