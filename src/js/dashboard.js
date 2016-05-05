@@ -120,7 +120,7 @@ let parseBool = (string) {
   } else {
     return false;
   }
-}
+};
 
 let addToTimeline = (current, previous, timeline) => {
   if (previous) {
