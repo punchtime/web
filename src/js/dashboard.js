@@ -126,7 +126,7 @@ let addToTimeline = (current, previous, timeline) => {
   if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
     timeline.innerHTML += html `
-<div class="timeline--item timeline--item__travel timeline--item__bad">
+<div class="timeline--item timeline--item__travel ${'timeline--item__good'}">
   <div class="duration"><span>${diff.getHours() - 1}h ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)}m</span></div>
 </div>`;
   }
