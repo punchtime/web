@@ -69,7 +69,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('copy',() => {
-  return gulp.src(['CNAME'])
+  return gulp.src(['CNAME','.well-known/**/*'])
     .pipe(gulp.dest(DIST));
 });
 
