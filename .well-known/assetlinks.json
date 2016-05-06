@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.punchtime.punchtime",
+    "sha256_cert_fingerprints":
+    ["77:62:F6:E4:96:A5:33:8B:76:5C:FF:78:5B:BF:DE:25:3B:CD:F4:82:4A:83:FC:A1:68:9D:2F:48:3E:3A:70:1A"]
+  }
+}]
