@@ -48,6 +48,7 @@ const addEmployee = (employee) => {
             checkin: new Date(parseInt(snap.val().checkin)),
             checkout: new Date(parseInt(snap.val().checkout)),
             address: snap.val().addressStreet,
+            city: snap.val().addressCityCountry,
             note: snap.val().note,
             confirmed: parseBool(snap.val().confirmed)
           });
@@ -95,6 +96,11 @@ let addOverview = (pulses,employee) => {
 //   <h3>Thursay, 28 April</h3>
 // </div>`;
 
+  if (pulses.length === 0) {
+    timeline.innerHTML += `
+    <p>No checkins</p>
+    `;
+  }
   for (let i in pulses) {
     addToTimeline(pulses[i],pulses[i-1],timeline);
   }
@@ -127,13 +133,14 @@ let addToTimeline = (current, previous, timeline) => {
     let diff = new Date(current.checkin - previous.checkout);
     timeline.innerHTML += html `
 <div class="timeline--item timeline--item__travel ${'timeline--item__good'}">
-  <div class="duration"><span>${diff.getHours() - 1}h ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)}m</span></div>
+  <div class="duration"><span>${diff.getHours > 0 ? (diff.getHours() - 1)+' h' : ''} ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)} min</span></div>
 </div>`;
   }
   timeline.innerHTML += html `
 <div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}">
   <h4>${current.address}</h4>
-  <p class="timeline--item__note">${current.note}<p>
+  <p class="timeline--item__city">${current.city}</p>
+  <p class="timeline--item__note">${current.note}</p>
   <div class="duration">
     <time datetime="${current.checkin.toISOString()}">${current.checkin.getHours()}:${current.checkin.getMinutes() < 10 ? 0 : ''}${current.checkin.getMinutes()}</time><span class="duration--arrow">→</span>
     <time datetime="${current.checkout.toISOString()}">${current.checkout.getHours()}:${current.checkout.getMinutes() < 10 ? 0 : ''}${current.checkout.getMinutes()}</time>
