@@ -210,3 +210,28 @@ body {
 .footer {
   display: none;
 }
+
+.settings {
+  max-width: 40em;
+  margin: 1em auto;
+
+  form {
+    max-width: initial;
+    width: 100%;
+    border-bottom: 1px solid $color-accent-dark;
+    padding: 1em 0;
+  }
+
+  * {
+    margin: .3em;
+  }
+
+  input, select {
+    width: 10em;
+
+    & .inline {
+      display: inline-block;
+      text-align: initial;
+    }
+  }
+}
