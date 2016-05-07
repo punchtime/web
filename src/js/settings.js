@@ -15,6 +15,26 @@ const setTitle = () => {
   }
 };
 
+if (localStorage.punchtime) {
+  base.child('companies/'+JSON.parse(localStorage.punchtime).company.id).on('value', snapshot => {
+    try {
+      document.getElementById('contact-email').value = snapshot.val().contact.email || '';
+      document.getElementById('contact-phone').value = snapshot.val().contact.phone || '';
+      document.getElementById('contact-note').value = snapshot.val().contact.note || '';
+    } catch(e) {/*don't care*/}
+  });
+}
+
+document.getElementById('contact').addEventListener('submit',e=>{
+  e.preventDefault();
+  let form = formObj(e.target);
+  base.child('companies/'+JSON.parse(localStorage.punchtime).company.id+'/contact').set(form)
+    .then(()=>{
+      modal('Settings saved',()=>{},()=>{});
+    });
+
+});
+
 if (auth) {
   console.log('logged in with: ' + auth.uid);
   setTitle();
