@@ -131,9 +131,10 @@ let parseBool = (string) => {
 let addToTimeline = (current, previous, timeline) => {
   if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
+    let diffHours = Math.round(diff.getTime() / 3600000);
     timeline.innerHTML += html `
 <div class="timeline--item timeline--item__travel ${'timeline--item__good'}">
-  <div class="duration"><span>${diff.getHours > 0 ? (diff.getHours() - 1)+' h' : ''} ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)} min</span></div>
+  <div class="duration"><span>${diffHours > 0 ? diffHours+' h' : ''} ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)} min</span></div>
 </div>`;
   }
   timeline.innerHTML += html `
