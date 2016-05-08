@@ -30,6 +30,13 @@
 
   var welcome = function() {
     console.log("%cWelcome to punchtime\nAll our code is open source, if you want to help, take a look at https://github.com/punchtime", "font-family: sans-serif; color: red; font-size: 1em;");
+    window.punch = function(arg) {
+      return "👊"+(arg||'');
+    };
+    window.time = function() {
+      var d = new Date();
+      return d.getHours() +':'+d.getMinutes();
+    };
   };
 
   return welcome;
