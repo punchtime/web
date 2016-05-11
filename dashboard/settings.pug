@@ -1,9 +1,9 @@
 doctype html
 html(lang="en")
   - var stylesheet = '/src/css/dashboard.css'
-  include ../includes/head.jade
+  include ../includes/head.pug
   body
-    include header.jade
+    include header.pug
     section.settings
       h1 Settings
       p Welcome&nbsp;
@@ -34,4 +34,4 @@ html(lang="en")
         input(type="submit",value="submit")
 
     script(src="/src/js/settings.js")
-    include ../includes/foot.jade
+    include ../includes/foot.pug

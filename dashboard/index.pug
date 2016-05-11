@@ -1,9 +1,9 @@
 doctype html
 html(lang="en")
   - var stylesheet = '/src/css/dashboard.css'
-  include ../includes/head.jade
+  include ../includes/head.pug
   body
-    include header.jade
+    include header.pug
     //- overlay when clicked on an employee
     //- http://codepen.io/Haroenv/pen/MyPoEg
     section.employees
@@ -32,4 +32,4 @@ html(lang="en")
           a(href="/") some link
     script(src="https://www.gstatic.com/charts/loader.js")
     script(src="/src/js/dashboard.js")
-    include ../includes/foot.jade
+    include ../includes/foot.pug

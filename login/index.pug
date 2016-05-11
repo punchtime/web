@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   - var stylesheet = '/src/css/login.css'
-  include ../includes/head.jade
+  include ../includes/head.pug
   body.dev
     h1 Welcome to punchtime
 
@@ -21,4 +21,4 @@ html(lang="en")
           input(type="button", value="login with email")#email-button
     script(src="/src/js/login.js")
     script(src="/src/js/scripts.js")
-    include ../includes/foot.jade
+    include ../includes/foot.pug

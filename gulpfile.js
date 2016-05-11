@@ -7,7 +7,7 @@ var gulp            = require('gulp'),
     cssnano         = require('gulp-cssnano'),
     imagemin        = require('gulp-imagemin'),
     // notify          = require('gulp-notify'),
-    jade            = require('gulp-jade'),
+    pug            = require('gulp-pug'),
     jshint          = require('gulp-jshint'),
     sass            = require('gulp-sass'),
     stylish         = require('jshint-stylish'),
@@ -34,8 +34,8 @@ gulp.task('scripts',() => {
 
 gulp.task('templates', function() {
   var LOCALS = {};
-  gulp.src(['**/*.jade', '!./node_modules/**', '!./dist/**', '!./includes/**'])
-    .pipe(jade({
+  gulp.src(['**/*.pug', '!./node_modules/**', '!./dist/**', '!./includes/**'])
+    .pipe(pug({
       locals: LOCALS
     }))
     .pipe(gulp.dest(DIST));
@@ -93,7 +93,7 @@ gulp.task('browser-sync', () => {
 
 gulp.task('watch',['default','browser-sync'], () => {
   gulp.watch('CNAME',['copy']);
-  gulp.watch('**/*.jade', ['templates']);
+  gulp.watch('**/*.pug', ['templates']);
   gulp.watch(SRC+'/scss/**/*.scss', ['sass']);
   gulp.watch(SRC+'/js/**/*.js', ['scripts']);
   gulp.watch(SRC+'/img/**/*', ['images']);

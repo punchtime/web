@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   - var stylesheet = '/src/css/firebase.css'
-  include ../includes/head.jade
+  include ../includes/head.pug
   body.dev
     p This is the firebase data, look at <code>firebase.js</code> to see how it works.
     form
@@ -51,4 +51,4 @@ html(lang="en")
         input(type="submit")
     #table
     script(src="/src/js/firebase.js")
-    include ../includes/foot.jade
+    include ../includes/foot.pug

@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   - var stylesheet = '/src/css/firebase.css'
-  include ../includes/head.jade
+  include ../includes/head.pug
   style.
     #timeline {
       width: 100%;
@@ -12,4 +12,4 @@ html(lang="en")
     script(src="https://d3js.org/d3.v3.min.js")
     script(src="/src/js/d3-timeline.js")
     script(src="/src/js/chart.js")
-    include ../includes/foot.jade
+    include ../includes/foot.pug

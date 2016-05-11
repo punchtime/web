@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   - var stylesheet = '/src/css/index.css'
-  include ./includes/head.jade
+  include ./includes/head.pug
   body.dark
     .full.full__intro#intro
       .full--content
@@ -28,4 +28,4 @@ html(lang="en")
         p created as a second-year project for #[a(href="http://www.odisee.be") Odisee] by #[a(href="https://haroen.me") Haroen Viaene], #[a(href="https://weyts.xyz") Arnaud Weyts] and #[a(href="https://eliasmei.re") Elias Meire]
         p all code is open source and visible at #[a(href="https://github.com/punchtime") github.com/punchtime]
     script(src="src/js/index.js")
-    include ./includes/foot.jade
+    include ./includes/foot.pug

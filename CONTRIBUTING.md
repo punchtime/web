@@ -10,7 +10,7 @@ First search in the [issues](https://github.com/punchtime/web/issues) if it isn'
 
 ## Do you want to add some code yourself?
 
-Local development of the web client is done with `scss`, `jade`, `gulp` and `browser-sync`. To get a correct build, you should run:
+Local development of the web client is done with `scss`, `pug`(`jade`), `gulp` and `browser-sync`. To get a correct build, you should run:
 
 ```
 npm install
@@ -27,5 +27,5 @@ All code in the repositories is licensed under the [MIT license](https://opensou
 
 ## Other repositories
 
-- [organisation](https://github.com/punchtime/organisation) (soon™)
-- [Android client](https://github.com/punchtime/android) (soon™)
+- [organisation](https://github.com/punchtime/organisation)
+- [Android client](https://github.com/punchtime/android)
