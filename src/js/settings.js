@@ -135,27 +135,66 @@ try {
     e.preventDefault();
     let form = formObj(e.target);
 
-    // for (let email in form) {
-    //   if (form.hasOwnProperty(email) && form[email]) {
-    //     console.log({
-    //       claimed: 'false',
-    //       company: JSON.parse(localStorage.punchtime).company.id,
-    //       email: form[email]
-    //     });
-    //     base.child('invites').push({
-    //       claimed: 'false',
-    //       company: {
-    //         id: JSON.parse(localStorage.punchtime).company.id,
-    //         name: JSON.parse(localStorage.punchtime).company.name
-    //       },
-    //       email: form[email]
-    //     });
-    //   }
-    // }
+    if (form.name) {
+      // create the new company
+      base.child('companies').push({
+        name: form.name,
+        tier: 'free'
+      }).then((s)=>{
+        let companyKey = s.key();
+        let companyName = s.val().name;
+        // put this new company as your company
+        base.child('users')
+            .child(auth.uid)
+            .child('employer')
+            .child(companyKey)
+            .set(true);
 
-    e.target.reset();
-    modal('Thanks, your employees now got an email',()=>{
-      location.href = '/dashboard';
-    },()=>{});
+        // set the newly created company in localStorage
+        var ls = JSON.parse(localStorage.punchtime);
+        console.log(ls,ls.company);
+        ls.company = {
+          id: companyKey,
+          name: companyName
+        };
+        console.log(ls);
+        localStorage.punchtime = JSON.stringify(ls);
+        console.log(JSON.parse(localStorage.punchtime));
+
+        // invite employees
+        for (let email in form) {
+          if (form.hasOwnProperty(email) && form[email] && email !== 'name') {
+            console.log({
+              claimed: 'false',
+              company: {
+                id: companyKey,
+                name: companyName
+              },
+              email: form[email]
+            });
+            base.child('invites').push({
+              claimed: 'false',
+              company: {
+                id: companyKey,
+                name: companyName
+              },
+              email: form[email]
+            });
+          }
+        }
+
+        // form finished
+        e.target.reset();
+        modal('Thanks, your employees now got an email',()=>{
+          location.href = '/dashboard';
+        },()=>{});
+      });
+
+
+    } else {
+      modal('you didn\'t fill in a name',()=>{},()=>{});
+    }
   });
-} catch(e) {}
+} catch(e) {
+  console.warn(e);
+}
