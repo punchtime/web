@@ -34,7 +34,7 @@ try {
         modal('Settings saved',()=>{},()=>{});
       });
   });
-} catch(e) {};
+} catch(e) {}
 
 if (auth) {
   console.log('logged in with: ' + auth.uid);
@@ -50,21 +50,25 @@ try {
     localStorage.punchtime = '';
     location.href = '/login/';
   });
-} catch(e) {};
+} catch(e) {}
 
-base.child('/users/' + auth.uid).once('value', (snapshot) => {
-  settings.name = snapshot.val().name;
-  document.getElementById('username').innerHTML = settings.name;
-  for (let i in snapshot.val().employer) {
-    if (snapshot.val().employer.hasOwnProperty(i)) {
-      base.child('/companies/' + i).once('value', snap => {
-        companies[i] = snap.val().name;
-        document.getElementById('company').innerHTML += `<option value="${i}">${snap.val().name}</option>`;
-        document.getElementById('company').value = JSON.parse(localStorage.punchtime).company.id;
-      });
+if (document.getElementById('username')) {
+  base.child('/users/' + auth.uid).once('value', (snapshot) => {
+    settings.name = snapshot.val().name;
+    document.getElementById('username').innerHTML = settings.name;
+    if (document.getElementById('company')) {
+      for (let i in snapshot.val().employer) {
+        if (snapshot.val().employer.hasOwnProperty(i)) {
+          base.child('/companies/' + i).once('value', snap => {
+            companies[i] = snap.val().name;
+            document.getElementById('company').innerHTML += `<option value="${i}">${snap.val().name}</option>`;
+            document.getElementById('company').value = JSON.parse(localStorage.punchtime).company.id;
+          });
+        }
+      }
     }
-  }
-});
+  });
+}
 
 try {
   document.getElementById('settings').addEventListener('submit', e => {
@@ -77,7 +81,7 @@ try {
     localStorage.punchtime = JSON.stringify(settings);
     setTitle();
   });
-} catch(e) {};
+} catch(e) {}
 
 const addEmail = (e) => {
   e.preventDefault();
@@ -96,7 +100,7 @@ const addEmail = (e) => {
 let num = 0;
 try {
   document.getElementById('add').addEventListener('click', addEmail);
-} catch(e) {};
+} catch(e) {}
 
 try {
   document.getElementById('invite').addEventListener('submit', e => {
@@ -124,4 +128,4 @@ try {
     e.target.reset();
     modal('Your employees now got an email with instructions',()=>{},()=>{});
   });
-} catch(e) {};
+} catch(e) {}

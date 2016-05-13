@@ -9,9 +9,15 @@ html(lang="en")
       p Welcome&nbsp;
         span#username
         button#logout log out
-      form#add
-        label(for="name") Name
-        input#name(type="text",name="name",placeholder="company name")
+      form#create
+        div
+          label(for="name") Name
+          input#name(type="text",name="name",placeholder="company name")
+        fieldset
+          label employees
+          div.inline
+            input(type="email", placeholder="their@email.com", name="email-0", data-num="0")
+            button#add(type="button") +
         input(type="submit",value="submit")
 
     script(src="/src/js/settings.js")
