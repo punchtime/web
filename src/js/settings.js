@@ -129,3 +129,33 @@ try {
     modal('Your employees now got an email with instructions',()=>{},()=>{});
   });
 } catch(e) {}
+
+try {
+  document.getElementById('create').addEventListener('submit', e => {
+    e.preventDefault();
+    let form = formObj(e.target);
+
+    // for (let email in form) {
+    //   if (form.hasOwnProperty(email) && form[email]) {
+    //     console.log({
+    //       claimed: 'false',
+    //       company: JSON.parse(localStorage.punchtime).company.id,
+    //       email: form[email]
+    //     });
+    //     base.child('invites').push({
+    //       claimed: 'false',
+    //       company: {
+    //         id: JSON.parse(localStorage.punchtime).company.id,
+    //         name: JSON.parse(localStorage.punchtime).company.name
+    //       },
+    //       email: form[email]
+    //     });
+    //   }
+    // }
+
+    e.target.reset();
+    modal('Thanks, your employees now got an email',()=>{
+      location.href = '/dashboard';
+    },()=>{});
+  });
+} catch(e) {}
