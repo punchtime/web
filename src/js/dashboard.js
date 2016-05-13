@@ -129,6 +129,11 @@ let parseBool = (string) => {
 };
 
 let addToTimeline = (current, previous, timeline) => {
+  if (!previous || current.checkin.toLocaleDateString() !== previous.checkout.toLocaleDateString()) {
+    timeline.innerHTML += html `<div class="timeline--item timeline--item__day">
+  <h3>${current.checkin.toLocaleDateString()}</h3>
+</div>`;
+  }
   if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
     let diffHours = Math.round(diff.getTime() / 3600000);
