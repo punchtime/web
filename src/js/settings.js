@@ -25,15 +25,16 @@ if (localStorage.punchtime) {
   });
 }
 
-document.getElementById('contact').addEventListener('submit',e=>{
-  e.preventDefault();
-  let form = formObj(e.target);
-  base.child('companies/'+JSON.parse(localStorage.punchtime).company.id+'/contact').set(form)
-    .then(()=>{
-      modal('Settings saved',()=>{},()=>{});
-    });
-
-});
+try {
+  document.getElementById('contact').addEventListener('submit',e=>{
+    e.preventDefault();
+    let form = formObj(e.target);
+    base.child('companies/'+JSON.parse(localStorage.punchtime).company.id+'/contact').set(form)
+      .then(()=>{
+        modal('Settings saved',()=>{},()=>{});
+      });
+  });
+} catch(e) {};
 
 if (auth) {
   console.log('logged in with: ' + auth.uid);
@@ -43,11 +44,13 @@ if (auth) {
   location.href = '/login/';
 }
 
-document.getElementById('logout').addEventListener('click', () => {
-  base.unauth();
-  localStorage.punchtime = '';
-  location.href = '/login/';
-});
+try {
+  document.getElementById('logout').addEventListener('click', () => {
+    base.unauth();
+    localStorage.punchtime = '';
+    location.href = '/login/';
+  });
+} catch(e) {};
 
 base.child('/users/' + auth.uid).once('value', (snapshot) => {
   settings.name = snapshot.val().name;
@@ -63,18 +66,20 @@ base.child('/users/' + auth.uid).once('value', (snapshot) => {
   }
 });
 
-document.getElementById('settings').addEventListener('submit', e => {
-  e.preventDefault();
-  let form = formObj(e.target);
-  settings.company = {
-    id: form.company,
-    name: companies[form.company]
-  };
-  localStorage.punchtime = JSON.stringify(settings);
-  setTitle();
-});
+try {
+  document.getElementById('settings').addEventListener('submit', e => {
+    e.preventDefault();
+    let form = formObj(e.target);
+    settings.company = {
+      id: form.company,
+      name: companies[form.company]
+    };
+    localStorage.punchtime = JSON.stringify(settings);
+    setTitle();
+  });
+} catch(e) {};
 
-const addEmail = e => {
+const addEmail = (e) => {
   e.preventDefault();
   num++;
   let div = document.createElement('div');
@@ -89,30 +94,34 @@ const addEmail = e => {
 };
 
 let num = 0;
-document.getElementById('add').addEventListener('click', addEmail);
+try {
+  document.getElementById('add').addEventListener('click', addEmail);
+} catch(e) {};
 
-document.getElementById('invite').addEventListener('submit', e => {
-  e.preventDefault();
-  let form = formObj(e.target);
+try {
+  document.getElementById('invite').addEventListener('submit', e => {
+    e.preventDefault();
+    let form = formObj(e.target);
 
-  for (let email in form) {
-    if (form.hasOwnProperty(email) && form[email]) {
-      console.log({
-        claimed: 'false',
-        company: JSON.parse(localStorage.punchtime).company.id,
-        email: form[email]
-      });
-      base.child('invites').push({
-        claimed: 'false',
-        company: {
-          id: JSON.parse(localStorage.punchtime).company.id,
-          name: JSON.parse(localStorage.punchtime).company.name
-        },
-        email: form[email]
-      });
+    for (let email in form) {
+      if (form.hasOwnProperty(email) && form[email]) {
+        console.log({
+          claimed: 'false',
+          company: JSON.parse(localStorage.punchtime).company.id,
+          email: form[email]
+        });
+        base.child('invites').push({
+          claimed: 'false',
+          company: {
+            id: JSON.parse(localStorage.punchtime).company.id,
+            name: JSON.parse(localStorage.punchtime).company.name
+          },
+          email: form[email]
+        });
+      }
     }
-  }
 
-  e.target.reset();
-  modal('Your employees now got an email with instructions',()=>{},()=>{});
-});
+    e.target.reset();
+    modal('Your employees now got an email with instructions',()=>{},()=>{});
+  });
+} catch(e) {};
