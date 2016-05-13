@@ -133,8 +133,7 @@ let addToTimeline = (current, previous, timeline) => {
     timeline.innerHTML += html `<div class="timeline--item timeline--item__day">
   <h3>${current.checkin.toLocaleDateString()}</h3>
 </div>`;
-  }
-  if (previous) {
+  } else if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
     let diffHours = Math.round(diff.getTime() / 3600000);
     timeline.innerHTML += html `
