@@ -220,6 +220,10 @@ body {
     width: 100%;
     border-bottom: 1px solid $color-accent-dark;
     padding: 1em 0;
+
+    &:target {
+      background-color: #ccc;
+    }
   }
 
   * {

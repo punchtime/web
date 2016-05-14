@@ -16,29 +16,42 @@ const setTitle = () => {
 };
 
 if (localStorage.punchtime) {
-  base.child('companies/'+JSON.parse(localStorage.punchtime).company.id).on('value', snapshot => {
+  base.child('companies/' + JSON.parse(localStorage.punchtime).company.id).on('value', snapshot => {
     try {
       document.getElementById('contact-email').value = snapshot.val().contact.email || '';
       document.getElementById('contact-phone').value = snapshot.val().contact.phone || '';
       document.getElementById('contact-note').value = snapshot.val().contact.note || '';
-    } catch(e) {/*don't care*/}
+    } catch (e) { /*don't care*/ }
   });
 }
 
 try {
-  document.getElementById('contact').addEventListener('submit',e=>{
+  document.getElementById('contact').addEventListener('submit', e => {
     e.preventDefault();
     let form = formObj(e.target);
-    base.child('companies/'+JSON.parse(localStorage.punchtime).company.id+'/contact').set(form)
-      .then(()=>{
-        modal('Settings saved',()=>{},()=>{});
+    base.child('companies/' + JSON.parse(localStorage.punchtime).company.id + '/contact').set(form)
+      .then(() => {
+        modal('Settings saved', () => {}, () => {});
       });
   });
-} catch(e) {}
+} catch (e) {}
 
 if (auth) {
   console.log('logged in with: ' + auth.uid);
   setTitle();
+  if (document.getElementById('invite')) {
+    base.child('companies')
+      .child(JSON.parse(localStorage.punchtime).company.id)
+      .child('employees')
+      .once('value')
+      .then((s) => {
+        if (s.numChildren() === 0) {
+          modal(`You don't have any employees yet, try inviting them`, () => {
+            location.href = '#invite';
+          }, () => {});
+        }
+      });
+  }
 } else {
   console.warn('not logged in');
   location.href = '/login/';
@@ -50,7 +63,7 @@ try {
     localStorage.punchtime = '';
     location.href = '/login/';
   });
-} catch(e) {}
+} catch (e) {}
 
 if (document.getElementById('username')) {
   base.child('/users/' + auth.uid).once('value', (snapshot) => {
@@ -81,7 +94,7 @@ try {
     localStorage.punchtime = JSON.stringify(settings);
     setTitle();
   });
-} catch(e) {}
+} catch (e) {}
 
 const addEmail = (e) => {
   e.preventDefault();
@@ -100,7 +113,7 @@ const addEmail = (e) => {
 let num = 0;
 try {
   document.getElementById('add').addEventListener('click', addEmail);
-} catch(e) {}
+} catch (e) {}
 
 try {
   document.getElementById('invite').addEventListener('submit', e => {
@@ -126,9 +139,9 @@ try {
     }
 
     e.target.reset();
-    modal('Your employees now got an email with instructions',()=>{},()=>{});
+    modal('Your employees now got an email with instructions', () => {}, () => {});
   });
-} catch(e) {}
+} catch (e) {}
 
 try {
   document.getElementById('create').addEventListener('submit', e => {
@@ -140,15 +153,15 @@ try {
       base.child('companies').push({
         name: form.name,
         tier: 'free'
-      }).then((s)=>{
+      }).then((s) => {
         let companyKey = s.key();
         let companyName = form.name;
         // put this new company as your company
         base.child('users')
-            .child(auth.uid)
-            .child('employer')
-            .child(companyKey)
-            .set(true);
+          .child(auth.uid)
+          .child('employer')
+          .child(companyKey)
+          .set(true);
 
         // set the newly created company in localStorage
         var ls = JSON.parse(localStorage.punchtime);
@@ -174,14 +187,14 @@ try {
 
         // form finished
         e.target.reset();
-        modal('Thanks, your employees now got an email',()=>{
+        modal('Thanks, your employees now got an email', () => {
           location.href = '/dashboard';
-        },()=>{});
+        }, () => {});
       });
 
 
     } else {
-      modal('you didn\'t fill in a name',()=>{},()=>{});
+      modal('you didn\'t fill in a name', () => {}, () => {});
     }
   });
-} catch(e) {}
+} catch (e) {}
