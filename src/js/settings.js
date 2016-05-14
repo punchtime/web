@@ -184,6 +184,4 @@ try {
       modal('you didn\'t fill in a name',()=>{},()=>{});
     }
   });
-} catch(e) {
-  console.warn(e);
-}
+} catch(e) {}
