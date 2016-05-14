@@ -90,11 +90,6 @@ let addOverview = (pulses,employee) => {
   overviewContent.innerHTML = html `<h2 class="overview--title">${employee.name}</h2>`;
   let timeline = document.createElement('div');
   timeline.classList.add('timeline');
-  // todo: take day in account
-//   timeline.innerHTML = html `
-// <div class="timeline--item timeline--item__day">
-//   <h3>Thursay, 28 April</h3>
-// </div>`;
 
   if (pulses.length === 0) {
     timeline.innerHTML += `
