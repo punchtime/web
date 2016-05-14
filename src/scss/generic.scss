@@ -49,6 +49,11 @@ body,html {
 
 a {
   color: $color-accent-light;
+
+  &.nolink {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 .inline {
