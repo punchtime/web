@@ -39,7 +39,7 @@ try {
 if (auth) {
   console.log('logged in with: ' + auth.uid);
   setTitle();
-  if (document.getElementById('invite')) {
+  if (document.getElementById('invite') && localStorage.punchtime) {
     base.child('companies')
       .child(JSON.parse(localStorage.punchtime).company.id)
       .child('employees')
@@ -52,6 +52,18 @@ if (auth) {
         }
       });
   }
+  base.child('users')
+    .child(auth.uid)
+    .child('employer')
+    .once('value')
+    .then((s) => {
+      if (s.numChildren() === 0 && location.pathname === '/dashboard/settings.html') {
+        modal("You don't have any company yet. Let's make one", () => {
+          location.href = 'create.html';
+        }, () => {});
+      }
+    });
+
 } else {
   console.warn('not logged in');
   location.href = '/login/';
