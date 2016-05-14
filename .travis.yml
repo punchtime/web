@@ -36,7 +36,8 @@ after_success:
     - if git checkout gh-pages; then git checkout -b gh-pages; fi
     - git rm -r .
     - cp -R ../dist/* .
-    - cp -R ../dist/.* .
+    - mkdir .well-known
+    - cp ../dist/.well-known/assetlinks.json .well-known/
     - git add -f .
     - git config user.email "punchtimeio@gmail.com"
     - git config user.name "punchtime bot"
