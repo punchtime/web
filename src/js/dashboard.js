@@ -12,6 +12,17 @@ const setTitle = () => {
 // if the localstorage hasn't been set, go to settings
 if (!localStorage.punchtime) {
   location.href = 'settings.html';
+} else {
+  base
+    .child('companies')
+    .child(JSON.parse(localStorage.punchtime).company.id)
+    .child('employees')
+    .once('value')
+    .then((s) => {
+      if (s.numChildren() === 0) {
+        location.href = 'settings.html';
+      }
+    });
 }
 
 if (auth) {
@@ -73,7 +84,7 @@ const addEmployee = (employee) => {
   document.querySelector('.employee-container').appendChild(empl);
 
   empl.addEventListener('click', () => {
-    addOverview(employeePulses,employee);
+    addOverview(employeePulses, employee);
   });
 
   let flexfix = document.createElement('div');
@@ -81,7 +92,7 @@ const addEmployee = (employee) => {
   document.querySelector('.employee-container').appendChild(flexfix);
 };
 
-let addOverview = (pulses,employee) => {
+let addOverview = (pulses, employee) => {
   let overview = document.createElement('div');
   overview.classList.add('overview');
   let overviewContent = document.createElement('div');
@@ -96,7 +107,7 @@ let addOverview = (pulses,employee) => {
     `;
   }
   for (let i in pulses) {
-    addToTimeline(pulses[i],pulses[i-1],timeline);
+    addToTimeline(pulses[i], pulses[i - 1], timeline);
   }
 
   overviewContent.appendChild(timeline);
