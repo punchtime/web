@@ -38,6 +38,7 @@ after_success:
     - cp -R ../dist/* .
     - mkdir .well-known
     - cp ../dist/.well-known/assetlinks.json .well-known/
+    - touch .nojekyll
     - git add -f .
     - git config user.email "punchtimeio@gmail.com"
     - git config user.name "punchtime bot"
