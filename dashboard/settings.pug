@@ -14,6 +14,13 @@ html(lang="en")
         select#company(name="company")
         a(href="create.html") create a new company
         input(type="submit",value="submit")
+      form#invite
+        p Invite employees to your team. They'll receive an email instructing how to join your team.
+        fieldset
+          div.inline
+            input(type="email", placeholder="their@email.com", name="email-0", data-num="0")
+            button#add(type="button") +
+        input(type="submit",value="submit")
       form#contact
         p Let your employees contact you
         div
@@ -25,13 +32,6 @@ html(lang="en")
         div
           label(for="note") extra info
           input(name="note", type="text")#contact-note
-        input(type="submit",value="submit")
-      form#invite
-        p Invite employees to your team. They'll receive an email instructing how to join your team.
-        fieldset
-          div.inline
-            input(type="email", placeholder="their@email.com", name="email-0", data-num="0")
-            button#add(type="button") +
         input(type="submit",value="submit")
 
     script(src="/src/js/settings.js")
