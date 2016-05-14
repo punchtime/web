@@ -142,7 +142,7 @@ try {
         tier: 'free'
       }).then((s)=>{
         let companyKey = s.key();
-        let companyName = s.val().name;
+        let companyName = form.name;
         // put this new company as your company
         base.child('users')
             .child(auth.uid)
@@ -152,26 +152,15 @@ try {
 
         // set the newly created company in localStorage
         var ls = JSON.parse(localStorage.punchtime);
-        console.log(ls,ls.company);
         ls.company = {
           id: companyKey,
           name: companyName
         };
-        console.log(ls);
         localStorage.punchtime = JSON.stringify(ls);
-        console.log(JSON.parse(localStorage.punchtime));
 
         // invite employees
         for (let email in form) {
-          if (form.hasOwnProperty(email) && form[email] && email !== 'name') {
-            console.log({
-              claimed: 'false',
-              company: {
-                id: companyKey,
-                name: companyName
-              },
-              email: form[email]
-            });
+          if (form.hasOwnProperty(email) && form[email]) {
             base.child('invites').push({
               claimed: 'false',
               company: {
