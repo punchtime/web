@@ -32,7 +32,6 @@ const addEmployee = (employee) => {
         try {
           let name = employee.name,
             checkin = new Date(parseInt(snap.val().checkin)),
-            note = snap.val().note,
             address = snap.val().addressStreet,
             checkout;
           if (snap.val().checkout && snap.val().checkout !== 0) {
@@ -45,9 +44,9 @@ const addEmployee = (employee) => {
             id: snap.key(),
             latitude: snap.val().latitude,
             longitude: snap.val().longitude,
-            checkin: new Date(parseInt(snap.val().checkin)),
-            checkout: new Date(parseInt(snap.val().checkout)),
-            address: snap.val().addressStreet,
+            checkin: checkin,
+            checkout: checkout,
+            address: address,
             city: snap.val().addressCityCountry,
             note: snap.val().note,
             confirmed: parseBool(snap.val().confirmed)
@@ -90,11 +89,6 @@ let addOverview = (pulses,employee) => {
   overviewContent.innerHTML = html `<h2 class="overview--title">${employee.name}</h2>`;
   let timeline = document.createElement('div');
   timeline.classList.add('timeline');
-  // todo: take day in account
-//   timeline.innerHTML = html `
-// <div class="timeline--item timeline--item__day">
-//   <h3>Thursay, 28 April</h3>
-// </div>`;
 
   if (pulses.length === 0) {
     timeline.innerHTML += `

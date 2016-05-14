@@ -64,6 +64,11 @@ form {
   margin: 1em 0;
 }
 
+fieldset {
+  border: none;
+  margin: 0;
+}
+
 button, input[type=button], input[type=submit] {
   font-size: 1em;
   appearance: none;
