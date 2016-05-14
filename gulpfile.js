@@ -69,8 +69,13 @@ gulp.task('sass', () => {
 });
 
 gulp.task('copy',() => {
-  return gulp.src(['CNAME','.well-known/**/*'])
+  return gulp.src(['CNAME'])
     .pipe(gulp.dest(DIST));
+});
+
+gulp.task('well-known',() => {
+  return gulp.src(['.well-known/**/*'])
+    .pipe(gulp.dest(DIST + '/.well-known'));
 });
 
 gulp.task('browser-sync', () => {
@@ -97,6 +102,7 @@ gulp.task('watch',['default','browser-sync'], () => {
   gulp.watch(SRC+'/scss/**/*.scss', ['sass']);
   gulp.watch(SRC+'/js/**/*.js', ['scripts']);
   gulp.watch(SRC+'/img/**/*', ['images']);
+  gulp.watch('.well-known/**/*', ['well-known']);
 });
 
-gulp.task('default', ['copy','templates','sass','scripts','images']);
+gulp.task('default', ['copy','templates','sass','scripts','images','well-known']);
