@@ -10,34 +10,6 @@ let tableify = require('tableify');
  */
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 
-
-/**
- * all database operations that are allowed
- * not really used
- * @type {class}
- */
-// class baseOperations {
-//   getAll() {
-//     console.log(base);
-//   }
-
-//   addEmployee(userRef,company) {
-//     console.log('add user');
-//   }
-
-//   addEmployer(userRef,company) {
-//     console.log('add user');
-//   }
-
-//   baseOperations(url) {
-//     let base = new Firebase(url);
-//   }
-// }
-
-// let yeah = new baseOperations('https://scorching-inferno-1467.firebaseio.com/');
-
-// yeah.getAll();
-
 /**
  * logging all of the values of our firebase
  */
