@@ -215,8 +215,8 @@ let toggleStatus = (element) => {
  * @param  {function} callback what should be called after running (addEmployee)
  */
 let getEmployees = (id, callback) => {
-  base.child('companies').child(id).child('employees').on('child_added').then((snapshot) => {
-    base.child('users').child(snapshot.key()).once('value').then((snap) => {
+  base.child('companies').child(id).child('employees').on('child_added', (snapshot) => {
+    base.child('users').child(snapshot.key()).once('value', (snap) => {
       callback(snap.val(),snap.key());
     });
   });
