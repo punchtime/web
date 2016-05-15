@@ -110,6 +110,7 @@ try {
   });
 } catch (e) {}
 
+let num = 0;
 const addEmail = (e) => {
   e.preventDefault();
   num++;
@@ -124,7 +125,6 @@ const addEmail = (e) => {
   e.target.parentNode.removeChild(e.target);
 };
 
-let num = 0;
 try {
   document.getElementById('add').addEventListener('click', addEmail);
 } catch (e) {}
