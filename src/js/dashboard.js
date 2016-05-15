@@ -34,8 +34,29 @@ if (auth) {
   location.href = '/login/';
 }
 
+/**
+ * parse a string as a boolean
+ * @param  {string} string what you want to parse
+ * @return {boolean}        true of string is 'true' or true, false otherwise
+ */
+let parseBool = (string) => {
+  if (string === 'true' || string === true) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 let pulses = []; // the graph is made from this object
 
+/**
+ * add an employee to the dashboard
+ * 1. his face in a card
+ * 2. popup for that card
+ * 3. history view in timeline
+ * @param  {object} employee the employee
+ * @param  {string} id       its uid
+ */
 const addEmployee = (employee,id) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
@@ -94,6 +115,11 @@ const addEmployee = (employee,id) => {
   document.querySelector('.employee-container').appendChild(flexfix);
 };
 
+/**
+ * show the overview of an employee with a timeline
+ * @param  {object} pulses   pulses of that employee
+ * @param  {object} employee employee object
+ */
 let addOverview = (pulses, employee) => {
   let overview = document.createElement('div');
   overview.classList.add('overview');
@@ -104,9 +130,7 @@ let addOverview = (pulses, employee) => {
   timeline.classList.add('timeline');
 
   if (pulses.length === 0) {
-    timeline.innerHTML += `
-    <p>No checkins</p>
-    `;
+    timeline.innerHTML += `<p>No checkins</p>`;
   }
   for (let i in pulses) {
     if (pulses.hasOwnProperty(i)) {
@@ -129,14 +153,12 @@ let addOverview = (pulses, employee) => {
   });
 };
 
-let parseBool = (string) => {
-  if (string === 'true' || string === true) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
+/**
+ * add a moment ot the timeline
+ * @param  {object} current  the current pulse
+ * @param  {object} previous the previous pulse (optional)
+ * @param  {htmlnode} timeline the place where it should be added
+ */
 let addToTimeline = (current, previous, timeline) => {
   if (!previous || current.checkin.toLocaleDateString() !== previous.checkout.toLocaleDateString()) {
     timeline.innerHTML += html `<div class="timeline--item timeline--item__day">
@@ -145,8 +167,7 @@ let addToTimeline = (current, previous, timeline) => {
   } else if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
     let diffHours = Math.round(diff.getTime() / 3600000);
-    timeline.innerHTML += html `
-<div class="timeline--item timeline--item__travel ${'timeline--item__good'}">
+    timeline.innerHTML += html `<div class="timeline--item timeline--item__travel ${'timeline--item__good'}">
   <div class="duration"><span>${diffHours > 0 ? diffHours+' h' : ''} ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)} min</span></div>
 </div>`;
   }
@@ -162,6 +183,10 @@ let addToTimeline = (current, previous, timeline) => {
 </div>`;
 };
 
+/**
+ * click handler to toggle the confirmed status
+ * @param  {htmlnode} element clicked element
+ */
 let toggleStatus = (element) => {
   if (element.classList.contains('timeline--item__unconfirmed')) {
     element.classList.remove('timeline--item__unconfirmed');
@@ -184,9 +209,14 @@ let toggleStatus = (element) => {
   }
 };
 
+/**
+ * get all the employees once
+ * @param  {string}   id       your company id
+ * @param  {function} callback what should be called after running (addEmployee)
+ */
 let getEmployees = (id, callback) => {
-  base.child('companies').child(id).child('employees').on('child_added', (snapshot) => {
-    base.child('users').child(snapshot.key()).once('value', (snap) => {
+  base.child('companies').child(id).child('employees').on('child_added').then((snapshot) => {
+    base.child('users').child(snapshot.key()).once('value').then((snap) => {
       callback(snap.val(),snap.key());
     });
   });
@@ -194,6 +224,10 @@ let getEmployees = (id, callback) => {
 
 getEmployees(JSON.parse(localStorage.punchtime).company.id, addEmployee);
 
+/**
+ * draw a new timeline chart
+ * can also be used to redraw the chart
+ */
 const drawChart = () => {
   let chart = new google.visualization.Timeline(document.getElementById('timeline'));
   let dataTable = new google.visualization.DataTable();
