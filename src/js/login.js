@@ -25,12 +25,12 @@ base.onAuth(authData=>{
 /**
  * logging in and out
  */
-(()=>{
+{
 
   /**
    * get name from authData
    */
-  let getName = authData => {
+  let getName = (authData) => {
     switch(authData.provider) {
       case 'password':
         return authData.password.email.replace(/@.*/, '');
@@ -47,7 +47,8 @@ base.onAuth(authData=>{
    * logging in with any service
    * @param {string} service the auth service [google,twitter,facebook]
    */
-  let auth = service => {
+  let auth = (service
+) => {
     console.log('logging in');
     base.authWithOAuthPopup(service, function(error, authData) {
       if (error) {
@@ -117,4 +118,4 @@ base.onAuth(authData=>{
     });
   });
 
-})();
+}
