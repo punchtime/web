@@ -109,7 +109,9 @@ let addOverview = (pulses, employee) => {
     `;
   }
   for (let i in pulses) {
-    addToTimeline(pulses[i], pulses[i - 1], timeline);
+    if (pulses.hasOwnProperty(i)) {
+      addToTimeline(pulses[i], pulses[i - 1], timeline);
+    }
   }
 
   overviewContent.appendChild(timeline);
