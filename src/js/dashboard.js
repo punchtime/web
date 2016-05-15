@@ -35,38 +35,39 @@ if (auth) {
 
 let pulses = []; // the graph is made from this object
 
-const addEmployee = (employee) => {
+const addEmployee = (employee,id) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
     if (employee.pulses.hasOwnProperty(pulse)) {
-      base.child('pulses').child(pulse).once('value', (snap) => {
         try {
           let name = employee.name,
-            checkin = new Date(parseInt(snap.val().checkin)),
-            address = snap.val().addressStreet,
+            checkin = new Date(parseInt(employee.pulses[pulse].checkin)),
+            address = employee.pulses[pulse].addressStreet,
             checkout;
-          if (snap.val().checkout && snap.val().checkout !== 0) {
-            checkout = new Date(parseInt(snap.val().checkout));
+          if (employee.pulses[pulse].checkout && employee.pulses[pulse].checkout !== 0) {
+            checkout = new Date(parseInt(employee.pulses[pulse].checkout));
           } else {
             checkout = new Date();
           }
           pulses.push([name, address, checkin, checkout]);
           employeePulses.push({
-            id: snap.key(),
-            latitude: snap.val().latitude,
-            longitude: snap.val().longitude,
+            id: pulse,
+            latitude: employee.pulses[pulse].latitude,
+            longitude: employee.pulses[pulse].longitude,
             checkin: checkin,
             checkout: checkout,
             address: address,
-            city: snap.val().addressCityCountry,
-            note: snap.val().note,
-            confirmed: parseBool(snap.val().confirmed)
+            city: employee.pulses[pulse].addressCityCountry,
+            note: employee.pulses[pulse].note,
+            confirmed: parseBool(employee.pulses[pulse].confirmed),
+            user: {
+              id: id
+            }
           });
           drawChart();
         } catch (e) {
-          console.log(`/pulses/${snap.key()} in /users/${employee.name} has a problem.`);
+          console.log(`/pulses/${pulse} in /users/${employee.name} has a problem.`);
         }
-      });
     }
   }
 
@@ -147,7 +148,7 @@ let addToTimeline = (current, previous, timeline) => {
 </div>`;
   }
   timeline.innerHTML += html `
-<div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}">
+<div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}" data-user="${current.user.id}">
   <h4>${current.address}</h4>
   <p class="timeline--item__city">${current.city}</p>
   <p class="timeline--item__note">${current.note}</p>
@@ -162,14 +163,18 @@ let toggleStatus = (element) => {
   if (element.classList.contains('timeline--item__unconfirmed')) {
     element.classList.remove('timeline--item__unconfirmed');
     element.classList.add('timeline--item__confirmed');
-    base.child('pulses')
+    base.child('users')
+      .child(element.dataset.user)
+      .child('pulses')
       .child(element.dataset.pulse)
       .child('confirmed')
       .set('true');
   } else if (element.classList.contains('timeline--item__confirmed')) {
     element.classList.remove('timeline--item__confirmed');
     element.classList.add('timeline--item__unconfirmed');
-    base.child('pulses')
+    base.child('users')
+      .child(element.dataset.user)
+      .child('pulses')
       .child(element.dataset.pulse)
       .child('confirmed')
       .set('false');
@@ -179,7 +184,7 @@ let toggleStatus = (element) => {
 let getEmployees = (id, callback) => {
   base.child('companies').child(id).child('employees').on('child_added', (snapshot) => {
     base.child('users').child(snapshot.key()).once('value', (snap) => {
-      callback(snap.val());
+      callback(snap.val(),snap.key());
     });
   });
 };
