@@ -1,3 +1,4 @@
+"use strict";
 let Firebase = require('firebase');
 let base = new Firebase('https://scorching-inferno-1467.firebaseio.com/');
 

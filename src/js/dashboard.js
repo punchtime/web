@@ -1,3 +1,4 @@
+"use strict";
 let Firebase = require('firebase');
 let html = require('./html-escaping');
 require('./welcome')();

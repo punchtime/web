@@ -1,3 +1,5 @@
+"use strict";
+
 const formObj = require('form-obj');
 const modal = require('modal');
 require('./welcome')();

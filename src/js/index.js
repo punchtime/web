@@ -1,22 +1,25 @@
+"use strict";
 require('./welcome')();
 /**
  * the animation for the arrows
  * @param  {string} classname the name of the class that each arrow has
  */
-(classname=>{
+((classname) => {
   // https://gist.github.com/james2doyle/5694700
   // easing functions http://goo.gl/5HLl8
-  Math.easeInOutQuad = function (t, b, c, d) {
-    t /= d/2;
+  Math.easeInOutQuad = function(t, b, c, d) {
+    t /= d / 2;
     if (t < 1) {
-      return c/2*t*t + b;
+      return c / 2 * t * t + b;
     }
     t--;
-    return -c/2 * (t*(t-2) - 1) + b;
+    return -c / 2 * (t * (t - 2) - 1) + b;
   };
   // requestAnimationFrame for Smart Animating http://goo.gl/sx5sts
-  var requestAnimFrame = (function(){
-    return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function( callback ){ window.setTimeout(callback, 1000 / 60); };
+  var requestAnimFrame = (function() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
   })();
 
   function scrollTo(to, callback, duration) {
@@ -26,6 +29,7 @@ require('./welcome')();
       document.body.parentNode.scrollTop = amount;
       document.body.scrollTop = amount;
     }
+
     function position() {
       return document.documentElement.scrollTop || document.body.parentNode.scrollTop || document.body.scrollTop;
     }
@@ -56,8 +60,8 @@ require('./welcome')();
 
   //adding the scroll to the arrows
   var addListener = function(i) {
-    i.addEventListener("click",function(e) {
-      scrollTo(document.getElementById(i.href.substr(i.href.indexOf("#")+1)).offsetTop,function() {
+    i.addEventListener("click", function(e) {
+      scrollTo(document.getElementById(i.href.substr(i.href.indexOf("#") + 1)).offsetTop, function() {
         document.location = i.href;
       });
       e.preventDefault();
