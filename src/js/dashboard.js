@@ -38,7 +38,7 @@ let pulses = []; // the graph is made from this object
 const addEmployee = (employee,id) => {
   let employeePulses = [];
   for (let pulse in employee.pulses) {
-    if (employee.pulses.hasOwnProperty(pulse)) {
+    if (employee.pulses.hasOwnProperty(pulse) && employee.pulses[pulse].employer === JSON.parse(localStorage.punchtime).company.id) {
         try {
           let name = employee.name,
             checkin = new Date(parseInt(employee.pulses[pulse].checkin)),
