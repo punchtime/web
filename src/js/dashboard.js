@@ -57,49 +57,14 @@ let pulses = []; // the graph is made from this object
  * @param  {object} employee the employee
  * @param  {string} id       its uid
  */
-const addEmployee = (employee,id) => {
-  let employeePulses = [];
-  for (let pulse in employee.pulses) {
-    if (employee.pulses.hasOwnProperty(pulse) && employee.pulses[pulse].employer === JSON.parse(localStorage.punchtime).company.id) {
-        try {
-          let name = employee.name,
-            checkin = new Date(parseInt(employee.pulses[pulse].checkin)),
-            address = employee.pulses[pulse].addressStreet,
-            checkout;
-          if (employee.pulses[pulse].checkout && employee.pulses[pulse].checkout !== 0) {
-            checkout = new Date(parseInt(employee.pulses[pulse].checkout));
-          } else {
-            checkout = new Date();
-          }
-          pulses.push([name, address, checkin, checkout]);
-          employeePulses.push({
-            id: pulse,
-            latitude: employee.pulses[pulse].latitude,
-            longitude: employee.pulses[pulse].longitude,
-            checkin: checkin,
-            checkout: checkout,
-            address: address,
-            city: employee.pulses[pulse].addressCityCountry,
-            note: employee.pulses[pulse].note,
-            confirmed: parseBool(employee.pulses[pulse].confirmed),
-            user: {
-              id: id
-            }
-          });
-          drawChart();
-        } catch (e) {
-          console.log(`/pulses/${pulse} in /users/${employee.name} has a problem.`);
-        }
-    }
-  }
-
+const addEmployee = (employee, id) => {
   let image = employee.image || '/src/img/icons/empty.svg',
     name = employee.name,
     status = 'good';
 
   let empl = document.createElement('div');
   empl.classList.add('employee');
-  // empl.dataset.id = id;
+  empl.dataset.id = id;
   empl.innerHTML = html `
 <img src="${image}" alt="${name}" class="employee--image">
 <p class="employee--name">${name}</p>
@@ -107,20 +72,42 @@ const addEmployee = (employee,id) => {
   document.querySelector('.employee-container').appendChild(empl);
 
   empl.addEventListener('click', () => {
-    addOverview(employeePulses, employee);
+    addOverview(employee, id);
   });
 
   let flexfix = document.createElement('div');
   flexfix.classList.add('👻');
   document.querySelector('.employee-container').appendChild(flexfix);
+
+  // todo: make this into a different function
+  for (let pulse in employee.pulses) {
+    if (employee.pulses.hasOwnProperty(pulse) && employee.pulses[pulse].employer === JSON.parse(localStorage.punchtime).company.id) {
+      try {
+        let name = employee.name,
+          checkin = new Date(parseInt(employee.pulses[pulse].checkin)),
+          address = employee.pulses[pulse].addressStreet,
+          checkout;
+        if (employee.pulses[pulse].checkout && employee.pulses[pulse].checkout !== 0) {
+          checkout = new Date(parseInt(employee.pulses[pulse].checkout));
+        } else {
+          checkout = new Date();
+        }
+        pulses.push([name, address, checkin, checkout]);
+        drawChart();
+      } catch (e) {
+        console.log(`/pulses/${pulse} in /users/${employee.name} has a problem.`);
+      }
+    }
+  }
 };
 
 /**
  * show the overview of an employee with a timeline
  * @param  {object} pulses   pulses of that employee
  * @param  {object} employee employee object
+ * @param  {string} id       the employee id
  */
-let addOverview = (pulses, employee) => {
+let addOverview = (employee, id) => {
   let overview = document.createElement('div');
   overview.classList.add('overview');
   let overviewContent = document.createElement('div');
@@ -129,14 +116,45 @@ let addOverview = (pulses, employee) => {
   let timeline = document.createElement('div');
   timeline.classList.add('timeline');
 
-  if (pulses.length === 0) {
-    timeline.innerHTML += `<p>No checkins</p>`;
-  }
-  for (let i in pulses) {
-    if (pulses.hasOwnProperty(i)) {
-      addToTimeline(pulses[i], pulses[i - 1], timeline);
-    }
-  }
+  base.child('users')
+    .child(id)
+    .child('pulses')
+    .on('child_added', (snap,prev) => {
+      let current = {
+        id: snap.key(),
+        latitude: snap.val().latitude,
+        longitude: snap.val().longitude,
+        checkin: new Date(parseInt(snap.val().checkin)),
+        checkout: new Date(parseInt(snap.val().checkout)),
+        address: snap.val().addressStreet,
+        city: snap.val().addressCityCountry,
+        note: snap.val().note,
+        confirmed: parseBool(snap.val().confirmed),
+        user: {
+          id: id
+        }
+      };
+      if (prev) {
+        base.child('users')
+          .child(id)
+          .child('pulses')
+          .child(prev)
+          .child('checkout')
+          .once('value')
+          .then((snapshot)=>{
+            addToTimeline(current, {
+              checkout: new Date(parseInt(snapshot.val())),
+            }, timeline);
+          })
+      } else {
+        addToTimeline(current, false, timeline);
+      }
+    });
+
+
+  // if (pulses.length === 0) {
+  //   timeline.innerHTML += `<p>No checkins</p>`;
+  // }
 
   overviewContent.appendChild(timeline);
   overview.appendChild(overviewContent);
@@ -160,16 +178,23 @@ let addOverview = (pulses, employee) => {
  * @param  {htmlnode} timeline the place where it should be added
  */
 let addToTimeline = (current, previous, timeline) => {
-  if (!previous || current.checkin.toLocaleDateString() !== previous.checkout.toLocaleDateString()) {
+  console.log(current);
+  let addDate = () => {
     timeline.innerHTML += html `<div class="timeline--item timeline--item__day">
   <h3>${current.checkin.toLocaleDateString()}</h3>
 </div>`;
-  } else if (previous) {
+  };
+  if (previous) {
     let diff = new Date(current.checkin - previous.checkout);
     let diffHours = Math.round(diff.getTime() / 3600000);
     timeline.innerHTML += html `<div class="timeline--item timeline--item__travel ${'timeline--item__good'}">
   <div class="duration"><span>${diffHours > 0 ? diffHours+' h' : ''} ${diff.getMinutes() + Math.round(diff.getSeconds() / 60)} min</span></div>
 </div>`;
+  }
+  if (!previous) {
+    addDate();
+  } else if (current.checkin.toLocaleDateString() !== previous.checkout.toLocaleDateString()) {
+    addDate();
   }
   timeline.innerHTML += html `
 <div class="timeline--item timeline--item__still timeline--item__${current.confirmed ? '' : 'un'}confirmed" data-pulse="${current.id}" data-user="${current.user.id}">
@@ -217,7 +242,7 @@ let toggleStatus = (element) => {
 let getEmployees = (id, callback) => {
   base.child('companies').child(id).child('employees').on('child_added', (snapshot) => {
     base.child('users').child(snapshot.key()).once('value', (snap) => {
-      callback(snap.val(),snap.key());
+      callback(snap.val(), snap.key());
     });
   });
 };
