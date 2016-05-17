@@ -272,3 +272,62 @@ window.addEventListener('resize', () => {
     drawChart();
   }, 250);
 });
+
+// dragon
+// https://github.com/tomhodgins/dragon
+window.steps = 0;
+window.necessary = 10;
+document.querySelector('.header').addEventListener('click', () => {
+  if (window.steps > window.necessary) {
+
+    window.b = 0;
+    window.X = 0;
+    window.Y = 0;
+    window.T = 0;
+    window.L = 0;
+
+    document.addEventListener("click", function(a) {
+      a.preventDefault();
+    }, !0);
+    document.addEventListener("mousedown", c);
+    document.addEventListener("touchstart", c);
+
+    function c(a) {
+
+      a.preventDefault();
+      a.target !== document.documentElement && a.target !== document.body && (window.b = Date.now(), a.target.setAttribute("data-drag", window.b), a.target.style.position = "relative", window.T = a.target.style.top.split("px")[0] || 0, window.L = a.target.style.left.split("px")[0] || 0);
+      window.X = a.clientX || a.touches[0].clientX;
+      window.Y = a.clientY || a.touches[0].clientY;
+    }
+    document.addEventListener("mousemove", d);
+    document.addEventListener("touchmove", d);
+
+    function d(a) {
+      if ("" !== window.b) {
+        var e = document.querySelector('[data-drag="' + window.b + '"]');
+        e.style.top = parseInt(window.T) + parseInt((a.clientY || a.touches[0].clientY) - window.Y) + "px";
+        e.style.left = parseInt(window.L) + parseInt((a.clientX || a.touches[0].clientX) - window.X) + "px";
+      }
+    }
+    document.addEventListener("mouseup", f);
+    document.addEventListener("touchend", f);
+
+    function f() {
+      window.b = "";
+    }
+    document.addEventListener("mouseover", g);
+
+    function g(a) {
+      a.target.style.cursor = "move";
+      a.target.style.boxShadow = "inset lime 0 0 1px,lime 0 0 1px";
+    }
+    document.addEventListener("mouseout", h);
+
+    function h(a) {
+      a.target.style.cursor = a.target.style.boxShadow = "";
+    }
+
+  } else {
+    window.steps++;
+  }
+});
