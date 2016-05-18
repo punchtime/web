@@ -3,7 +3,7 @@
  * @author Haroen Viaene <hello@haroen.me>
  */
 
-@import 'development';
+@import 'generic';
 
 $color-status-good: $color-accent-light;
 $color-status-bad: complement($color-accent-light);
