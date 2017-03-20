@@ -59,11 +59,11 @@ See also [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Screenshots
 
-![](./assets/screenshots/Screen Shot 2017-03-20 at 20.47.45.png)
+![](./assets/screenshots/Screen%20Shot%202017-03-20%20at%2020.47.45.png)
 
-![](./assets/screenshots/Screen Shot 2017-03-20 at 20.47.59.png)
+![](./assets/screenshots/Screen%20Shot%202017-03-20%20at%2020.47.59.png)
 
-![](./assets/screenshots/Screen Shot 2017-03-20 at 20.48.24.png)
+![](./assets/screenshots/Screen%20Shot%202017-03-20%20at%2020.48.24.png)
 
 ## License
 
