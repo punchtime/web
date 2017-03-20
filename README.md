@@ -1,7 +1,5 @@
 # [punchtime.io](https://punchtime.io)
 
-> Note: this is a work in progress, and not yet a deployed site.
-
 [![Join the chat at https://gitter.im/punchtime/public](https://badges.gitter.im/punchtime/public.svg)](https://gitter.im/punchtime/public?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/punchtime/web.svg?branch=master)](https://travis-ci.org/punchtime/web) [![Dependency Status](https://david-dm.org/punchtime/web.svg)](https://david-dm.org/punchtime/web) [![devDependency Status](https://david-dm.org/punchtime/web/dev-status.svg)](https://david-dm.org/punchtime/web#info=devDependencies)
 
 ## info
@@ -58,6 +56,8 @@ See also [CONTRIBUTING.md](CONTRIBUTING.md).
 * gulp-util
 * jshint
 * jshint-stylish
+
+## Screenshots
 
 ## License
 
